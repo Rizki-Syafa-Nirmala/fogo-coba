@@ -58,7 +58,7 @@ class MakananResource extends Resource
                 ->label('Gambar')
                 ->directory('Gambar_Makanan')
                 ->image(),
-                
+
             ]);
     }
 
@@ -98,6 +98,7 @@ class MakananResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
