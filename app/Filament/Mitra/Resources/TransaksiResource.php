@@ -47,12 +47,10 @@ class TransaksiResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+
             ]);
     }
 
@@ -67,8 +65,8 @@ class TransaksiResource extends Resource
     {
         return [
             'index' => Pages\ListTransaksis::route('/'),
-            'create' => Pages\CreateTransaksi::route('/create'),
-            'edit' => Pages\EditTransaksi::route('/{record}/edit'),
+            // 'create' => Pages\CreateTransaksi::route('/create'),
+            // 'edit' => Pages\EditTransaksi::route('/{record}/edit'),
         ];
     }
 
