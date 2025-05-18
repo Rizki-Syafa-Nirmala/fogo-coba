@@ -15,7 +15,7 @@ class ReviewController extends Controller
     public function index()
     {
         // Mengambil semua review untuk pengguna yang sedang login
-        $reviews = Ulasan::where('user_id', auth()->id())->get();
+        $reviews = Review::where('user_id', auth()->id())->get();
 
         return view('user.review', compact('reviews'));
     }
@@ -27,9 +27,9 @@ class ReviewController extends Controller
             'review' => 'required|string',
         ]);
 
-        $transaction = Transaksi::findOrFail($id);
+        $transaction = Transaction::findOrFail($id);
 
-        Ulasan::create([
+        Review::create([
             'food_id' => $transaction->food_id, // Pastikan ini ada di tabel transaksi
             'user_id' => auth()->id(),
             'transaction_id' => $transaction->id, // Pastikan transaction_id dimasukkan
@@ -56,7 +56,7 @@ class ReviewController extends Controller
         // Update hanya rating dan comment
         $review->update([
             'rating' => $validated['rating'], // Update rating
-            'comment' => $request->input('komen'),   // Update comment
+            'comment' => $request->input('comment'),   // Update comment
         ]);
 
         // Redirect kembali dengan pesan sukses
