@@ -41,11 +41,11 @@
                                 </div>
                                 <div class="space-y-3">
                                     <h5 class="text-lg font-medium uppercase text-black dark:text-white">restoran</h5>
-                                    @foreach ($partners as $partner)
+                                    @foreach ($mitras as $mitra)
                                     <div class="flex items-center">
                                         <div>
-                                            <input  type="checkbox" id="partner{{ $partner->id }}" name="partner[]" value="{{ $partner->id }}" {{ in_array($partner->id, request('partner', [])) ? 'checked' : '' }}  class="h-4 w-4  rounded border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600">
-                                            <label for="partner{{ $partner->id }}" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $partner->name }}</label>
+                                            <input  type="checkbox" id="mitra{{ $mitra->id }}" name="mitra[]" value="{{ $mitra->id }}" {{ in_array($mitra->id, request('mitra', [])) ? 'checked' : '' }}  class="h-4 w-4  rounded border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600">
+                                            <label for="mitra{{ $mitra->id }}" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $mitra->name }}</label>
                                         </div>
                                     </div>
                                     @endforeach

@@ -78,7 +78,7 @@ class FoodController extends Controller
 
 
 
-        return view('user.food', compact('foods', 'kategoris', 'partners'));
+        return view('user.food', compact('makanans', 'kategoris', 'mitras'));
     }
 
     public function storeTransaction(Request $request)

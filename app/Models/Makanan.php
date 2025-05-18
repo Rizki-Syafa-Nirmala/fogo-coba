@@ -14,7 +14,7 @@ class Makanan extends Model
         'harga',
         'gambar_makanan',
         'kategoris_id',
-        'mitras_id',
+        'mitra_id',
         'status'
     ];
 
@@ -23,9 +23,9 @@ class Makanan extends Model
         return $this->belongsTo(Kategori::class);
     }
 
-    public function mitras()
+    public function mitra()
     {
-        return $this->belongsTo(Mitra::class);
+        return $this->belongsTo(Mitra::class, 'mitras_id');
     }
 
         public function transaksi()

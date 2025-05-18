@@ -1,4 +1,4 @@
-@foreach ($foods as $food)
+@foreach ($makanans as $food)
 <div id="{{ $food->id }}" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-10 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full-lg">
     <div class="relative w-full max-w-4xl max-h-full">
         <!-- Modal content -->
@@ -19,20 +19,20 @@
                       <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
                         <div class="shrink-0 max-w-md lg:max-w-lg mx-auto">
                           {{-- <img class="w-full dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg" alt="" /> --}}
-                          <img class="w-full hidden dark:block" src="{{ $food->image_food ? asset('storage/'.$food->image_food) : asset('images/food.png') }}" alt="" />
+                          <img class="w-full hidden dark:block" src="{{ $food->gambar_makanan ? asset('storage/'.$food->gambar_makanan) : asset('images/food.png') }}" alt="" />
                         </div>
 
                         <div class="mt-6 sm:mt-8 lg:mt-10">
                           <h1
                             class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white"
                           >
-                            {{ $food->name }}
+                            {{ $food->nama }}
                           </h1>
                           <div class="mt-4 sm:items-center sm:gap-4 sm:flex">
                             <p
                               class="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white"
                             >
-                                Rp. {{ number_format($food->price, 0, ',', '.') }}
+                                Rp. {{ number_format($food->harga, 0, ',', '.') }}
                             </p>
 
                             <div class="flex items-center gap-2 mt-2 sm:mt-0">
@@ -103,7 +103,7 @@
 
                         </div>
                         <p class="mb-6 text-gray-500 dark:text-gray-400">
-                          {{ $food->description }}
+                          {{ $food->deskripsi }}
                         </p>
                       </div>
                     </div>
@@ -203,7 +203,7 @@
                       </div>
 
                       <div class="mt-6 divide-y divide-gray-200 dark:divide-gray-700">
-                        @foreach ($food->reviews as $review  )
+                        @foreach ($food->ulasan as $review  )
                         <div class="gap-3 py-6 sm:flex sm:items-start">
                           <div class="shrink-0 space-y-2 sm:w-48 md:w-72">
                             <div class="flex items-center gap-0.5">
