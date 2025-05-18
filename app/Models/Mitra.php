@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class Mitra extends Authenticable
+class Mitra extends Authenticatable
 {
     use Notifiable;
 
@@ -18,7 +18,7 @@ class Mitra extends Authenticable
         'alamat',
     ];
 
-    public function makanans()
+    public function makanan()
     {
         return $this->hasMany(Makanan::class);
     }

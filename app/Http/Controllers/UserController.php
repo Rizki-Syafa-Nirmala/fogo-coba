@@ -38,21 +38,21 @@ class UserController extends Controller
         // Cek dan simpan gambar baru jika diunggah
         if ($request->hasFile('profile_picture')) {
             // Hapus gambar lama jika ada
-            if ($user->profile_picture && Storage::exists('public/' . $user->profile_picture)) {
-                Storage::delete('public/' . $user->profile_picture);
+            if ($user->profpic && Storage::exists('public/' . $user->profpic)) {
+                Storage::delete('public/' . $user->profpic);
             }
 
             // Simpan gambar baru
             $path = $request->file('profile_picture')->store('profile_picture', 'public');
-            $user->profile_picture = $path;
+            $user->profpic = $path;
         }
 
         // Update field lain
         $user->name = $validated['first_name'];
         $user->last_name  = $validated['last_name'] ?? null;
         $user->email      = $validated['email'] ?? null;
-        $user->phone      = $validated['phone'] ?? null;
-        $user->address    = $validated['address'] ?? null;
+        $user->no_telp      = $validated['phone'] ?? null;
+        $user->alamat    = $validated['address'] ?? null;
 
         $user->save();
 
