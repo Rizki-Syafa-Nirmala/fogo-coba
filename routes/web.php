@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\LogoutController;
-use App\Http\Controllers\Pelanggan\MakananController;
+use App\Http\Controllers\Customer\FoodController;
 
 // untuk guest
 Route::middleware('guest')->group(function () {
@@ -26,11 +26,11 @@ Route::middleware('auth')->group(function () {
     })->name('home-user');
 
 
-    Route::get('/foods', [MakananController::class, 'index'])->name('foods');
+    Route::get('/foods', [FoodController::class, 'index'])->name('foods');
 
-    Route::get('/transaksi', [MakananController::class, 'userTransactions'])->name('transaksi');
-    Route::post('/order', [MakananController::class, 'storeTransaction'])->name('transactions.store');
-    Route::put('/transactions/{id}/complete', [MakananController::class, 'update'])->name('transactions.complete');
+    Route::get('/transaksi', [FoodController::class, 'userTransactions'])->name('transaksi');
+    Route::post('/order', [FoodController::class, 'storeTransaction'])->name('transactions.store');
+    Route::put('/transactions/{id}/complete', [FoodController::class, 'update'])->name('transactions.complete');
     Route::get('/review', [ReviewController::class, 'index'])->name('review');
     Route::put('/review/{id}', [ReviewController::class, 'update'])->name('review.update');
 
