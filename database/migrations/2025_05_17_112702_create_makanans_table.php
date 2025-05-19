@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->string('deskripsi');
-            $table->decimal('harga', 8, 2);
+            $table->decimal('harga', 10, 2);
             $table->string('gambar_makanan')->nullable();
             $table->foreignId('kategoris_id')->constrained('kategoris')->onDelete('cascade');
             $table->foreignId('mitra_id')->constrained('mitras')->onDelete('cascade');

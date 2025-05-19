@@ -34,4 +34,8 @@ class Transaksi extends Model
     {
         return $this->hasOne(Ulasan::class);
     }
+
+    protected $casts = [
+        'total_harga' => 'decimal:2',
+    ];
 }

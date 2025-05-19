@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Customer;
 
 use Illuminate\Http\Request;
-use App\Models\Transaction;
-use App\Models\Partner;
+use App\Models\Transaksi;
+use App\Models\Mitra;
+use App\Models\Makanan;
 use App\Models\Kategori;
-use App\Models\Food;
 use App\Http\Controllers\Controller;
 
 
@@ -16,7 +16,7 @@ class FoodController extends Controller
     {
         // Ambil semua kategori dan mitra untuk filter
         $kategoris = Kategori::all();
-        $partners = Partner::all();
+        $mitras = Mitra::all();
         // $review = Review::all();
 
         // $kategoris = $request->input('kategoris', []); // Ambil data kategori yang dipilih
@@ -27,72 +27,73 @@ class FoodController extends Controller
 
 
             // Ambil data food hanya yang berstatus 'available'
-            $foods = Food::with(['kategoris', 'partner', 'reviews'])
-            ->where('status', 'available') // Filter hanya yang tersedia
+            $makanans = Makanan::with(['kategoris', 'mitra', 'ulasan'])
+            ->where('tersedia', true) // Filter hanya yang tersedia
             ->when($request->has('kategoris'), function ($query) use ($request) {
                 // Pastikan request kategoris adalah array
                 if ($request->kategoris) {
                     $query->whereIn('kategoris_id', $request->kategoris); // Filter berdasarkan kategori
                 }
             })
-            ->when($request->has('partner'), function ($query) use ($request) {
+            ->when($request->has('mitra'), function ($query) use ($request) {
                 // Pastikan request partner adalah array
-                if ($request->partner) {
-                    $query->whereIn('partner_id', $request->partner); // Filter berdasarkan partner
+                if ($request->mitra) {
+                    $query->whereIn('mitra_id', $request->mitra); // Filter berdasarkan partner
                 }
             })
             ->get()
-            ->map(function ($food) {
+            ->map(function ($makanan) {
                 // Hitung rata-rata rating makanan
-                $food->average_rating = $food->reviews->isNotEmpty() ? number_format($food->reviews->avg('rating'), 1) : 0;
-                $food->rating_count = $food->reviews->count();
+                $makanan->average_rating = $makanan->ulasan->isNotEmpty() ? number_format($makanan->ulasan->avg('rating'), 1) : 0;
+                $makanan->rating_count = $makanan->ulasan->count();
 
              // Hitung jumlah review berdasarkan masing-masing rating
              $ratingCounts = [
-                5 => $food->reviews->where('rating', 5)->count(),
-                4 => $food->reviews->where('rating', 4)->count(),
-                3 => $food->reviews->where('rating', 3)->count(),
-                2 => $food->reviews->where('rating', 2)->count(),
-                1 => $food->reviews->where('rating', 1)->count(),
+                5 => $makanan->ulasan->where('rating', 5)->count(),
+                4 => $makanan->ulasan->where('rating', 4)->count(),
+                3 => $makanan->ulasan->where('rating', 3)->count(),
+                2 => $makanan->ulasan->where('rating', 2)->count(),
+                1 => $makanan->ulasan->where('rating', 1)->count(),
             ];
 
             // Hitung total review untuk persentase
             // Hitung jumlah masing-masing rating
-            $food->rating_5 = $food->reviews->where('rating', 5)->count();
-            $food->rating_4 = $food->reviews->where('rating', 4)->count();
-            $food->rating_3 = $food->reviews->where('rating', 3)->count();
-            $food->rating_2 = $food->reviews->where('rating', 2)->count();
-            $food->rating_1 = $food->reviews->where('rating', 1)->count();
+            $makanan->rating_5 = $makanan->ulasan->where('rating', 5)->count();
+            $makanan->rating_4 = $makanan->ulasan->where('rating', 4)->count();
+            $makanan->rating_3 = $makanan->ulasan->where('rating', 3)->count();
+            $makanan->rating_2 = $makanan->ulasan->where('rating', 2)->count();
+            $makanan->rating_1 = $makanan->ulasan->where('rating', 1)->count();
 
             // Hitung persentase review per bintang
-            $total_reviews = $food->reviews->count();
-            $food->rating_5_percent = $total_reviews > 0 ? ($food->rating_5 / $total_reviews) * 100 : 0;
-            $food->rating_4_percent = $total_reviews > 0 ? ($food->rating_4 / $total_reviews) * 100 : 0;
-            $food->rating_3_percent = $total_reviews > 0 ? ($food->rating_3 / $total_reviews) * 100 : 0;
-            $food->rating_2_percent = $total_reviews > 0 ? ($food->rating_2 / $total_reviews) * 100 : 0;
-            $food->rating_1_percent = $total_reviews > 0 ? ($food->rating_1 / $total_reviews) * 100 : 0;
+            $total_ulasan = $makanan->ulasan->count();
+            $makanan->rating_5_percent = $total_ulasan > 0 ? ($makanan->rating_5 / $total_ulasan) * 100 : 0;
+            $makanan->rating_4_percent = $total_ulasan > 0 ? ($makanan->rating_4 / $total_ulasan) * 100 : 0;
+            $makanan->rating_3_percent = $total_ulasan > 0 ? ($makanan->rating_3 / $total_ulasan) * 100 : 0;
+            $makanan->rating_2_percent = $total_ulasan > 0 ? ($makanan->rating_2 / $total_ulasan) * 100 : 0;
+            $makanan->rating_1_percent = $total_ulasan > 0 ? ($makanan->rating_1 / $total_ulasan) * 100 : 0;
 
-            return $food;
+            return $makanan;
             });
 
 
 
 
-        return view('user.food', compact('foods', 'kategoris', 'partners'));
+        return view('user.food', compact('makanans', 'kategoris', 'mitras'));
     }
 
     public function storeTransaction(Request $request)
     {
-        $food = Food::findOrFail($request->food_id);
+        $makanan = Makanan::findOrFail($request->makanan_id);
 
-        $partnerId = $food->partner_id;
+        $mitraId = $makanan->mitra_id;
 
-        Transaction::create([
+
+        Transaksi::create([
             'user_id' => auth()->id(),
-            'food_id' => $food->id,
-            'partner_id' => $partnerId,
-            'total_price' => $food->price,
-            'status' => 'pending',
+            'makanan_id' => $makanan->id,
+            'mitra_id' => $mitraId,
+            'total_harga' => $makanan->harga,
+            'status' => 'Proses',
         ]);
 
 
@@ -103,29 +104,29 @@ class FoodController extends Controller
     public function userTransactions()
     {
 
-        $transactions = Transaction::with('food', 'partner')
+        $transaksis = Transaksi::with('makanan', 'mitra')
                         ->where('user_id', auth()->id())
                         // ->whereDoesntHave('reviews') // Filter transaksi yang belum di-review
                         ->latest()
                         ->get()
-                        ->sortBy(function ($transaction) {
+                        ->sortBy(function ($transaksis) {
                             // Urutkan berdasarkan ada tidaknya review (yang belum di-review berada di atas)
-                            return $transaction->reviews ? 0 : 1;
+                            return $transaksis->ulasan ? 0 : 1;
                         })
                         ->sortBy('status')
                         ->reverse();
 
-        return view('user.transaksi', compact('transactions'));
+        return view('user.transaksi', compact('transaksis'));
     }
 
     public function update(Request $request, $id)
     {
-        $transaction = Transaction::findOrFail($id);
+        $transaksi = Transaksi::findOrFail($id);
 
         // Cek agar hanya update dari ready_for_pickup ke completed
 
-            $transaction->status = 'completed';
-        $transaction->save();
+            $transaksi->status = 'Selesai';
+        $transaksi->save();
 
 
 
@@ -137,15 +138,15 @@ class FoodController extends Controller
         // Validasi input rating dan review
         $validated = $request->validate([
             'rating' => 'required|integer|min:1|max:5',
-            'review' => 'required|string|max:255',
+            'komen' => 'required|string|max:255',
         ]);
 
         // Menyimpan data rating dan review ke tabel reviews
-        $review = new Review();
-        $review->food_id = $id;  // Menggunakan food_id sesuai dengan ID transaksi atau produk
-        $review->user_id = auth()->id();  // Menggunakan user yang sedang login
-        $review->rating = $validated['rating'];
-        $review->comment = $validated['review'];
+        $ulasan = new Review();
+        $ulasan->makanan_id = $id;  // Menggunakan food_id sesuai dengan ID transaksi atau produk
+        $ulasan->user_id = auth()->id();  // Menggunakan user yang sedang login
+        $ulasan->rating = $validated['rating'];
+        $ulasan->komen = $validated['komen'];
         $review->save();
 
         // Respons sukses
