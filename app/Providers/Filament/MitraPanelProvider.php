@@ -17,15 +17,21 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use App\Filament\Mitra\Pages\Auth\RegisterMitra;
 
 class MitraPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->viteTheme('resources/css/filament/user/theme.css')
             ->id('mitra')
             ->path('mitra')
             ->login()
+            ->brandLogo(asset('images/fogo.svg'))
+            ->brandLogoHeight('7rem')
+            ->registration(RegisterMitra::class)
+            ->darkMode(false)
             ->authGuard('mitra')
             ->colors([
                 'primary' => Color::Amber,
