@@ -1,0 +1,35 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@config 'tailwind.config.js';
+
+.fi-simple-layout {
+    @apply bg-gray-50;
+}
+
+.fi-simple-main {
+    @apply bg-[#CCC5B9]/20;
+    @apply border border-[#CCC5B9]/50 shadow-lg;
+    @apply mx-2 md:mx-0;
+    @apply max-w-2xl ;
+}
+
+.fi-fo-field-wrp-label span{
+    @apply text-[#252422];
+}
+
+.fi-simple-header-heading {
+    @apply text-[#252422];
+}
+
+.fi-logo {
+    @apply text-[#252422];
+}
+.fi-input-wrp-input input{
+
+    @apply bg-white;
+}
+
+.fi-form-actions {
+    @apply mt-2
+}
+
