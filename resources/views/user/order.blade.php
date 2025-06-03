@@ -41,25 +41,59 @@
                         <h4 class="text-xl font-semibold text-[#0f172a] dark:text-white">Ringkasan Pembayaran</h4>
                         <div class="space-y-4">
                             <div class="space-y-2">
+
+                                @if ($transaksi->user->point > 0 && $transaksi->status_pembayaran gi== 'belum dibayar')
+                                <!-- Toggle potongan poin -->
+                                <form id="form-poin" action="{{ route('hitungPotongan', $transaksi->id) }}" method="POST">
+                                    @csrf
+
+                                    <!-- Hidden field agar checkbox unchecked tetap mengirim nilai -->
+                                    <input type="hidden" name="point" value="0">
+
+                                    <label class="inline-flex items-center cursor-pointer">
+                                        <input
+                                            type="checkbox"
+                                            name="point"
+                                            value="1"
+                                            {{ old('point', $transaksi->point) ? 'checked' : '' }}
+                                            class="sr-only peer"
+                                            onchange="document.getElementById('form-poin').submit();"
+                                            >
+                                            <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div>
+                                            <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Gunakan Poin</span>
+                                        </label>
+                                </form>
+                                @endif
                                 <dl class="flex items-center justify-between gap-4">
                                     <dt class="text-gray-500 dark:text-gray-400">Harga Makanan</dt>
-                                    <dd class="text-base font-medium text-[#1e293b] dark:text-white">Rp.{{ number_format($transaksi->total_harga) }}</dd>
+                                    <dd class="text-base font-medium text-[#1e293b] dark:text-white">Rp.{{ number_format($transaksi->makanan->harga) }}</dd>
                                 </dl>
+
+
+                                @if ($transaksi->point === 1)
+
+
+                                <dl class="flex items-center justify-between gap-4">
+                                    <dt class="text-gray-500 dark:text-gray-400">diskon poin</dt>
+                                    <dd class="text-base font-medium text-red-400 dark:text-white">-Rp.{{ number_format($transaksi->makanan->harga - $transaksi->total_harga)}}</dd>
+                                </dl>
+                                @endif
+
                                 <!-- Add more payment details here if needed -->
                             </div>
                             <dl class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
                                 <dt class="text-lg font-bold text-[#0f172a] dark:text-white">Total</dt>
-                                <dd class="text-lg font-bold text-[#10b981] dark:text-green-400">Rp.{{ number_format($transaksi->total_harga) }}</dd>
+                                <dd id="total-harga" class="text-lg font-bold text-[#10b981] dark:text-green-400">Rp.{{ number_format($transaksi->total_harga) }}</dd>
                             </dl>
                         </div>
                         @if ($transaksi->status_pembayaran == 'belum dibayar')
 
                         <div class="gap-4 sm:flex sm:items-center">
                             <input type="hidden" name="id" value="{{ $transaksi->id }}">
-                            <button id="pay-button" class="mt-4 flex w-full items-center justify-center rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#06b6d4] px-5 py-2.5 text-sm font-semibold text-white shadow-lg hover:scale-105 transition-transform duration-200 focus:outline-none focus:ring-4 focus:ring-[#3b82f6]/30 sm:mt-0">
+                            <a href="{{ route('bayar', $transaksi->id) }}"class="mt-4 flex w-full items-center justify-center rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#06b6d4] px-5 py-2.5 text-sm font-semibold text-white shadow-lg hover:scale-105 transition-transform duration-200 focus:outline-none focus:ring-4 focus:ring-[#3b82f6]/30 sm:mt-0">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a5 5 0 00-10 0v2a2 2 0 00-2 2v7a2 2 0 002 2h10a2 2 0 002-2v-7a2 2 0 00-2-2z" /></svg>
                                 BAYAR SEKARANG
-                            </button>
+                            </a>
                         </div>
                         @else
                             <div class="mt-4 text-center">
@@ -127,15 +161,15 @@
             </div>
         </div>
     </div>
+@if ($transaksi->status_pembayaran == 'belum dibayar')
+
     @if ($snapToken != null)
     <script type="text/javascript"
-		src="https://app.sandbox.midtrans.com/snap/snap.js"
+        src="https://app.sandbox.midtrans.com/snap/snap.js"
     data-client-key="{{config('midtrans.client_key')}}">
     </script>
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function () {
-            var payButton = document.getElementById('pay-button');
-            payButton.addEventListener('click', function () {
                 window.snap.pay('{{ $snapToken }}', {
                     onSuccess: function(result){
                         console.log("Pembayaran sukses", result);
@@ -152,9 +186,11 @@
                         console.log('Popup ditutup oleh pengguna');
                     }
                 });
-            });
         });
     </script>
     @endif
+@endif
+
+
 
 @endsection
