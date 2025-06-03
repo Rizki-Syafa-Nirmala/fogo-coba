@@ -52,6 +52,7 @@ class PaymentController extends Controller
                     $transaksi->status_pembayaran = 'proses';
                 } else {
                     $transaksi->status_pembayaran = 'sudah dibayar';
+
                 }
             }
             break;

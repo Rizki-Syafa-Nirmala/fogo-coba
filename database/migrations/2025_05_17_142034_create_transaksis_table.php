@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('makanan_id')->constrained()->onDelete('cascade');
             $table->foreignId('mitra_id')->constrained()->onDelete('cascade');
             $table->integer('total_harga');
+            $table->boolean('point')->default(0);
             $table->string('order_id')->unique();
             $table->enum('status', ['Proses', 'Siap ambil', 'Selesai'])->default('Proses');
             $table->enum('status_pembayaran', ['belum dibayar','dibatalkan','sudah dibayar', 'gagal', 'proses'])->default('belum dibayar');

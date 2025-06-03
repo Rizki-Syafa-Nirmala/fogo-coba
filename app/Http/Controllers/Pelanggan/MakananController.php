@@ -47,7 +47,7 @@ class MakananController extends Controller
 
                     $makanans->jarak_km = GeoUtils::hitungJarak($userLat, $userLon, $mitraLat, $mitraLon);
                 } else {
-                    $makanan->jarak_km = null;
+                    $makanans->jarak_km = null;
                 }
 
                 return $makanans;
@@ -118,7 +118,7 @@ class MakananController extends Controller
 
                     $makanans->jarak_km = GeoUtils::hitungJarak($userLat, $userLon, $mitraLat, $mitraLon);
                 } else {
-                    $makanan->jarak_km = null;
+                    $makanans->jarak_km = null;
                 }
 
                 return $makanans;
@@ -172,14 +172,21 @@ class MakananController extends Controller
     {
         $transaksi = Transaksi::findOrFail($id);
 
-        // Cek agar hanya update dari ready_for_pickup ke completed
-
+        // Hanya update jika status sebelumnya bukan 'Selesai'
+        if ($transaksi->status !== 'Selesai') {
             $transaksi->status = 'Selesai';
-        $transaksi->save();
+            $transaksi->save();
 
+            // Tambahkan poin ke user berdasarkan total transaksi
+            $user = $transaksi->user; // pastikan relasi user() ada di model Transaksi
 
+            // Misal kolom nominal di transaksi bernama 'total'
+            $poinTambahan = floor($transaksi->total_harga / 1000); // 1 poin per 1000 rupiah
+            $user->point += $poinTambahan;
+            $user->save();
+        }
 
-        return redirect()->back()->with('success', 'Status pesanan diperbarui.');
+        return redirect()->back()->with('success', 'Status pesanan diperbarui dan poin diberikan.');
     }
 
     public function rate(Request $request, $id)

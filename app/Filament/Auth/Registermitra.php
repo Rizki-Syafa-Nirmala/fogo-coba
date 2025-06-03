@@ -11,10 +11,6 @@ use Tapp\FilamentGoogleAutocomplete\Forms\Components\GoogleAutocomplete;
 use Filament\Forms\Components\Hidden;
 
 
-
-
-
-
 class Registermitra extends AuthRegister
 {
     // protected static string $view = 'filamentf.user.pages.auth.register';

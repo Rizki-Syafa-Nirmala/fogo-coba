@@ -47,7 +47,7 @@
             <p class="text-4xl text-orange-700 dark:text-orange-300 font-semibold">Mau Makan Apa Hari Ini?</p>
         </div>
 
-        <div class="grid  grid-cols-2 md:grid-cols-5 gap-4 ">
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 ">
             <a href="{{ route('foods') }}" class="group">
                 <div class="relative rounded-xl overflow-hidden h-32 md:h-40 bg-cover bg-center transition-all duration-300 {{ !isset($selectedKategori) ? '' : 'grayscale group-hover:grayscale-0' }}"
                     style="background-image: url('https://images.unsplash.com/photo-1686150778458-ce4d48f9697d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
@@ -136,14 +136,17 @@
                       <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ $makanan->mitra->name }}</p>
                       </p>
                     </li>
+                    @if (session('user_latitude') && session('user_longitude') )
                     <li class="flex items-center gap-2 max-w-full">
                             <svg class="w-[20px] h-[20px] text-red-600" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
                             </svg>
-                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
-                            {{ $makanan->jarak_km }} KM
-                        </p>
-                    </li>
+
+                            <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                {{ $makanan->jarak_km }} KM
+                            </p>
+                     </li>
+                    @endif
 
                     <li class="flex items-center gap-2 max-w-full">
                         <svg class="w-[20px] h-[20px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -169,7 +172,7 @@
 @include('components.modal-food')
 </div>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ config('filament-google-autocomplete-field.api-key') }}&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ config('filament-google-autocomplete-field.api-key') }}&libraries=places&language=id"></script>
     <script>
         const input = document.getElementById('autocomplete');
         const autocomplete = new google.maps.places.Autocomplete(input, {

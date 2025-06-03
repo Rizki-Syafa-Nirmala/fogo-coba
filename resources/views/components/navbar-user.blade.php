@@ -12,6 +12,10 @@
             <!-- Navigation Links - Desktop -->
             <div class="hidden md:flex items-center space-x-8">
                 <a href="{{ route('foods') }}" class="nav-link {{ request()->routeIs('foods') ? 'text-orange-600 dark:text-orange-500' : 'text-gray-600 hover:text-orange-600 dark:text-gray-300 dark:hover:text-orange-500' }}">Beranda</a>
+                @if (session('user_latitude') && session('user_longitude'))
+
+                <a href="{{ route('rekomendasi') }}" class="nav-link {{ request()->routeIs('rekomendasi') ? 'text-orange-600 dark:text-orange-500' : 'text-gray-600 hover:text-orange-600 dark:text-gray-300 dark:hover:text-orange-500' }}">Rekomendasi</a>
+                @endif
                 <a href="{{ route('transaksi') }}" class="nav-link {{ request()->routeIs('transaksi') ? 'text-orange-600 dark:text-orange-500' : 'text-gray-600 hover:text-orange-600 dark:text-gray-300 dark:hover:text-orange-500' }}">Pesanan Saya</a>
                 <a href="{{ route('review') }}" class="nav-link {{ request()->routeIs('review') ? 'text-orange-600 dark:text-orange-500' : 'text-gray-600 hover:text-orange-600 dark:text-gray-300 dark:hover:text-orange-500' }}">Review</a>
                 <a href="#" class="nav-link text-gray-600 hover:text-orange-600 dark:text-gray-300 dark:hover:text-orange-500">Contact</a>
@@ -37,6 +41,8 @@
                             <div class="flex-1 min-w-0">
                                 <p class="text-sm font-semibold text-gray-900 truncate dark:text-white">{{ Auth::user()->name }} {{ Auth::user()->last_name }}</p>
                                 <p class="text-xs text-gray-500 truncate dark:text-gray-400">{{ Auth::user()->email }}</p>
+                                <p class="mt-1 text-xs font-medium text-orange-600 dark:text-orange-400">🎁 {{ Auth::user()->point }} point loyalitas</p>
+
                             </div>
                         </div>
                     </div>

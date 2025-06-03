@@ -4,10 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\RekomendasiController;
 use App\Http\Controllers\Pelanggan\MakananController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\LokasiController;
+use App\Http\Controllers\LogoutController;
 
 
 // untuk guest
@@ -53,12 +54,22 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/transaksi/beli', [TransaksiController::class, 'buattransaksi'])->name('transaksi.store');
     Route::get('/transaksi/{id}', [TransaksiController::class, 'tampilkantransaksi'])->name('transaksi.show');
+    Route::get('/transaksi/{id}/bayar', [TransaksiController::class, 'bayar'])->name('bayar');
 
     Route::get('/transaksi-', function () {
         return redirect()->route('belum-dibayar');  // Ganti 'home' dengan view sesuai kebutuhan
     })->name('transaksi-semua');
+    // Route::get('/rekomendasi', function () {
+    //     return view('user.rekomendasi');  // Ganti 'home' dengan view sesuai kebutuhan
+    // })->name('rekomendasi');
+
+    // route rekomendasi
+    Route::get('/rekomendasi', [RekomendasiController::class, 'index'])->name('rekomendasi');
+    Route::get('/rekomendasi/{filter}', [RekomendasiController::class, 'lihatsemua'])->name('lihatsemuarekomendasi');
+
     Route::get('/belum-dibayar', [TransaksiController::class, 'transaksi'])->name('belum-dibayar');
     Route::get('/semua', [TransaksiController::class, 'semuatransaksi'])->name('semua-transaksi');
+    Route::post('/transaksi/hitung-potongan/{id}', [TransaksiController::class, 'hitungPotongan'])->name('hitungPotongan');
     // Route::get('/Transaksi', [TransaksiController::class, 'transaksi'])->name('transaksi.pembayaran');
 
     Route::put('/transactions/{id}/complete', [MakananController::class, 'update'])->name('transactions.complete');
