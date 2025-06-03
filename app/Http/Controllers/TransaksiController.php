@@ -40,7 +40,6 @@ class TransaksiController extends Controller
             'status_pembayaran' => 'Belum dibayar',
         ]);
 
-
         $transaksi->save();
 
 

@@ -15,7 +15,6 @@ class Registermitra extends AuthRegister
 {
     // protected static string $view = 'filamentf.user.pages.auth.register';
 
-
     public function getHeading(): string
     {
         return 'Buat Akun MItra';
