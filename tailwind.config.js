@@ -5,7 +5,11 @@ export default {
     './resources/js/**/*.js',
     './node_modules/flowbite/**/*.js',
   ],
+<<<<<<< HEAD
 //   darkMode: 'class', 
+=======
+  darkMode: 'class',
+>>>>>>> main
   theme: {
     extend: {
       colors: {

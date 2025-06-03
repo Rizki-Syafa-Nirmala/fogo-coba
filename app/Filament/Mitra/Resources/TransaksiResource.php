@@ -36,10 +36,22 @@ class TransaksiResource extends Resource
                 ->label('Harga')
                 ->money('IDR'),
                 SelectColumn::make('status')
-                ->options([
-                    'Proses' => 'Proses',
-                    'Siap ambil' => 'Siap ambil',
-                ])
+                ->options(function ($record) {
+                    // Kalau status sudah 'Selesai', tampilkan semua opsi termasuk 'Selesai'
+                    if ($record->status === 'Selesai') {
+                        return [
+                            'Proses' => 'Proses',
+                            'Siap ambil' => 'Siap ambil',
+                            'Selesai' => 'Selesai',
+                        ];
+                    }
+
+                    // Kalau status belum 'Selesai', jangan tampilkan opsi 'Selesai'
+                    return [
+                        'Proses' => 'Proses',
+                        'Siap ambil' => 'Siap ambil',
+                    ];
+                })
                 ->disabled(fn ($record) => $record->status === 'Selesai')
 
             ])
@@ -74,6 +86,7 @@ class TransaksiResource extends Resource
     {
         return parent::getEloquentQuery()
             ->where('mitra_id', auth()->id())
+            ->where('status_pembayaran', 'sudah dibayar')
             ->orderByRaw("CASE status WHEN 'Proses' THEN 1 WHEN 'Siap ambil' THEN 2 ELSE 3 END")
             ->orderByDesc('created_at');
     }

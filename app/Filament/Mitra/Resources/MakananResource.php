@@ -46,7 +46,7 @@ class MakananResource extends Resource
                 TextInput::make('deskripsi')
                 ->label('Deskripsi'),
 
-                Hidden::make('mitras_id')
+                Hidden::make('mitra_id')
                 ->default(fn ()=> auth()->id())
                 ->required(),
 
@@ -119,6 +119,6 @@ class MakananResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->where('mitras_id', auth()->id());
+            ->where('mitra_id', auth()->id());
     }
 }

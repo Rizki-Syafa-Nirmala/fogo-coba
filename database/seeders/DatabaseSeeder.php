@@ -24,10 +24,11 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('iniadmin'),
             'is_admin' => true
         ]);
-        
+
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'no_telp' => '085889251312',
             'password' => Hash::make('iniuser'),
             'is_admin' => false
 
@@ -61,12 +62,12 @@ class DatabaseSeeder extends Seeder
         DB::table('kategoris')->insert([
             [
                 'nama' => 'Makanan Berat',
-                
+
             ],
-            
+
             [
                 'nama' => 'Makanan Ringan',
-                
+
             ],
         ]);
 
