@@ -51,7 +51,7 @@ class UserController extends Controller
         $user->name = $validated['first_name'];
         $user->last_name  = $validated['last_name'] ?? null;
         $user->email      = $validated['email'] ?? null;
-        $user->no_telp      = $validated['phone'] ?? null;
+        $user->no_telp     = $validated['phone'] ?? null;
         $user->alamat    = $validated['address'] ?? null;
 
         $user->save();

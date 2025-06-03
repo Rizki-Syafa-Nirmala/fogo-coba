@@ -11,7 +11,7 @@
                 <div class="col-span-1 place-content-center">
                     <div class="flex items-center justify-center space-x-4">
                         <!-- Assuming current profile picture URL is in `currentProfilePictureUrl` -->
-                        <img id="preview-image" class="w-40 h-40 rounded-full object-cover" src="{{ Auth::user()->profile_picture ? asset('storage/'.Auth::user()->profile_picture) : asset('images/user.png') }}" alt="Profile Picture">
+                        <img id="preview-image" class="w-40 h-40 rounded-full object-cover" src="{{ Auth::user()->profpic ? asset('storage/'.Auth::user()->profpic) : asset('images/user.png') }}" alt="Profile Picture">
                         <div>
                         <label for="profile_picture" class="cursor-pointer text-blue-600">
                             <svg class="w-10 h-10 text-gray-800 dark:text-white"  xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -36,7 +36,7 @@
                         <!-- Name Field -->
                         <div class="mt-4">
                             <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
-                            <input type="text" id="last_name" name="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John Doe" value="{{ Auth::user()->last_name }}">
+                            <input type="text" id="last_name" name="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="belum ada" value="{{ Auth::user()->last_name }}">
                         </div>
                     </div>
 
@@ -48,13 +48,13 @@
                     <!-- phone Field -->
                     <div class="mt-4">
                         <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ex: 085889241514" value="{{ Auth::user()->phone }}">
+                        <input type="tel" id="phone" name="phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ex: 085889241514" value="{{ Auth::user()->no_telp }}">
                     </div>
 
                     <!-- Address Field -->
                     <div class="mt-4">
                         <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
-                        <input type="text" id="address" name="address" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ex: Jl. Kebon Jeruk" value="{{ Auth::user()->address }}">
+                        <input type="text" id="address" name="address" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ex: Jl. Kebon Jeruk" value="{{ Auth::user()->alamat }}">
                     </div>
                 </div>
             </div>

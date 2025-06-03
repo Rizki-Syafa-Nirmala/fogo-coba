@@ -2,18 +2,18 @@
 
 namespace App\Filament\Mitra\Resources;
 
-use App\Filament\Mitra\Resources\TransaksiResource\Pages;
-use App\Filament\Mitra\Resources\TransaksiResource\RelationManagers;
-use App\Models\Transaksi;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\SelectColumn;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables;
+use Filament\Resources\Resource;
+use Filament\Forms\Form;
+use Filament\Forms;
+use App\Models\Transaksi;
+use App\Filament\Mitra\Resources\TransaksiResource\RelationManagers;
+use App\Filament\Mitra\Resources\TransaksiResource\Pages;
 
 class TransaksiResource extends Resource
 {
@@ -32,7 +32,7 @@ class TransaksiResource extends Resource
                 ->label('Makanan'),
                 TextColumn::make('status')
                 ->badge(),
-                TextColumn::make('harga')
+                TextColumn::make('total_harga')
                 ->label('Harga')
                 ->money('IDR'),
                 SelectColumn::make('status')
