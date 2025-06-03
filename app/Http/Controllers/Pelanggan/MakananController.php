@@ -47,11 +47,7 @@ class MakananController extends Controller
 
                     $makanans->jarak_km = GeoUtils::hitungJarak($userLat, $userLon, $mitraLat, $mitraLon);
                 } else {
-<<<<<<< HEAD
                     $makanans->jarak_km = null;
-=======
-                    $makanan->jarak_km = null;
->>>>>>> origin/main
                 }
 
                 return $makanans;
