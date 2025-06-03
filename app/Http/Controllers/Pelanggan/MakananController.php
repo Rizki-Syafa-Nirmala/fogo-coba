@@ -172,7 +172,6 @@ class MakananController extends Controller
     {
         $transaksi = Transaksi::findOrFail($id);
 
-<<<<<<< HEAD
         // Hanya update jika status sebelumnya bukan 'Selesai'
         if ($transaksi->status !== 'Selesai') {
             $transaksi->status = 'Selesai';
@@ -188,16 +187,6 @@ class MakananController extends Controller
         }
 
         return redirect()->back()->with('success', 'Status pesanan diperbarui dan poin diberikan.');
-=======
-        // Cek agar hanya update dari ready_for_pickup ke completed
-
-            $transaksi->status = 'Selesai';
-        $transaksi->save();
-
-
-
-        return redirect()->back()->with('success', 'Status pesanan diperbarui.');
->>>>>>> origin/main
     }
 
     public function rate(Request $request, $id)
