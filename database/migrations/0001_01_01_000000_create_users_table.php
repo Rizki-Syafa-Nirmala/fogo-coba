@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('profpic')->nullable();
             $table->string('password');
             $table->boolean('is_admin')->default(false);
+            $table->integer('point')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
