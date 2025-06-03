@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticable;
+use Illuminate\Notifications\Notifiable;
 
-class Mitra extends Authenticatable
+class Mitra extends Authenticable
 {
     use Notifiable;
 
@@ -22,7 +22,7 @@ class Mitra extends Authenticatable
         'longitude',
     ];
 
-    public function makanan()
+    public function makanans()
     {
         return $this->hasMany(Makanan::class);
     }

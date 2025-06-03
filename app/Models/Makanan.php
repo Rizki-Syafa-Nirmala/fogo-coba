@@ -14,7 +14,7 @@ class Makanan extends Model
         'harga',
         'gambar_makanan',
         'kategoris_id',
-        'mitra_id',
+        'mitras_id',
         'status'
     ];
 
@@ -37,5 +37,4 @@ class Makanan extends Model
     {
         return $this->hasMany(Ulasan::class);
     }
-
 }
