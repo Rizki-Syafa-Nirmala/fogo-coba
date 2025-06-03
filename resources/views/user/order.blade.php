@@ -42,7 +42,7 @@
                         <div class="space-y-4">
                             <div class="space-y-2">
 
-                                @if ($transaksi->user->point > 0 && $transaksi->status_pembayaran gi== 'belum dibayar')
+                                @if ($transaksi->user->point > 0 && $transaksi->status_pembayaran === 'belum dibayar')
                                 <!-- Toggle potongan poin -->
                                 <form id="form-poin" action="{{ route('hitungPotongan', $transaksi->id) }}" method="POST">
                                     @csrf
