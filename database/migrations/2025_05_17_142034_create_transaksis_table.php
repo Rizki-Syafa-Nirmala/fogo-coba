@@ -16,8 +16,12 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('makanan_id')->constrained()->onDelete('cascade');
             $table->foreignId('mitra_id')->constrained()->onDelete('cascade');
-            $table->decimal('total_harga', 8, 2);
+            $table->integer('total_harga');
+            $table->boolean('point')->default(0);
+            $table->string('order_id')->unique();
             $table->enum('status', ['Proses', 'Siap ambil', 'Selesai'])->default('Proses');
+            $table->enum('status_pembayaran', ['belum dibayar','dibatalkan', 'sudah dibayar', 'gagal', 'proses'])->default('belum dibayar');
+            $table->string('snap_token', 100)->nullable();
             $table->timestamps();
         });
     }
