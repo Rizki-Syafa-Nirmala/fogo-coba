@@ -17,16 +17,22 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use App\Filament\Pages\Auth\RegisterUser;
 
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
+        ->viteTheme('resources/css/filament/user/theme.css')
             ->default()
             ->id('user')
             ->path('user')
             ->login()
+            ->brandLogo(asset('images/fogo.svg'))
+            ->brandLogoHeight('7rem')
+            ->registration(RegisterUser::class)
+            ->darkMode(false)
             ->colors([
                 'primary' => Color::Amber,
             ])

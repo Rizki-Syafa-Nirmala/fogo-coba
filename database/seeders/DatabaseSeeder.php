@@ -33,16 +33,26 @@ class DatabaseSeeder extends Seeder
 
         ]);
 
-        DB::table('mitras')->insert([
+       DB::table('mitras')->insert([
             [
-                'name' => 'Mitra1',
+                'name' => 'Nasi Goreng Bang ansor',
                 'email' => 'mitra1@example.com',
+                'no_telp' => '085889251312',
+                'alamat' => 'Jl. Mr. Koesbiyono Tjondrowibowo No.18 A, Patemon, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50228',
+                'kota' => 'Kota Semarang',
+                'latitude' => '-7.0670972',
+                'longitude' => '110.397318',
                 'password' => Hash::make('inimitra1')
             ],
-            
+
             [
                 'name' => 'Mitra2',
                 'email' => 'mitra2@example.com',
+                'no_telp' => '081234567890',
+                'alamat' => 'Jl papanggo 1c',
+                'kota' => 'Jakarta Utara',
+                'latitude' => null,
+                'longitude' => null,
                 'password' => Hash::make('inimitra2')
             ],
 
