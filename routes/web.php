@@ -14,8 +14,13 @@ use App\Http\Controllers\LogoutController;
 // untuk guest
 Route::get('/', function () {
     if (auth()->check()) {
-        // Kalau user sudah login, redirect ke halaman dashboard misal
-        return redirect()->route('home-user');
+        if (auth()->user()->is_admin) {
+            // Jika admin, arahkan ke panel Filament
+            return redirect()->route('filament.user.pages.dashboard');
+        } else {
+            // Jika user biasa
+            return redirect()->route('home-user');
+        }
     }
     // Kalau belum login, tampilkan halaman guest
     return redirect()->route('guest.home');
