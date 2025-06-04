@@ -106,7 +106,7 @@
         </div>
     </section>
 
-    <div id="billingInformationModal" tabindex="-1" aria-hidden="true" class="antialiased fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-auto w-full max-h-full items-center justify-center overflow-y-auto overflow-x-hidden antialiased md:inset-0">
+    <div id="billingInformationModal" tabindex="-1" aria-hidden="true" class="antiialiased fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-auto w-full max-h-full items-center justify-center overflow-y-auto overflow-x-hidden antialiased md:inset-0">
         <div class="relative max-h-auto w-full max-h-full max-w-lg p-4">
             <!-- Modal content -->
             <div class="relative rounded-lg bg-white shadow dark:bg-gray-800">
