@@ -71,28 +71,6 @@
         </div>
     </div>
 
-    <!-- Existing Filter Button -->
-    {{-- <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
-        <div class="mb-4 items-end justify-between space-y-4 sm:flex sm:space-y-0 md:mb-8">
-            <div class="flex items-center space-x-4 ">
-                <button data-modal-toggle="filterModal" data-modal-target="filterModal" type="button" class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 sm:w-auto">
-                    <svg class="-ms-0.5 me-2 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M18.796 4H5.204a1 1 0 0 0-.753 1.659l5.302 6.058a1 1 0 0 1 .247.659v4.874a.5.5 0 0 0 .2.4l3 2.25a.5.5 0 0 0 .8-.4v-7.124a1 1 0 0 1 .247-.659l5.302-6.059c.566-.646.106-1.658-.753-1.658Z" />
-                    </svg>
-                    Filter
-                    <svg class="-me-0.5 ms-2 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div> --}}
-
-    <!-- Tombol untuk membuka modal filter -->
-
-    @include('components.modal-filter')
-
-
     <!-- Daftar Makanan -->
     <div class="container mx-auto max-w-screen-xl px-4 mb-4 2xl:px-0">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-10">
@@ -167,9 +145,53 @@
             <button id="showLessBtn" class="px-5 py-2 rounded-full bg-white border border-orange-300 text-orange-700 hover:bg-orange-50 hover:border-orange-400 hover:text-orange-800 shadow-sm transition-all hidden">Show Less</button>
         </div>
     </div>
-
-
 @include('components.modal-food')
+
+ <section class="bg-white py-12 px-6 sm:px-12 md:px-20">
+   <div class="max-w-7xl mx-auto text-center">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8">
+     Cara Pemesanan
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-10">
+     <div class="flex flex-col items-center space-y-4">
+      <div class="bg-red-600 text-white rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold">
+       1
+      </div>
+      <img alt="Ilustrasi memilih makanan sisa produksi di aplikasi, gambar tangan menunjuk layar ponsel dengan gambar makanan" class="w-24 h-24 object-contain" height="120" src="https://storage.googleapis.com/a1aa/image/7e435691-80ef-478e-02c7-fc6080992610.jpg" width="120"/>
+      <h3 class="text-xl font-semibold text-gray-800">
+       Pilih Makanan
+      </h3>
+      <p class="text-gray-600 max-w-xs">
+       Telusuri dan pilih makanan sisa produksi yang ingin Anda pesan.
+      </p>
+     </div>
+     <div class="flex flex-col items-center space-y-4">
+      <div class="bg-red-600 text-white rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold">
+       2
+      </div>
+      <img alt="Ilustrasi konfirmasi pesanan makanan, gambar tangan menekan tombol konfirmasi di layar ponsel" class="w-24 h-24 object-contain" height="120" src="https://storage.googleapis.com/a1aa/image/917a9c03-5efe-431e-afbb-976fef4d6bbc.jpg" width="120"/>
+      <h3 class="text-xl font-semibold text-gray-800">
+       Konfirmasi Pesanan
+      </h3>
+      <p class="text-gray-600 max-w-xs">
+       Pastikan pesanan Anda sudah benar dan lakukan konfirmasi.
+      </p>
+     </div>
+     <div class="flex flex-col items-center space-y-4">
+      <div class="bg-red-600 text-white rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold">
+       3
+      </div>
+      <img alt="Ilustrasi mengambil makanan di tempat penjual, gambar orang mengambil makanan di konter warung" class="w-24 h-24 object-contain" height="120" src="https://storage.googleapis.com/a1aa/image/7ecf79d8-ae47-4c22-6974-f9819a00f2df.jpg" width="120"/>
+      <h3 class="text-xl font-semibold text-gray-800">
+       Ambil Makanan
+      </h3>
+      <p class="text-gray-600 max-w-xs">
+       Datang ke penjual dan ambil makanan yang sudah Anda pesan.
+      </p>
+     </div>
+    </div>
+   </div>
+  </section>
 </div>
 
     <script src="https://maps.googleapis.com/maps/api/js?key={{ config('filament-google-autocomplete-field.api-key') }}&libraries=places&language=id"></script>
