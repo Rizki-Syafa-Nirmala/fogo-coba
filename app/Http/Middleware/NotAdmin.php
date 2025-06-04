@@ -15,6 +15,7 @@ class NotAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // dd(auth()->user());
         if (auth()->check() && !auth()->user()->is_admin ){
             return redirect()->route('home-user');
         }

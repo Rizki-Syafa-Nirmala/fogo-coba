@@ -10,6 +10,7 @@
         "jenssegers/agent": "^2.6",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9",
+        "midtrans/midtrans-php": "^2.6",
         "tapp/filament-google-autocomplete-field": "^1.0"
     },
     "require-dev": {
