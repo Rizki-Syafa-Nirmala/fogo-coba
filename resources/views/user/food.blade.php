@@ -39,6 +39,52 @@
         </div>
       </section>
 
+    <section class="bg-white py-12 px-6 sm:px-12 md:px-20">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8">
+            Cara Pemesanan
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-10">
+            <div class="flex flex-col items-center space-y-4">
+            <div class="bg-red-600 text-white rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold">
+            1
+            </div>
+            <img alt="Ilustrasi memilih makanan sisa produksi di aplikasi, gambar tangan menunjuk layar ponsel dengan gambar makanan" class="w-24 h-24 object-contain" height="120" src="https://storage.googleapis.com/a1aa/image/7e435691-80ef-478e-02c7-fc6080992610.jpg" width="120"/>
+            <h3 class="text-xl font-semibold text-gray-800">
+            Pilih Makanan
+            </h3>
+            <p class="text-gray-600 max-w-xs">
+            Telusuri dan pilih makanan sisa produksi yang ingin Anda pesan.
+            </p>
+            </div>
+            <div class="flex flex-col items-center space-y-4">
+            <div class="bg-red-600 text-white rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold">
+            2
+            </div>
+            <img alt="Ilustrasi konfirmasi pesanan makanan, gambar tangan menekan tombol konfirmasi di layar ponsel" class="w-24 h-24 object-contain" height="120" src="https://storage.googleapis.com/a1aa/image/917a9c03-5efe-431e-afbb-976fef4d6bbc.jpg" width="120"/>
+            <h3 class="text-xl font-semibold text-gray-800">
+            Konfirmasi Pesanan
+            </h3>
+            <p class="text-gray-600 max-w-xs">
+            Pastikan pesanan Anda sudah benar dan lakukan konfirmasi.
+            </p>
+            </div>
+            <div class="flex flex-col items-center space-y-4">
+            <div class="bg-red-600 text-white rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold">
+            3
+            </div>
+            <img alt="Ilustrasi mengambil makanan di tempat penjual, gambar orang mengambil makanan di konter warung" class="w-24 h-24 object-contain" height="120" src="https://storage.googleapis.com/a1aa/image/7ecf79d8-ae47-4c22-6974-f9819a00f2df.jpg" width="120"/>
+            <h3 class="text-xl font-semibold text-gray-800">
+            Ambil Makanan
+            </h3>
+            <p class="text-gray-600 max-w-xs">
+            Datang ke penjual dan ambil makanan yang sudah Anda pesan.
+            </p>
+            </div>
+            </div>
+        </div>
+    </section>
+
 
 
     <!-- Category Navigation -->
@@ -147,51 +193,7 @@
     </div>
 @include('components.modal-food')
 
- <section class="bg-white py-12 px-6 sm:px-12 md:px-20">
-   <div class="max-w-7xl mx-auto text-center">
-    <h2 class="text-3xl font-bold text-gray-800 mb-8">
-     Cara Pemesanan
-    </h2>
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-10">
-     <div class="flex flex-col items-center space-y-4">
-      <div class="bg-red-600 text-white rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold">
-       1
-      </div>
-      <img alt="Ilustrasi memilih makanan sisa produksi di aplikasi, gambar tangan menunjuk layar ponsel dengan gambar makanan" class="w-24 h-24 object-contain" height="120" src="https://storage.googleapis.com/a1aa/image/7e435691-80ef-478e-02c7-fc6080992610.jpg" width="120"/>
-      <h3 class="text-xl font-semibold text-gray-800">
-       Pilih Makanan
-      </h3>
-      <p class="text-gray-600 max-w-xs">
-       Telusuri dan pilih makanan sisa produksi yang ingin Anda pesan.
-      </p>
-     </div>
-     <div class="flex flex-col items-center space-y-4">
-      <div class="bg-red-600 text-white rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold">
-       2
-      </div>
-      <img alt="Ilustrasi konfirmasi pesanan makanan, gambar tangan menekan tombol konfirmasi di layar ponsel" class="w-24 h-24 object-contain" height="120" src="https://storage.googleapis.com/a1aa/image/917a9c03-5efe-431e-afbb-976fef4d6bbc.jpg" width="120"/>
-      <h3 class="text-xl font-semibold text-gray-800">
-       Konfirmasi Pesanan
-      </h3>
-      <p class="text-gray-600 max-w-xs">
-       Pastikan pesanan Anda sudah benar dan lakukan konfirmasi.
-      </p>
-     </div>
-     <div class="flex flex-col items-center space-y-4">
-      <div class="bg-red-600 text-white rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold">
-       3
-      </div>
-      <img alt="Ilustrasi mengambil makanan di tempat penjual, gambar orang mengambil makanan di konter warung" class="w-24 h-24 object-contain" height="120" src="https://storage.googleapis.com/a1aa/image/7ecf79d8-ae47-4c22-6974-f9819a00f2df.jpg" width="120"/>
-      <h3 class="text-xl font-semibold text-gray-800">
-       Ambil Makanan
-      </h3>
-      <p class="text-gray-600 max-w-xs">
-       Datang ke penjual dan ambil makanan yang sudah Anda pesan.
-      </p>
-     </div>
-    </div>
-   </div>
-  </section>
+
 </div>
 
     <script src="https://maps.googleapis.com/maps/api/js?key={{ config('filament-google-autocomplete-field.api-key') }}&libraries=places&language=id"></script>

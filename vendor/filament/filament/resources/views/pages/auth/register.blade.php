@@ -18,5 +18,6 @@
         </div>
     @endif
 
+
     {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::AUTH_REGISTER_FORM_BEFORE, scopes: $this->getRenderHookScopes()) }}
 </x-filament-panels::page.simple>
