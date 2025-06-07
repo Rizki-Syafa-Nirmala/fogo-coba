@@ -10,22 +10,20 @@
     <script type="text/javascript"
 		src="https://app.stg.midtrans.com/snap/snap.js"
     data-client-key="{{config('midtrans.client_key')}}"></script>
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
     <div>
         <!-- Menambahkan Navbar -->
 
+
         @php
             $agent = new Jenssegers\Agent\Agent();
         @endphp
         @if ($agent->isMobile())
-            @include('components.navbar-mobile')
-
+            @yield('content-navbar-mobile')
         @else
-               {{-- <div class="fixed top-0 left-0 z-50 w-full ">
-
-        </div> --}}
             @auth
                 @include('components.navbar-user')
             @else
@@ -36,7 +34,7 @@
         <main>
             @if ($agent->isMobile())
                 @auth
-                    <div class="pt-20">
+                    <div class="">
                         @yield('content-user-mobile')
                     </div>
                 @else

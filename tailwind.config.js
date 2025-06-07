@@ -5,7 +5,7 @@ export default {
     './resources/js/**/*.js',
     './node_modules/flowbite/**/*.js',
   ],
-  darkMode: false,
+//   darkMode: false,
   theme: {
     extend: {
       colors: {
@@ -51,6 +51,7 @@ export default {
   },
   plugins: [
     require('flowbite/plugin'),
+    require('tailwind-scrollbar-hide')
   ],
 }
 

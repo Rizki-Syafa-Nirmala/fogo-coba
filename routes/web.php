@@ -53,7 +53,8 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/foods', [MakananController::class, 'index'])->name('foods');
-    Route::get('/makanan/category/{kategori}', [MakananController::class, 'byCategory'])->name('makanan.kategori');
+    Route::get('/detailmakanan/{id}', [MakananController::class, 'detailmakanan'])->name('detailmakanan');
+    Route::get('/makanan/Kategori/{kategori?}', [MakananController::class, 'byCategory'])->name('makanan.kategori');
 
     Route::get('/transaksi', [MakananController::class, 'userTransactions'])->name('transaksi');
 
@@ -71,6 +72,7 @@ Route::middleware('auth')->group(function () {
     // route rekomendasi
     Route::get('/rekomendasi', [RekomendasiController::class, 'index'])->name('rekomendasi');
     Route::get('/rekomendasi/{filter}', [RekomendasiController::class, 'lihatsemua'])->name('lihatsemuarekomendasi');
+    Route::get('/rekomendasi/mobile/{filter}', [RekomendasiController::class, 'rekomendasimakananmobile'])->name('rekomendasimobile');
 
     Route::get('/belum-dibayar', [TransaksiController::class, 'transaksi'])->name('belum-dibayar');
     Route::get('/semua', [TransaksiController::class, 'semuatransaksi'])->name('semua-transaksi');

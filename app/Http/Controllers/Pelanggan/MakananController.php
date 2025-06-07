@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pelanggan;
 
 use Midtrans\Snap;
 use Midtrans\Config;
+use Jenssegers\Agent\Agent;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use App\Utils\GeoUtils;
@@ -17,18 +18,9 @@ use App\Http\Controllers\Controller;
 
 class MakananController extends Controller
 {
-    public function index(Request $request)
+    private function getProcessedMakanans($userKota, $userLat, $userLon)
     {
-        $userKota = session('user_kota'); // Ambil kota dari session
-
-        // Ambil semua kategori dan mitra untuk filter
-        $kategoris = Kategori::all();
-        $mitras = Mitra::all();
-        $userLat = session('user_latitude'); // latitude user yang sudah disimpan
-        $userLon = session('user_longitude'); // longitude user yang sudah disimpan
-
-
-            // Ambil data food hanya yang berstatus 'available'
+        // Ambil data food hanya yang berstatus 'available'
             $makanans = Makanan::with(['kategoris', 'mitra', 'ulasan'])
             ->where('tersedia', true) // Filter hanya yang tersedia
             ->when($userKota, function ($query) use ($userKota) {
@@ -83,12 +75,29 @@ class MakananController extends Controller
             $makanans->rating_1_percent = $total_ulasan > 0 ? ($makanans->rating_1 / $total_ulasan) * 100 : 0;
 
             return $makanans;
-            });
+        });
+        return $makanans;
+    }
+    public function index(Request $request)
+    {
+        $userKota = session('user_kota'); // Ambil kota dari session
+        $userLat = session('user_latitude'); // latitude user yang sudah disimpan
+        $userLon = session('user_longitude'); // longitude user yang sudah disimpan
+
+        // Ambil semua kategori dan mitra untuk filter
+        $kategoris = Kategori::all();
+        $mitras = Mitra::all();
+
+        $makanans = $this->getProcessedMakanans($userKota, $userLat, $userLon);
 
 
+            $agent = new agent();
 
-
-        return view('user.food', compact('makanans', 'kategoris', 'mitras'));
+            if ($agent->isMobile()) {
+                return view('user-mobile.beranda', compact('makanans', 'kategoris', 'mitras'));
+            }else{
+                return view('user.food', compact('makanans', 'kategoris', 'mitras'));
+            }
     }
 
     public function byCategory($kategoriId)
@@ -101,51 +110,47 @@ class MakananController extends Controller
         $mitras = Mitra::all();
         $selectedKategori = Kategori::findOrFail($kategoriId);
 
-        $makanans = Makanan::where('kategoris_id', $kategoriId)
-            ->when($userKota, function ($query) use ($userKota) {
-                $query->whereHas('mitra', function ($q) use ($userKota) {
-                    $q->where(function ($subQuery) use ($userKota) {
-                        $subQuery->where('kota', 'like', "%{$userKota}%")
-                                 ->orWhereRaw('? LIKE CONCAT("%", kota, "%")', [$userKota]);
-                    });
-                });
-            })
-            ->get()
-            ->map(function ($makanans) use ($userLat, $userLon) {
-                if ($makanans->mitra && $makanans->mitra->latitude && $makanans->mitra->longitude) {
-                    $mitraLat = $makanans->mitra->latitude;
-                    $mitraLon = $makanans->mitra->longitude;
+        $ambilmakanan = $this->getProcessedMakanans($userKota, $userLat, $userLon);
 
-                    $makanans->jarak_km = GeoUtils::hitungJarak($userLat, $userLon, $mitraLat, $mitraLon);
-                } else {
-                    $makanans->jarak_km = null;
-                }
+        $makanans = $ambilmakanan->filter(function ($makanan) use ($kategoriId) {
+            return $makanan->kategoris_id == $kategoriId;
+        });
 
-                return $makanans;
-            })
-            ->map(function ($makanan) {
-                // Hitung rata-rata rating makanan
-                $makanan->average_rating = $makanan->ulasan->isNotEmpty() ? number_format($makanan->ulasan->avg('rating'), 1) : 0;
-                $makanan->rating_count = $makanan->ulasan->count();
+        $agent = new agent();
 
-                // Hitung jumlah review berdasarkan masing-masing rating
-                $makanan->rating_5 = $makanan->ulasan->where('rating', 5)->count();
-                $makanan->rating_4 = $makanan->ulasan->where('rating', 4)->count();
-                $makanan->rating_3 = $makanan->ulasan->where('rating', 3)->count();
-                $makanan->rating_2 = $makanan->ulasan->where('rating', 2)->count();
-                $makanan->rating_1 = $makanan->ulasan->where('rating', 1)->count();
+        if ($agent->isMobile()) {
+            return view('user-mobile.makanan', compact('kategoris', 'makanans', 'selectedKategori' , 'mitras'));
+        }else {
+            return view('user.food', compact('kategoris', 'makanans', 'selectedKategori' , 'mitras'));
+        }
+    }
 
-                // Hitung persentase review per bintang
-                $total_ulasan = $makanan->ulasan->count();
-                $makanan->rating_5_percent = $total_ulasan > 0 ? ($makanan->rating_5 / $total_ulasan) * 100 : 0;
-                $makanan->rating_4_percent = $total_ulasan > 0 ? ($makanan->rating_4 / $total_ulasan) * 100 : 0;
-                $makanan->rating_3_percent = $total_ulasan > 0 ? ($makanan->rating_3 / $total_ulasan) * 100 : 0;
-                $makanan->rating_2_percent = $total_ulasan > 0 ? ($makanan->rating_2 / $total_ulasan) * 100 : 0;
-                $makanan->rating_1_percent = $total_ulasan > 0 ? ($makanan->rating_1 / $total_ulasan) * 100 : 0;
+    public function detailmakanan($id)
+    {
+        $makanan = Makanan::with('kategoris', 'mitra', 'ulasan')->findOrFail($id);
 
-                return $makanan;
-            });
-        return view('user.food', compact('kategoris', 'makanans', 'selectedKategori' , 'mitras'));
+        $makanan->average_rating = $makanan->ulasan->isNotEmpty() ? number_format($makanan->ulasan->avg('rating'), 1) : 0;
+        $makanan->rating_count = $makanan->ulasan->count();
+
+        return view('user-mobile.detail-makanan', compact('makanan'));
+    }
+
+    public function semuamakananmobile($id)
+    {
+        $userKota = session('user_kota'); // Ambil kota dari session
+        $userLat = session('user_latitude'); // latitude user yang sudah disimpan
+        $userLon = session('user_longitude'); // longitude user yang sudah disimpan
+
+        $kategoris = Kategori::all();
+        $mitras = Mitra::all();
+        $selectedKategori = Kategori::findOrFail($kategoriId);
+
+        $ambilmakanan = $this->getProcessedMakanans($userKota, $userLat, $userLon);
+
+        $makanans = $ambilmakanan->filter(function ($makanan) use ($kategoriId) {
+            return $makanan->kategoris_id == $kategoriId;
+        });
+        
     }
 
 
