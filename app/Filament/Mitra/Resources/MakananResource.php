@@ -2,25 +2,25 @@
 
 namespace App\Filament\Mitra\Resources;
 
-use App\Filament\Mitra\Resources\MakananResource\Pages;
-use App\Filament\Mitra\Resources\MakananResource\RelationManagers;
-use App\Models\Makanan;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Table;
+use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables;
+use Filament\Support\RawJs;
+use Filament\Resources\Resource;
+use Filament\Forms\Form;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\TextArea;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms;
 use Filament\Form\Components\Toggle;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
-use Filament\Support\RawJs;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Models\Makanan;
+use App\Filament\Mitra\Resources\MakananResource\RelationManagers;
+use App\Filament\Mitra\Resources\MakananResource\Pages;
 
 class MakananResource extends Resource
 {
@@ -57,7 +57,8 @@ class MakananResource extends Resource
 
                 FileUpload::make('gambar_makanan')
                 ->label('Gambar')
-                ->directory('Gambar_Makanan')
+                ->disk('public')
+                ->directory('storage/Gambar_Makanan')
                 ->image(),
             ]);
     }

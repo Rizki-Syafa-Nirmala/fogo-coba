@@ -18,6 +18,14 @@ use App\Http\Controllers\Controller;
 
 class MakananController extends Controller
 {
+
+    protected $agent;
+
+    public function __construct()
+    {
+        $this->agent = new Agent();
+    }
+
     private function getProcessedMakanans($userKota, $userLat, $userLon)
     {
         // Ambil data food hanya yang berstatus 'available'
@@ -90,17 +98,14 @@ class MakananController extends Controller
 
         $makanans = $this->getProcessedMakanans($userKota, $userLat, $userLon);
 
-
-            $agent = new agent();
-
-            if ($agent->isMobile()) {
-                return view('user-mobile.beranda', compact('makanans', 'kategoris', 'mitras'));
-            }else{
-                return view('user.food', compact('makanans', 'kategoris', 'mitras'));
-            }
+        if ($this->agent->isMobile()) {
+            return view('user-mobile.beranda', compact('makanans', 'kategoris', 'mitras'));
+        }else{
+            return view('user.food', compact('makanans', 'kategoris', 'mitras'));
+        }
     }
 
-    public function byCategory($kategoriId)
+    public function byCategory($kategoriId,)
     {
         $userKota = session('user_kota'); // Ambil kota dari session
         $userLat = session('user_latitude'); // latitude user yang sudah disimpan
@@ -116,13 +121,7 @@ class MakananController extends Controller
             return $makanan->kategoris_id == $kategoriId;
         });
 
-        $agent = new agent();
-
-        if ($agent->isMobile()) {
-            return view('user-mobile.makanan', compact('kategoris', 'makanans', 'selectedKategori' , 'mitras'));
-        }else {
-            return view('user.food', compact('kategoris', 'makanans', 'selectedKategori' , 'mitras'));
-        }
+         return view('user.food', compact('kategoris', 'makanans', 'selectedKategori' , 'mitras'));
     }
 
     public function detailmakanan($id)
@@ -132,10 +131,12 @@ class MakananController extends Controller
         $makanan->average_rating = $makanan->ulasan->isNotEmpty() ? number_format($makanan->ulasan->avg('rating'), 1) : 0;
         $makanan->rating_count = $makanan->ulasan->count();
 
-        return view('user-mobile.detail-makanan', compact('makanan'));
+        if($this->agent->isMobile()){
+            return view('user-mobile.detail-makanan', compact('makanan'));
+        }
     }
 
-    public function semuamakananmobile($id)
+    public function semuamakananmobile($kategoriId = null)
     {
         $userKota = session('user_kota'); // Ambil kota dari session
         $userLat = session('user_latitude'); // latitude user yang sudah disimpan
@@ -143,14 +144,14 @@ class MakananController extends Controller
 
         $kategoris = Kategori::all();
         $mitras = Mitra::all();
-        $selectedKategori = Kategori::findOrFail($kategoriId);
+        $selectedKategori = $kategoriId ? Kategori::findOrFail($kategoriId) : null;
 
         $ambilmakanan = $this->getProcessedMakanans($userKota, $userLat, $userLon);
 
         $makanans = $ambilmakanan->filter(function ($makanan) use ($kategoriId) {
-            return $makanan->kategoris_id == $kategoriId;
+            return $kategoriId ? $makanan->kategoris_id == $kategoriId :true;
         });
-        
+        return view('user-mobile.makanan', compact('makanans', 'kategoris', 'mitras', 'selectedKategori'));
     }
 
 

@@ -8,9 +8,9 @@
 
 <div class="pb-20 pt-2 ">
 
-    <div class="bg-white min-h-screen p-4">
+    <div class="bg-white pt-4">
 
-        <div class="max-w-md mx-auto">
+        <div class="max-w-md mx-auto ">
                 @php
                     date_default_timezone_set('Asia/Jakarta');
                     $hour = date('H');
@@ -23,7 +23,7 @@
                         $greeting = 'Selamat Malam';
                     }
                 @endphp
-            <div class="flex justify-between items-start mb-4 px-1">
+            <div class="flex justify-between items-start mb-4 px-2">
                 <div class="flex-1">
                     <p class="text-gray-500 text-sm mb-1">
                         {{ $greeting }}
@@ -77,103 +77,63 @@
                 </div>
             </div>
            <!-- Categories heading with arrow -->
-            <div class="flex justify-between items-center mb-3 px-1">
+            <div class="flex justify-between items-center mb-3 px-2">
                 <h2 class="font-semibold text-gray-900 text-base">
                 Kategori
                 </h2>
-                <button aria-label="See more categories" class="text-gray-900 text-lg">
-                <i class="fas fa-arrow-right">
-                </i>
-                </button>
             </div>
            <!-- Categories scroll container -->
-            <div class="flex space-x-4 overflow-x-auto pb-2 px-1 scrollbar-hide">
+            <div class="flex space-x-4 overflow-x-auto pb-2 px-2 scrollbar-hide">
                 <!-- Button dengan background gambar -->
                 @foreach ($kategoris as $kategori)
-                    <a href="{{ route('makanan.kategori', $kategori->id) }}">
-                        <button
-                        class="flex-shrink-0 w-20 h-20 bg-cover bg-center rounded-2xl p-4 shadow-lg flex items-center justify-center text-white font-bold"
-                        style="background-image: url('{{ asset('images/mariah-hewines-J89GBos3avo-unsplash.jpg') }}')"
-                        >
-                        {{ $kategori->nama }}
-                        </button>
+                    <a href="{{ route('mobile.makananmobile', $kategori->id) }}" type="button" class="inline-flexbg-white text-black border border-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 whitespace-nowrap items-center px-2 py-2 text-sm font-medium  rounded-full">
+                    {{ $kategori->nama }}
                     </a>
                 @endforeach
             </div>
         </div>
-
-            <div class="max-w-md mx-auto pt-4">
-                <div class="flex items-center justify-between mb-4">
-                    <h2 class="font-semibold text-base">
+        <div class="max-w-md mx-auto pt-4">
+            <div class="flex items-center justify-between mb-4 px-2">
+                <h2 class="font-semibold text-base">
                     Makanan yang Tersedia
-                    </h2>
-                    <a href="{{ route('makanan.kategori') }}" class="text-black text-lg">
-                        <i class="fas fa-arrow-right">
-                        </i>
-                    </a>
-                </div>
-                <div  class="grid grid-cols-2 gap-4 mb-6">
-                    @foreach ($makanans as $makanan)
-                    {{-- <a href="{{ route('detailmakanan', $makanan->id) }}" class="makanan-item {{ $loop->index >= 4 ? 'hidden' : '' }} relative rounded-xl overflow-hidden bg-black aspect-square flex flex-col justify-end">
-                        <img alt="Glass of fresh orange juice with sliced oranges and rosemary on white background" class="w-full h-full object-cover absolute inset-0" src="{{ $makanan->gambar_makanan ? asset('storage/'.$makanan->gambar_makanan) : asset('images/food.png') }}"/>
-                        @if ($makanan->rating_count > 0)
-
-                        <div class="absolute top-3 left-3 bg-black bg-opacity-50 rounded-md px-2 py-1 text-yellow-400 text-sm font-semibold flex items-center space-x-1">
-                            <i class="fas fa-star">
-                            </i>
-                            <span>
-                            {{ $makanan->averange_rating }}
-                            </span>
-                        </div>
-                        @endif
-                        <div class="relative z-10 p-3 bg-gradient-to-t from-black/80 to-transparent rounded-b-xl">
-                            <h3 class="text-outline font-semibold text-lg leading-tight">
-                            {{ $makanan->nama }}
-                            </h3>
-                            <p class="text-yellow-300 text-xs mt-1">
-                            Mitra: Citrus World
-                            </p>
-                            <p class="text-yellow-300 text-xs">
-                            Jarak: 3.1 km
-                            </p>
-                            <div class="text-yellow-300 text-xs font-normal mt-1">
-                            $4.9
-                            </div>
-                        </div>
-                    </a> --}}
-                    <a href="{{ route('detailmakanan', $makanan->id) }}"  class="makanan-item {{ $loop->index >= 4 ? 'hidden' : '' }} relative rounded-xl overflow-hidden bg-gray-100 bg-opacity-80 border border-gray-500">
-                        <img alt="{{ $makanan->nama }}" class="w-full h-30 object-cover" src="{{ $makanan->gambar_makanan ? asset('storage/'.$makanan->gambar_makanan) : asset('images/food.png') }}">
-                            @if ($makanan->rating_count > 0)
-                            <div class="absolute top-2 left-2 flex items-center space-x-1 text-yellow-400 text-sm bg- bg-opacity-60 rounded px-1 py-0.5">
-                            <i class="fas fa-star">
-                            </i>
-                            <span class="text-white text-xs font-semibold">
-                            {{ $makanan->averange_rating }}
-                            </span>
-                            </div>
-                            @endif
-                            <div class="p-3 text-black border-t border-gray-500">
-                            <h3 class="text-base font-semibold truncate w-full">
-                            {{ $makanan->nama }}
-                            </h3>
-                            <p class="text-sm font-semibold mt-1">
-                            Rp {{ number_format($makanan->harga, 0, ',', '.') }}
-                            </p>
-                            @if (session('user_latitude') && session('user_longitude') )
-                            <p class="text-xs font-normal pt-2">
-                            {{ $makanan->jarak_km }} KM
-                            </p>
-                            @endif
-                        </div>
-                    </a>
-                    @endforeach
-                </div>
-                <button  id="toggle-button" onclick="toggleMakanan()" class="w-full bg-black text-white rounded-full py-3 text-center text-base font-semibold" type="button">
-                    Tampilkan Lebih Banyak
-                </button>
+                </h2>
+                <a href="{{ route('mobile.makananmobile') }}" class="text-black text-lg pr-3">
+                    <i class="fas fa-arrow-right">
+                    </i>
+                </a>
             </div>
+            <div  class="flex overflow-x-auto gap-6 px-1 mb-2 scrollbar-hide">
+                @foreach ($makanans as $makanan)
+                <a href="{{ route('mobile.detailmakanan', $makanan->id) }}" class="makanan-item {{ $loop->index >= 4 ? 'hidden' : '' }} flex-shrink-0 relative rounded-xl overflow-hidden bg-gray-100 w-60 aspect-square flex flex-col justify-end shadow-md">
+                    <img alt="Glass of fresh orange juice with sliced oranges and rosemary on white background" class="w-60 h-full object-cover absolute inset-0" src="{{ $makanan->gambar_makanan ? asset('storage/'.$makanan->gambar_makanan) : asset('images/food.png') }}"/>
+                    @if ($makanan->rating_count > 0)
+                    <div class="absolute top-3 left-3 bg-black bg-opacity-50 rounded-md px-2 py-1 text-yellow-400 text-sm font-semibold flex items-center space-x-1">
+                        <i class="fas fa-star">
+                        </i>
+                        <span>
+                            {{ $makanan->averange_rating }}
+                        </span>
+                    </div>
+                    @endif
+                    {{-- Jarak di kanan atas --}}
+                    <div class="absolute top-3 right-3 bg-black bg-opacity-50 rounded-md px-2 py-1 text-white text-xs font-small">
+                        {{ $makanan->jarak_km }} KM
+                    </div>
+                    <div class="relative z-10 p-3  bg-gray-900/50 rounded-b-xl">
+                        <h3 class="text-orange-300 font-semibold text-xl w-full flex items-center gap-1">
+                            <span class="truncate block max-w-[90%]">
+                                {{ $makanan->nama }}
+                            </span>
+                        </h3>
+                        <div class="text-gray-100 text-lg font-normal mt-1">
+                            Rp {{ number_format($makanan->harga, 0, ',', '.') }}
+                        </div>
+                    </div>
+                </a>
+                @endforeach
+            </div>
+        </div>
     </div>
-
     <script>
         let visible = 4;
         const step = 4;

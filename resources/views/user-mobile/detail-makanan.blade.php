@@ -7,14 +7,14 @@
 
     <div class="max-w-md w-full bg-white rounded-lg  overflow-hidden">
         <div class="relative bg-[#fefefe] rounded-b-[100px]">
-            <img alt="Three fresh green organic lemons with two green leaves, one lemon cut in half showing juicy interior" class="w-full object-contain pt-12" height="300" src="{{ $makanan->gambar_makanan ? asset('storage/'.$makanan->gambar_makanan) : asset('images/food.png') }}" width="400"/>
+            <img alt="{{ $makanan->nama }}" class="w-full object-contain pt-12" height="300" src="{{ $makanan->gambar_makanan ? asset('storage/'.$makanan->gambar_makanan) : asset('images/food.png') }}" width="400"/>
             <a href="{{ url()->previous() != url()->current() ? url()->previous() : route('foods') }}" class="absolute top-4 left-4 text-black text-xl">
                 <i class="fas fa-arrow-left">
                 </i>
             </a>
         </div>
-        <hr class="border-t-2 border-[#3ea2ff]"/>
-        <div class="p-6 space-y-4">
+        <hr class="border-b border-gray-900 shadow-lg"/>
+        <div class="py-6 px-2 space-y-4">
             <h1 class="font-bold text-xl text-black text-center">
             {{ $makanan->nama }}
             </h1>
@@ -64,13 +64,10 @@
                 just like regular lemons, but they will usually have a few more scars on
                 the outside of the lemon skin. Organic lemons are considered to be the
                 world's finest lemon for juicing
-            <span class="font-semibold">
-            more
-            </span>
             </p>
-            <div class="fixed bottom-0 left-0 w-full px-4 pb-8 bg-white z-50">
+            <div class="fixed bottom-0 left-0 w-full px-2 pb-8 bg-white z-50">
                 <button class="w-full bg-gradient-to-r from-[#6cc24a] to-[#2bb673] text-white font-semibold rounded-md py-3 flex items-center justify-center space-x-2">
-                    <span>Add to cart</span>
+                    <span>Pesan Sekarang</span>
                     <i class="fas fa-shopping-bag"></i>
                 </button>
             </div>

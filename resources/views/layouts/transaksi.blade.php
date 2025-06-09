@@ -29,13 +29,13 @@
 
                 @endif
                 <main class="pt-20">
-                    <div class="container mx-auto pt-6 bg-gray-50 dark:bg-gray-900 rounded-2xl shadow-xl p-6">
+                    <div class="container mx-auto pt-6 bg-gray-50  rounded-2xl shadow-xl p-6">
 
                         <section class="min-h-screen px-6">
                             <div class="flex flex-col md:flex-row gap-6 md:gap-8 pt-4 md:pt-6">
                                 <!-- Sidebar Menu di kiri -->
                                 <aside class="w-full md:w-1/4 p-2 flex flex-col">
-                                    <ul class="flex flex-row md:flex-col md:space-y-1 bg-white shadow-xl dark:bg-gray-800 p-3 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+                                    <ul class="flex flex-row md:flex-col md:space-y-1 bg-white shadow-xl  p-3 rounded-lg shadow-sm border border-gray-200 ">
 
                                         <li>
                                             <a href="{{ route('belum-dibayar') }}" class="block px-4 py-2 rounded-lg font-semibold text-gray-700 hover:bg-orange-100 hover:text-orange-700 focus:bg-orange-200 focus:text-orange-800 transition-all duration-200 {{ request()->routeIs('belum-dibayar') ? 'bg-orange-100 text-orange-700' : '' }}">

@@ -12,9 +12,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->trustProxies(at: '*');
         $middleware->validateCsrfTokens(except: [
             'midtrans-callback',
             'ambil-kota'
+        ]);
+        $middleware->alias([
+            'cekDevice' => \App\Http\Middleware\CekDevice::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

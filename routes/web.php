@@ -1,5 +1,6 @@
 <?php
 
+use Jenssegers\Agent\Agent;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TransaksiController;
@@ -11,6 +12,15 @@ use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\LogoutController;
 
 
+// Route::get('/storage/{path}', function ($path) {
+//     $fullPath = storage_path('app/public/' . $path);
+
+//     if (!File::exists($fullPath)) {
+//         abort(404);
+//     }
+
+//     return Response::file($fullPath);
+// })->where('path', '.*');
 // untuk guest
 Route::get('/', function () {
     if (auth()->check()) {
@@ -19,12 +29,12 @@ Route::get('/', function () {
             return redirect()->route('filament.user.pages.dashboard');
         } else {
             // Jika user biasa
-            return redirect()->route('home-user');
+            return redirect()->route('foods');
         }
     }
     // Kalau belum login, tampilkan halaman guest
     return redirect()->route('guest.home');
-});
+})->name('gerbang');
 Route::middleware('guest')->group(function () {
     Route::get('/home/guest', function () {
         return view('guest.home');
@@ -46,40 +56,33 @@ Route::middleware('guest')->group(function () {
 });
 
 // Rute untuk halaman home dengan pengecekan apakah sudah login
-Route::middleware('auth')->group(function () {
-    Route::get('/home-user', function () {
-        return redirect()->route('foods');  // Ganti 'home' dengan view sesuai kebutuhan
-    })->name('home-user');
+Route::middleware(['auth', 'cekDevice'])->group(function () {
 
+    Route::prefix('mobile')->name('mobile.')->group(function () {
+        Route::get('/foods', [MakananController::class, 'index'])->name('foods');
+        Route::get('/detailmakanan/mobile/{id}', [MakananController::class, 'detailmakanan'])->name('detailmakanan')->where('id', '[0-9]+'); //mobile
+        Route::get('/rekomendasi/mobile /{filter}', [RekomendasiController::class, 'rekomendasimakananmobile'])->name('rekomendasimobile');
+        // Route::get('/makanan/Kategori/{kategori?}', [MakananController::class, 'byCategory'])->name('makanan.kategori');
+        Route::get('/makanan/Kategori/{kategori?}', [MakananController::class, 'semuamakananmobile'])->name('makananmobile');
 
+    });
     Route::get('/foods', [MakananController::class, 'index'])->name('foods');
-    Route::get('/detailmakanan/{id}', [MakananController::class, 'detailmakanan'])->name('detailmakanan');
     Route::get('/makanan/Kategori/{kategori?}', [MakananController::class, 'byCategory'])->name('makanan.kategori');
-
-    Route::get('/transaksi', [MakananController::class, 'userTransactions'])->name('transaksi');
+    Route::get('/semua-transaksi', [MakananController::class, 'userTransactions'])->name('transaksi');
+    Route::put('/transactions/{id}/complete', [MakananController::class, 'update'])->name('transactions.complete')->where('id', '[0-9]+');
 
     Route::post('/transaksi/beli', [TransaksiController::class, 'buattransaksi'])->name('transaksi.store');
-    Route::get('/transaksi/{id}', [TransaksiController::class, 'tampilkantransaksi'])->name('transaksi.show');
-    Route::get('/transaksi/{id}/bayar', [TransaksiController::class, 'bayar'])->name('bayar');
-
-    Route::get('/transaksi-', function () {
-        return redirect()->route('belum-dibayar');  // Ganti 'home' dengan view sesuai kebutuhan
-    })->name('transaksi-semua');
-    // Route::get('/rekomendasi', function () {
-    //     return view('user.rekomendasi');  // Ganti 'home' dengan view sesuai kebutuhan
-    // })->name('rekomendasi');
+    Route::get('/transaksi/{id}', [TransaksiController::class, 'tampilkantransaksi'])->name('transaksi.show')->where('id', '[0-9]+');
+    Route::get('/transaksi/{id}/bayar', [TransaksiController::class, 'bayar'])->name('bayar')->where('id', '[0-9]+');
+    Route::get('/belum-dibayar', [TransaksiController::class, 'transaksi'])->name('belum-dibayar');
+    Route::get('/semua', [TransaksiController::class, 'semuatransaksi'])->name('semua-transaksi');
+    Route::post('/transaksi/hitung-potongan/{id}', [TransaksiController::class, 'hitungPotongan'])->name('hitungPotongan');
 
     // route rekomendasi
     Route::get('/rekomendasi', [RekomendasiController::class, 'index'])->name('rekomendasi');
     Route::get('/rekomendasi/{filter}', [RekomendasiController::class, 'lihatsemua'])->name('lihatsemuarekomendasi');
-    Route::get('/rekomendasi/mobile/{filter}', [RekomendasiController::class, 'rekomendasimakananmobile'])->name('rekomendasimobile');
 
-    Route::get('/belum-dibayar', [TransaksiController::class, 'transaksi'])->name('belum-dibayar');
-    Route::get('/semua', [TransaksiController::class, 'semuatransaksi'])->name('semua-transaksi');
-    Route::post('/transaksi/hitung-potongan/{id}', [TransaksiController::class, 'hitungPotongan'])->name('hitungPotongan');
-    // Route::get('/Transaksi', [TransaksiController::class, 'transaksi'])->name('transaksi.pembayaran');
 
-    Route::put('/transactions/{id}/complete', [MakananController::class, 'update'])->name('transactions.complete');
     Route::get('/review', [ReviewController::class, 'index'])->name('review');
     Route::put('/review/{id}', [ReviewController::class, 'update'])->name('review.update');
     Route::post('/transactions/{id}/rate', [ReviewController::class, 'rate'])->name('transactions.rate');

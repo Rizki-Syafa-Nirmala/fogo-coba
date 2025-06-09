@@ -173,8 +173,8 @@ class RekomendasiController extends Controller
             $filtered = $makanans->filter(fn($m) => $m->rating_5 > 0)
             ->sortByDesc('rating_5')
             ->values();
-        } else if ($filter === 'semua') {
-            $filtered = $makanans;
+        } else if ($filter === 'random') {
+            $filtered = $makanans->shuffle();
         }
 
         return view('user-mobile.rekomendasi', compact('filtered', 'filter', 'makanans'));

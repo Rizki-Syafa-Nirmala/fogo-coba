@@ -11,13 +11,13 @@
 
             <!-- Navigation Links - Desktop -->
             <div class="hidden md:flex items-center space-x-8">
-                <a href="{{ route('foods') }}" class="nav-link {{ request()->routeIs('foods') ? 'text-orange-600  : 'text-gray-600 hover:text-orange-600   }}">Beranda</a>
+                <a href="{{ route('foods') }}" class="nav-link {{ request()->routeIs('foods') ? 'text-orange-600'  : 'text-gray-600 hover:text-orange-600'}}">Beranda</a>
                 @if (session('user_latitude') && session('user_longitude'))
 
-                <a href="{{ route('rekomendasi') }}" class="nav-link {{ request()->routeIs('rekomendasi') ? 'text-orange-600  : 'text-gray-600 hover:text-orange-600   }}">Rekomendasi</a>
+                <a href="{{ route('rekomendasi') }}" class="nav-link {{ request()->routeIs('rekomendasi') ? 'text-orange-600'  : 'text-gray-600 hover:text-orange-600'   }}">Rekomendasi</a>
                 @endif
-                <a href="{{ route('transaksi') }}" class="nav-link {{ request()->routeIs('transaksi') ? 'text-orange-600  : 'text-gray-600 hover:text-orange-600   }}">Pesanan Saya</a>
-                <a href="{{ route('review') }}" class="nav-link {{ request()->routeIs('review') ? 'text-orange-600  : 'text-gray-600 hover:text-orange-600   }}">Review</a>
+                <a href="{{ route('transaksi') }}" class="nav-link {{ request()->routeIs('transaksi') ? 'text-orange-600'  : 'text-gray-600 hover:text-orange-600' }}">Pesanan Saya</a>
+                <a href="{{ route('review') }}" class="nav-link {{ request()->routeIs('review') ? 'text-orange-600'  : 'text-gray-600 hover:text-orange-600'  }}">Review</a>
                 <a href="#" class="nav-link text-gray-600 hover:text-orange-600  ">Contact</a>
             </div>
 
@@ -58,7 +58,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('transaksi-semua') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50   group transition-colors duration-200">
+                            <a href="{{ route('belum-dibayar') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50   group transition-colors duration-200">
                                 <svg class="w-5 h-5 mr-3 text-gray-400 group-hover:text-orange-500 " fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                                 </svg>
@@ -104,13 +104,13 @@
         <!-- Mobile Navigation Menu -->
         <div class="hidden md:hidden" id="navbar-user">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="{{ route('foods') }}" class="block rounded-md px-3 py-2 text-base font-medium transition-colors {{ request()->routeIs('foods') ? 'bg-orange-500 text-white' : 'text-gray-600 hover:bg-orange-50   }}">
+                <a href="{{ route('foods') }}" class="block rounded-md px-3 py-2 text-base font-medium transition-colors {{ request()->routeIs('foods') ? 'bg-orange-500 text-white' : 'text-gray-600 hover:bg-orange-50' }}">
                     Food Product
                 </a>
-                <a href="{{ route('transaksi') }}" class="block rounded-md px-3 py-2 text-base font-medium transition-colors {{ request()->routeIs('transaksi') ? 'bg-orange-500 text-white' : 'text-gray-600 hover:bg-orange-50   }}">
+                <a href="{{ route('transaksi') }}" class="block rounded-md px-3 py-2 text-base font-medium transition-colors {{ request()->routeIs('transaksi') ? 'bg-orange-500 text-white' : 'text-gray-600 hover:bg-orange-50'   }}">
                     My Order
                 </a>
-                <a href="{{ route('review') }}" class="block rounded-md px-3 py-2 text-base font-medium transition-colors {{ request()->routeIs('review') ? 'bg-orange-500 text-white' : 'text-gray-600 hover:bg-orange-50   }}">
+                <a href="{{ route('review') }}" class="block rounded-md px-3 py-2 text-base font-medium transition-colors {{ request()->routeIs('review') ? 'bg-orange-500 text-white' : 'text-gray-600 hover:bg-orange-50'    }}">
                     Review
                 </a>
                 <a href="#" class="block rounded-md px-3 py-2 text-base font-medium transition-colors text-gray-600 hover:bg-orange-50  ">

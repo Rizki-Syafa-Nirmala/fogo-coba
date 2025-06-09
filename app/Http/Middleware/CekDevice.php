@@ -5,8 +5,10 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Jenssegers\Agent\Agent;
 
-class NotAdmin
+
+class CekDevice
 {
     /**
      * Handle an incoming request.
@@ -15,11 +17,16 @@ class NotAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // dd(auth()->user());
-        if (auth()->check() && !auth()->user()->is_admin ){
-            return redirect()->route('gerbang');
-        }
 
+        // Jika user sudah login dan dia admin, jangan redirect ke mobile
+        $agent = new Agent();
+        if (auth()->check() && !auth()->user()->is_admin) {
+
+            if ($agent->isMobile() && ! $request->routeIs('mobile.*')) {
+                return redirect()->route('mobile.foods');
+            }
+        }
         return $next($request);
     }
 }
+

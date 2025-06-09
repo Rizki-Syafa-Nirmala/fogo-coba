@@ -123,10 +123,10 @@
             <div class="food-item rounded-lg border border-gray-200 bg-white p-4 shadow-sm   transform transition duration-300 hover:scale-105 hover:shadow-xl hover:shadow-orange-200 cursor-pointer" role="button" data-modal-target="{{ $makanan->id }}" data-modal-toggle="{{ $makanan->id }}">
                 <div class="aspect-[3/2] w-full relative overflow-hidden">
                     <div class="animate-pulse bg-gray-200 absolute inset-0"></div>
-                    <img class="mx-auto h-full  relative z-10 object-cover"
-                         src="{{ $makanan->gambar_makanan ? asset('storage/'.$makanan->gambar_makanan) : asset('images/food.png') }}"
-                         alt="{{ $makanan->nama }}"
-                         loading="lazy" />
+                     <img class="mx-auto h-full  relative z-10 object-cover"
+                        src="{{ $makanan->gambar_makanan ? asset('storage/'.$makanan->gambar_makanan) : asset('images/food.png') }}"
+                        alt="{{ $makanan->nama }}"
+                        loading="lazy" />
                 </div>
                 <div class="pt-6">
                   <div class="mb-4 flex items-center justify-between gap-4">

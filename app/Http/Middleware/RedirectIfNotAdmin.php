@@ -16,10 +16,10 @@ class RedirectIfNotAdmin
     public function handle(Request $request, Closure $next): Response
     {
         if (auth()->check() && !auth()->user()->is_admin) {
-            return redirect()->route('home-user'); // Ganti dengan rute dashboard buatanmu
+            return redirect()->route(''); // Ganti dengan rute dashboard buatanmu
         }
 
         return $next($request);
     }
-    
+
 }

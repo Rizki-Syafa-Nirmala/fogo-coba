@@ -12,6 +12,9 @@ class TransaksiController extends Controller
     public function tampilkantransaksi($id)
     {
         $transaksi = Transaksi::findOrFail($id);
+        if (!$transaksi) {
+        abort(404, 'Transaksi tidak ditemukan');
+        }
         // Cek apakah transaksi milik user yang sedang login
         if ($transaksi->user_id !== auth()->id()) {
             return redirect()->route('foods');

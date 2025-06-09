@@ -156,7 +156,7 @@
 
             @foreach ($ulasans->getUrlRange(1, $ulasans->lastPage()) as $page => $url)
             <li>
-                <a href="{{ $url }}" class="flex h-8 items-center justify-center border border-gray-300 bg-white px-3 leading-tight text-gray-500 {{ $ulasans->currentPage() == $page ? '     : '     }} ">
+                <a href="{{ $url }}" class="flex h-8 items-center justify-center border border-gray-300 bg-white px-3 leading-tight text-gray-500 {{ $ulasans->currentPage() == $page ?   ''   :  ''    }} ">
                 {{ $page }}
                 </a>
             </li>

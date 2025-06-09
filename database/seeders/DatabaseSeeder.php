@@ -2,12 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\Makanan;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use App\Models\User;
+use App\Models\Mitra;
+use App\Models\Makanan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -61,17 +62,38 @@ class DatabaseSeeder extends Seeder
 
         DB::table('kategoris')->insert([
             [
-                'nama' => 'Makanan Berat',
+                'nama' => 'Makanan',
 
             ],
-
             [
-                'nama' => 'Makanan Ringan',
+                'nama' => 'Minuman',
 
             ],
+            // [
+            //     'nama' => 'Cemilan',
+
+            // ],
+
+            // [
+            //     'nama' => 'Sayur',
+
+            // ],
+
+
+            // [
+            //     'nama' => 'Buah',
+
+            // ],
+
         ]);
 
-        Makanan::factory(20)->create();
+        Mitra::factory()->count(20)->create();
+        Makanan::factory(40)->create();
+        Makanan::factory(50)->minuman()->create();
+        // Makanan::factory(10)->cemilan()->create();
+        // Makanan::factory(10)->buah()->create();
+        // Makanan::factory(10)->sayur()->create();
+        Makanan::factory(10)->daging()->create();
     }
 
 }
