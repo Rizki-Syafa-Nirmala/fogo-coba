@@ -36,10 +36,11 @@ Route::get('/', function () {
     return redirect()->route('guest.home');
 })->name('gerbang');
 Route::middleware('guest')->group(function () {
-    Route::get('/home/guest', function () {
-        return view('guest.home');
-    })->name('guest.home');
+    // Route::get('/home/guest', function () {
+    //     return view('guest.home');
+    // })->name('guest.home');
 
+    Route::get('/home/guest', [MakananController::class, 'index'])->name('guest.home');
     Route::get('/about', function () {
         return view('guest.about');
     });
