@@ -49,10 +49,6 @@ Route::middleware('guest')->group(function () {
         return redirect('/user/login');
     })->name('login');
 
-    // Kalau ada halaman register khusus
-    Route::get('/register-mitra', function () {
-        return redirect()->route('filament.partner.auth.register');
-    })->name('register');
 });
 
 // Rute untuk halaman home dengan pengecekan apakah sudah login

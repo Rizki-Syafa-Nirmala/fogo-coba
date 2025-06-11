@@ -27,7 +27,7 @@
             @auth
                 @include('components.navbar-user')
             @else
-                @include('components.navbar')
+                @yield('navbar-guest')
             @endauth
 
         @endif
@@ -48,7 +48,7 @@
                         @yield('content-user')
                     </div>
                 @else
-                    <div class="pt-20">
+                    <div class="">
                         @yield('content')
                 @endauth
             @endif
