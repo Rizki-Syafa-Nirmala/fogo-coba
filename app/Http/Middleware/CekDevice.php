@@ -24,6 +24,8 @@ class CekDevice
 
             if ($agent->isMobile() && ! $request->routeIs('mobile.*')) {
                 return redirect()->route('mobile.foods');
+            } else if ($agent->isDesktop() && $request->routeIs('mobile.*')) {
+                return redirect()->route('foods'); // asumsi ini route untuk desktop
             }
         }
         return $next($request);

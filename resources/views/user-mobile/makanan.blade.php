@@ -5,10 +5,10 @@
 @endsection
 
 @section('content-user-mobile')
-<div class="bg-gray-50 min-h-screen">
+<div class="bg-orange-50 min-h-screen">
     <div class="max-w-sm mx-auto bg-white min-h-screen">
         <!-- Header -->
-        <div class="sticky top-0 z-50 bg-white border-b border-gray-200">
+        <div class="sticky top-0 z-50 bg-white border-b border-gray-400">
             <div class="px-4 py-6">
                 <div class="text-center">
                     @if ($selectedKategori === null)
@@ -42,7 +42,7 @@
         <div class="px-2 pb-24">
             <div class="grid grid-cols-2 gap-4">
                 @foreach ($makanans as $makanan)
-                    <div class="max-w-full bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+                    <div class="max-w-full bg-white border border-gray-500 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 overflow-hidden">
                         {{-- Link ke detail --}}
                         <a href="{{ route('mobile.detailmakanan', $makanan->id) }}"
                         class="makanan-item flex-shrink-0 relative rounded-xl overflow-hidden bg-gray-100 w-full aspect-square flex flex-col justify-end shadow-md">
