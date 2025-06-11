@@ -98,9 +98,15 @@ class MakananController extends Controller
 
         $makanans = $this->getProcessedMakanans($userKota, $userLat, $userLon);
 
+            // Jika user belum login (guest)
+        if (!auth()->check()) {
+            return view('guest.beranda', compact('makanans', 'kategoris', 'mitras'));
+        }
+
         if ($this->agent->isMobile()) {
             return view('user-mobile.beranda', compact('makanans', 'kategoris', 'mitras'));
         }else{
+
             return view('user.food', compact('makanans', 'kategoris', 'mitras'));
         }
     }

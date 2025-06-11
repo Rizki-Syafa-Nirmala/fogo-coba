@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('total_harga');
             $table->boolean('point')->default(0);
             $table->string('order_id')->unique();
-            $table->enum('status', ['Proses', 'Siap ambil', 'Selesai'])->default('Proses');
+            $table->enum('status', ['Proses', 'Siap ambil', 'Selesai'])->nullable();
             $table->enum('status_pembayaran', ['belum dibayar','dibatalkan','sudah dibayar', 'gagal', 'proses'])->default('belum dibayar');
             $table->string('snap_token', 100)->nullable();
             $table->timestamps();

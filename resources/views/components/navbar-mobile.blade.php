@@ -45,15 +45,15 @@
             Makanan
             <div class="tooltip-arrow" data-popper-arrow></div>
         </div>
-        <button data-tooltip-target="tooltip-settings" type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50  group">
-            <svg class="mb-1 {{ request()->routeIs('mobile.foods') ? 'text-blue-600 ' : 'text-gray-500' }} group-hover:text-blue-600" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" aria-hidden="true"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+        <a href="{{ route('mobile.transaksiberlangsung') }}" data-tooltip-target="tooltip-settings" type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50  group">
+            <svg class="mb-1 {{ request()->routeIs('mobile.transaksiberlangsung') ? 'text-blue-600 ' : 'text-gray-500' }} group-hover:text-blue-600" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" aria-hidden="true"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
                 <path d="M8.261,3.75l-0.761,0c-0.414,0 -0.75,0.336 -0.75,0.75l-0,2.5c-0,0.414 0.336,0.75 0.75,0.75l9,0c0.414,0 0.75,-0.336 0.75,-0.75l0,-2.5c0,-0.414 -0.336,-0.75 -0.75,-0.75l-0.761,0c-0.127,-1.402 -1.305,-2.5 -2.739,-2.5l-2,0c-1.434,0 -2.612,1.098 -2.739,2.5Z"></path>
                 <path d="M5.75,4.75l-0.25,0c-0.967,0 -1.75,0.784 -1.75,1.75l0,14.5c0,0.967 0.784,1.75 1.75,1.75c2.727,0 10.273,0 13,0c0.966,0 1.75,-0.783 1.75,-1.75l0,-14.5c-0,-0.966 -0.783,-1.75 -1.75,-1.75l-0.25,0l0,2.25c0,0.966 -0.784,1.75 -1.75,1.75c-0,0 -9,0 -9,0c-0.966,0 -1.75,-0.784 -1.75,-1.75l0,-2.25Zm2.25,14l8,0c0.414,0 0.75,-0.336 0.75,-0.75c0,-0.414 -0.336,-0.75 -0.75,-0.75l-8,0c-0.414,0 -0.75,0.336 -0.75,0.75c0,0.414 0.336,0.75 0.75,0.75Zm0,-3.5l8,0c0.414,0 0.75,-0.336 0.75,-0.75c0,-0.414 -0.336,-0.75 -0.75,-0.75l-8,0c-0.414,0 -0.75,0.336 -0.75,0.75c0,0.414 0.336,0.75 0.75,0.75Zm1.5,-3.5l5,0c0.414,0 0.75,-0.336 0.75,-0.75c0,-0.414 -0.336,-0.75 -0.75,-0.75l-5,0c-0.414,0 -0.75,0.336 -0.75,0.75c0,0.414 0.336,0.75 0.75,0.75Z"></path>
             </svg>
-            <span class="sr-only">Settings</span>
-        </button>
+            <span class="sr-only">pesanan saya</span>
+        </a>
         <div id="tooltip-settings" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip ">
-            Settings
+            Pesanan Saya
             <div class="tooltip-arrow" data-popper-arrow></div>
         </div>
         <button data-tooltip-target="tooltip-profile" type="button" class="inline-flex flex-col items-center justify-center px-5 rounded-e-full hover:bg-gray-50  group">

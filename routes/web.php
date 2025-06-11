@@ -64,6 +64,14 @@ Route::middleware(['auth', 'cekDevice'])->group(function () {
         Route::get('/rekomendasi/mobile /{filter}', [RekomendasiController::class, 'rekomendasimakananmobile'])->name('rekomendasimobile');
         // Route::get('/makanan/Kategori/{kategori?}', [MakananController::class, 'byCategory'])->name('makanan.kategori');
         Route::get('/makanan/Kategori/{kategori?}', [MakananController::class, 'semuamakananmobile'])->name('makananmobile');
+        Route::get('pesanansaya', function() {
+           return view('user-mobile.order');
+        })->name('pesanansaya');
+        Route::get('/transaksi-berlangsung', [TransaksiController::class, 'transaksi'])->name('transaksiberlangsung');
+        Route::get('/ajax/transaksi', [TransaksiController::class, 'ajaxStatus'])->name('ajax.transaksi.statusSemua');
+        Route::get('/semua', [TransaksiController::class, 'semuatransaksi'])->name('semua-transaksi');
+
+
 
     });
     Route::get('/foods', [MakananController::class, 'index'])->name('foods');
