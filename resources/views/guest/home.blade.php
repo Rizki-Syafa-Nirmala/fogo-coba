@@ -134,34 +134,19 @@
                 </div>
 
                 {{-- Food Cards --}}
-                <div class="flex-1 relative">
-                    <div class="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide pb-4 snap-x snap-mandatory">
-                        @php
-                            $courses = [
-                                ['title' => 'Food Photography', 'img' => '8a904299-8ec6-4579-0a41-51259f46b3f6'],
-                                ['title' => 'Creative Cooking', 'img' => '64b3815b-c816-4fd5-0246-1f2a77b3679e'],
-                                ['title' => 'Healthy Recipes', 'img' => 'edde7589-669f-4504-bd2b-5c9a471b9610'],
-                            ];
-                        @endphp
-                        
-                        @foreach ($courses as $course)
-                        <div class="min-w-[200px] md:min-w-[240px] bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 snap-start group">
-                            <div class="relative overflow-hidden">
-                                <img 
-                                    src="https://storage.googleapis.com/a1aa/image/{{ $course['img'] }}.jpg"
-                                    alt="{{ $course['title'] }}" 
-                                    class="w-full h-32 md:h-36 object-cover group-hover:scale-105 transition-transform duration-300" 
-                                />
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            </div>
-                            <div class="p-4 md:p-5">
-                                <h3 class="text-sm md:text-base font-semibold text-[#00B4C4] group-hover:text-[#007a8a] transition-colors duration-200">
-                                    {{ $course['title'] }}
-                                </h3>
-                            </div>
-                        </div>
-                        @endforeach
-                    </div>
+<div class="flex-1 relative">
+    <div class="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide pb-4 snap-x snap-mandatory">
+        @foreach ($makanans as $makanan)
+        <div class="min-w-[200px] md:min-w-[240px] bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 snap-start group">
+            <div class="p-4 md:p-5">
+                <h3 class="text-sm md:text-base font-semibold text-[#00B4C4] group-hover:text-[#007a8a] transition-colors duration-200">
+                    {{ $makanan['name'] }}
+                </h3>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</div>
 
                     {{-- Navigation Buttons --}}
                     <button 
