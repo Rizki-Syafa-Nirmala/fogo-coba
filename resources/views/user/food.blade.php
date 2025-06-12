@@ -3,118 +3,137 @@
 
 @section('content-user')
 <div class="bg-gray-50  antialiased  ">
+<section class="relative overflow-hidden">
+  <div class="absolute inset-0 bg-cover bg-center z-0" style="background-image: url('https://images.unsplash.com/photo-1458303210916-a83c4b8538e1?q=80&w=2006&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+    <div class="absolute inset-0 bg-gradient-to-b from-red-900/80 via-red-800/70 to-red-700/80"></div>
+  </div>
 
+  <div class="relative z-10 px-6 py-24 sm:py-32 lg:px-8 max-w-6xl mx-auto">
+    <div class="flex flex-col items-center">
+      {{-- Decorative Elements --}}
+      <div class="absolute top-10 left-10 w-20 h-20 rounded-full bg-orange-400/30 blur-xl"></div>
+      <div class="absolute bottom-20 right-10 w-32 h-32 rounded-full bg-red-500/30 blur-xl"></div>
 
-    <section class="relative bg-red-600 text-white rounded-b-3xl overflow-hidden">
-        <!-- Content -->
-        <div class="relative z-0  px-10 py-48 sm:py-32 lg:px-8 text-center"
-        style="background-image: url('https://images.unsplash.com/photo-1458303210916-a83c4b8538e1?q=80&w=2006&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center;
-        background-size: cover; background-position: center;">
-          <div class=" mx-auto">
-            <h1 class="text-5xl font-extrabold tracking-tight text-white drop-shadow-lg sm:text-7xl">Makan Untuk Menjaga Lingkungan</h1>
-            <p class="mt-6 text-xl leading-8 text-orange-100 drop-shadow">Bantu kurangi limbah makanan dengan memesan makanan sisa produksi dari mitra kami.</p>
-            <!-- Form lokasi -->
-            <form action="{{ route('ganti.kota') }}" method="POST" class="mt-10 max-w-md mx-auto bg-transparen rounded-2xl shadow-2xl p-6  flex flex-col space-y-4 transition-all duration-300 hover:shadow-orange-300">
-                @csrf
-                {{-- <label class="bg-white mx-auto px-2 rounded-xl text-lg font-bold text-orange-600 mb-1 ml-1">Lokasimu</label> --}}
-                <div class="flex items-center flex-grow border-2 border-orange-400 bg-white rounded-2xl px-3 py-2 focus-within:ring-2 focus-within:ring-orange-500 transition-all duration-200">
-                    <svg class="h-10 w-10 text-red-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-                    </svg>
-                    <input type="text" id="autocomplete" name="kota" value="{{ session('user_kota') }}" class="w-full border-none focus:outline-none text-black placeholder-black bg-white text-lg font-semibold" placeholder="Masukkan nama kota..." />
-                    <button type="submit" class="flex items-center bg-orange-400 hover:bg-orange-500 text-gray-50 font-bold p-2 ml-2 rounded-xl transition duration-200 shadow-lg hover:scale-105" title="Cari Kota">
-                        <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                    </button>
-                    <button onclick="ambilLokasi()" class="flex items-center bg-orange-100 hover:bg-orange-200 text-orange-700 font-bold p-2 ml-2 rounded-xl transition duration-200 shadow-md hover:scale-105" title="Gunakan Lokasi Saat Ini">
-                        <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3" />
-                        </svg>
-                    </button>
-                </div>
-            </form>
+      {{-- Badge --}}
+      <div class="bg-orange-500 text-white px-4 py-1 rounded-full text-sm font-medium mb-6 animate-pulse">
+        Selamatkan Makanan, Selamatkan Bumi
+      </div>
+
+      {{-- Main Heading with Animation --}}
+      <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white text-center max-w-4xl leading-tight">
+        <span class="inline-block transform hover:scale-105 transition-transform duration-300">Makan</span>
+        <span class="inline-block transform hover:scale-105 transition-transform duration-300">Untuk</span>
+        <span class="inline-block transform hover:scale-105 transition-transform duration-300">Menjaga</span>
+        <span class="bg-gradient-to-r from-orange-300 to-yellow-200 text-transparent bg-clip-text inline-block transform hover:scale-105 transition-transform duration-300">Lingkungan
+        </span>
+      </h1>
+
+      {{-- Subheading with improved styling --}}
+      <p class="mt-8 text-xl md:text-2xl text-orange-100 text-center max-w-2xl leading-relaxed">
+        Bantu kurangi limbah makanan dengan memesan makanan sisa produksi dari mitra kami.
+      </p>
+
+      {{-- Form with enhanced styling --}}
+      <form action="{{ route('ganti.kota') }}" method="POST" class="mt-12 w-full max-w-2xl mx-auto">
+        @csrf
+        <div class="bg-white/10 backdrop-blur-md p-6 rounded-3xl shadow-2xl border border-white/20 transition-all duration-300 hover:shadow-orange-500/30">
+          <div class="flex items-center flex-wrap sm:flex-nowrap gap-3 mt-2">
+            <div class="flex items-center flex-grow bg-white rounded-2xl px-4 py-3 shadow-inner focus-within:ring-2 focus-within:ring-orange-500 transition-all duration-200 w-full">
+              <svg class="h-8 w-8 text-red-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"
+                />
+              </svg>
+              <input type="text" id="autocomplete" name="kota" value="{{ session('user_kota') }}"
+                class="w-full border-none focus:outline-none text-gray-800 placeholder-gray-500 bg-transparent text-lg font-medium ml-3"
+                placeholder="Masukkan nama kota..."
+              />
+            </div>
+
+            <div class="flex gap-2 w-full sm:w-auto">
+            <button type="submit" class="flex items-center justify-center bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold p-3 rounded-xl transition duration-300 shadow-lg hover:shadow-orange-500/50 hover:scale-105">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+            </button>
+            </div>
+            
+            <button type="button" onclick="ambilLokasi()" class="flex items-center justify-center bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white font-bold px-4 py-3 rounded-xl transition duration-300 shadow-lg hover:shadow-orange-300/30 hover:scale-105 flex-grow sm:flex-grow-0"
+            title="Gunakan Lokasi Saat Ini">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
-      </section>
- <section class="py-12 px-6 sm:px-12 md:px-20">
-   <div class="max-w-7xl mx-auto text-center">
-    <h2 class="text-3xl font-bold text-gray-800 mb-8">
-     Cara Pemesanan
-    </h2>
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-10">
-     <div class="flex flex-col items-center space-y-4">
-      <div class="bg-orange-600 text-white rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold">
-       1
-      </div>
-      <img alt="Ilustrasi memilih makanan sisa produksi di aplikasi, gambar tangan menunjuk layar ponsel dengan gambar makanan" class="w-24 h-24 object-contain" height="120" src="https://storage.googleapis.com/a1aa/image/e4f564cf-38e3-46d5-10f5-930b4a7272cf.jpg" width="120"/>
-      <h3 class="text-xl font-semibold text-gray-800">
-       Pilih Makanan
-      </h3>
-      <p class="text-gray-600 max-w-xs">
-       Telusuri dan pilih makanan sisa produksi yang ingin Anda pesan.
-      </p>
-     </div>
-     <div class="flex flex-col items-center space-y-4">
-      <div class="bg-orange-600 text-white rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold">
-       2
-      </div>
-      <img alt="Ilustrasi konfirmasi pesanan makanan, gambar tangan menekan tombol konfirmasi di layar ponsel" class="w-24 h-24 object-contain" height="120" src="https://storage.googleapis.com/a1aa/image/4d2b1e7e-5279-4c79-87f8-ccba5854507d.jpg" width="120"/>
-      <h3 class="text-xl font-semibold text-gray-800">
-       Konfirmasi Pesanan
-      </h3>
-      <p class="text-gray-600 max-w-xs">
-       Pastikan pesanan Anda sudah benar dan lakukan konfirmasi.
-      </p>
-     </div>
-     <div class="flex flex-col items-center space-y-4">
-      <div class="bg-orange-600 text-white rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold">
-       3
-      </div>
-      <img alt="Ilustrasi mengambil makanan di tempat penjual, gambar orang mengambil makanan di konter warung" class="w-24 h-24 object-contain" height="120" src="https://storage.googleapis.com/a1aa/image/809a78c4-a86f-4c44-880e-fe0b76eaaaf5.jpg" width="120"/>
-      <h3 class="text-xl font-semibold text-gray-800">
-       Ambil Makanan
-      </h3>
-      <p class="text-gray-600 max-w-xs">
-       Datang ke penjual dan ambil makanan yang sudah Anda pesan.
-      </p>
-     </div>
+      </form>
     </div>
-   </div>
-  </section>
-
-
+  </div>
+</section>
 
     <!-- Category Navigation -->
-    <div class="mx-auto max-w-screen-xl pt-20 px-4 mb-12 2xl:px-0">
-        <div class="mb-6 text-center">
-            <p class="text-4xl text-orange-700  font-semibold">Mau Makan Apa Hari Ini?</p>
-        </div>
+<div class="mx-auto max-w-screen-xl pt-20 px-4 mb-12 2xl:px-0">
+    <div class="mb-10 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-2">
+            Mau Makan <span class="text-orange-600">Apa Hari Ini?</span>
+        </h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-orange-300 to-orange-600 mx-auto rounded-full"></div>
+    </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 ">
-            <a href="{{ route('foods') }}" class="group">
-                <div class="relative rounded-xl overflow-hidden h-32 md:h-40 bg-cover bg-center transition-all duration-300 {{ !isset($selectedKategori) ? '' : 'grayscale group-hover:grayscale-0' }}"
-                    style="background-image: url('https://images.unsplash.com/photo-1686150778458-ce4d48f9697d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
-                    <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-all"></div>
-                    <span class="absolute inset-0 flex items-center justify-center text-white font-bold text-lg drop-shadow-md">
+    <div class="grid grid-cols-5 md:grid-cols-5 gap-5">
+        <a href="{{ route('foods') }}" class="group">
+            <div class="relative h-20 w-auto  rounded-xl overflow-hidden transition-all duration-300 
+                {{ !isset($selectedKategori) ? 'ring-4 ring-orange-400 shadow-lg shadow-orange-200' : '' }}">
+                <div class="absolute inset-0 bg-gradient-to-br from-orange-400 to-red-500 group-hover:from-orange-500 group-hover:to-red-600 transition-all duration-500"></div>
+                
+                <!-- Decorative Elements -->
+                <div class="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -translate-y-10 translate-x-10"></div>
+                <div class="absolute bottom-0 left-0 w-16 h-16 bg-white/10 rounded-full translate-y-8 -translate-x-8"></div>
+                
+                <!-- Text Content -->
+                <div class="absolute inset-0 flex flex-col items-center justify-center p-1 transition-all duration-300 group-hover:scale-105">
+                    <span class="text-white font-bold text-lg text-center drop-shadow-md">
                         Semua Makanan
                     </span>
+                    <div class="w-0 group-hover:w-16 h-0.5 bg-white/70 mt-2 transition-all duration-300"></div>
                 </div>
-            </a>
-            @foreach ($kategoris as $kategori)
-                <a href="{{ route('makanan.kategori', $kategori->id) }}" class="group">
-                    <div class="relative rounded-xl overflow-hidden h-32 md:h-40 bg-cover bg-center transition-all duration-300 {{ (isset($selectedKategori) && $selectedKategori->id == $kategori->id) ? '' : 'grayscale group-hover:grayscale-0' }}"
-                        style="background-image: url('https://images.unsplash.com/photo-1686150778458-ce4d48f9697d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
-                        <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-all"></div>
-                        <span class="absolute inset-0 flex items-center justify-center text-white font-bold text-lg drop-shadow-md">
+            </div>
+        </a>
+        
+        <!-- Dynamic Categories -->
+        @foreach ($kategoris as $index => $kategori)
+            <a href="{{ route('makanan.kategori', $kategori->id) }}" class="group">
+                <div class="relative h-20 rounded-xl overflow-hidden transition-all duration-300
+                    {{ (isset($selectedKategori) && $selectedKategori->id == $kategori->id) ? 'ring-4 ring-orange-400 shadow-lg shadow-orange-200' : '' }}">
+                    
+                    <!-- Dynamic Gradient Background -->
+                    <div class="absolute inset-0 transition-all duration-500
+                        {{ $index % 5 == 0 ? 'bg-gradient-to-br from-blue-400 to-indigo-600 group-hover:from-blue-500 group-hover:to-indigo-700' : '' }}
+                        {{ $index % 5 == 1 ? 'bg-gradient-to-br from-green-400 to-teal-600 group-hover:from-green-500 group-hover:to-teal-700' : '' }}
+                        {{ $index % 5 == 2 ? 'bg-gradient-to-br from-purple-400 to-pink-600 group-hover:from-purple-500 group-hover:to-pink-700' : '' }}
+                        {{ $index % 5 == 3 ? 'bg-gradient-to-br from-yellow-400 to-amber-600 group-hover:from-yellow-500 group-hover:to-amber-700' : '' }}
+                        {{ $index % 5 == 4 ? 'bg-gradient-to-br from-red-400 to-rose-600 group-hover:from-red-500 group-hover:to-rose-700' : '' }}
+                    "></div>
+                    
+                    <!-- Decorative Elements -->
+                    <div class="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -translate-y-10 translate-x-10"></div>
+                    <div class="absolute bottom-0 left-0 w-16 h-16 bg-white/10 rounded-full translate-y-8 -translate-x-8"></div>
+                    
+                    <!-- Text Content -->
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-4 transition-all duration-300 group-hover:scale-105">
+                        <span class="text-white font-bold text-lg text-center drop-shadow-md">
                             {{ $kategori->nama }}
                         </span>
+                        <div class="w-0 group-hover:w-16 h-0.5 bg-white/70 mt-2 transition-all duration-300"></div>
                     </div>
-                </a>
-            @endforeach
-        </div>
+                </div>
+            </a>
+        @endforeach
     </div>
+</div>
 
     <!-- Daftar Makanan -->
     <div class="container mx-auto max-w-screen-xl px-4 mb-4 2xl:px-0">
@@ -253,5 +272,4 @@
     </script>
 
 @endsection
-
 

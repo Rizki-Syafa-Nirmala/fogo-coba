@@ -36,9 +36,7 @@ Route::get('/', function () {
     return redirect()->route('guest.home');
 })->name('gerbang');
 Route::middleware('guest')->group(function () {
-    // Route::get('/home/guest', function () {
-    //     return view('guest.home');
-    // })->name('guest.home');
+    
 
     Route::get('/home/guest', [MakananController::class, 'index'])->name('guest.home');
     Route::get('/about', function () {
@@ -49,7 +47,10 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', function () {
         return redirect('/user/login');
     })->name('login');
-
+    
+    Route::get('edukasi', function () {
+        return view('guest.edukasi');
+    })->name('edukasi');
 });
 
 // Rute untuk halaman home dengan pengecekan apakah sudah login
