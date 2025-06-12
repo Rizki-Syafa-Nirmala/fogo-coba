@@ -19,7 +19,20 @@ class TransaksiController extends Controller
 
     public function tampilkantransaksi($id)
     {
+        if ($this->agent->isMobile()) {
+            $transaksi = Transaksi::findOrFail($id);
+            if (!$transaksi) {
+            abort(404, 'Transaksi tidak ditemukan');
+            }
+            // Cek apakah transaksi milik user yang sedang login
+            if ($transaksi->user_id !== auth()->id()) {
+                return redirect()->route('mobile.foods');
+            }
+            $snapToken = $transaksi->snap_token;
 
+            return view('user-mobile.detail-transaksi', compact('transaksi', 'snapToken'));
+
+        }
         $transaksi = Transaksi::findOrFail($id);
         if (!$transaksi) {
         abort(404, 'Transaksi tidak ditemukan');
@@ -35,7 +48,27 @@ class TransaksiController extends Controller
 
     public function buattransaksi(Request $request)
     {
-        // dd($request->all());
+        if($this->agent->isMobile()){
+
+            $makanan = Makanan::findOrFail($request->makanan_id);
+
+            $mitraId = $makanan->mitra_id;
+
+            $orderId = 'ORDER-' . uniqid();
+
+            $transaksi = Transaksi::create([
+                'order_id' => $orderId,
+                'user_id' => auth()->id(),
+                'makanan_id' => $makanan->id,
+                'mitra_id' => $mitraId,
+                'total_harga' => $makanan->harga,
+                'status_pembayaran' => 'Belum dibayar',
+            ]);
+
+            $transaksi->save();
+
+            return redirect()->route('mobile.transaksi.show', $transaksi->id);
+        }
         $makanan = Makanan::findOrFail($request->makanan_id);
 
         $mitraId = $makanan->mitra_id;
@@ -59,6 +92,54 @@ class TransaksiController extends Controller
 
     public function bayar($id)
     {
+
+        if($this->agent->isMobile()){
+
+            $transaksi = Transaksi::findOrFail($id);
+
+            // Cek apakah transaksi milik user yang sedang login
+            if ($transaksi->user_id !== auth()->id()) {
+                return redirect()->route('foods');
+            }
+
+            if ($transaksi->status_pembayaran === 'sudah dibayar') {
+                return redirect()->route('transaksi.show', $transaksi->id);
+            }else {
+                if (!$transaksi->snap_token) {
+                    // Set konfigurasi Midtrans
+                    \Midtrans\Config::$serverKey = config('midtrans.server_key');
+                    \Midtrans\Config::$isProduction = false;
+                    \Midtrans\Config::$isSanitized = true;
+                    \Midtrans\Config::$is3ds = true;
+
+                    // Parameter untuk Midtrans
+                    $params = [
+                        'transaction_details' => [
+                            'order_id' => $transaksi->order_id,
+                            'gross_amount' => $transaksi->total_harga,
+                        ],
+                        'customer_details' => [
+                            'first_name' => $transaksi->user->name,
+                            'email' => $transaksi->user->email,
+                            'phone' => $transaksi->user->no_telp,
+                        ],
+                    ];
+
+                    // Buat Snap Token dan simpan
+                    $snapToken = \Midtrans\Snap::getSnapToken($params);
+                    $transaksi->snap_token = $snapToken;
+                    $transaksi->save();
+                } else {
+                    $snapToken = $transaksi->snap_token;
+                }
+
+            }
+            return view('user-mobile.detail-transaksi', [
+            'transaksi' => $transaksi,
+            'snapToken' => $snapToken
+            ]);
+
+        }
         $transaksi = Transaksi::findOrFail($id);
 
         // Cek apakah transaksi milik user yang sedang login

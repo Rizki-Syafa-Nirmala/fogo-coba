@@ -182,6 +182,21 @@ class MakananController extends Controller
 
     public function update(Request $request, $id)
     {
+        if($this->agent->isMobile()){
+            try {
+                $transaksi = Transaksi::findOrFail($id);
+                $transaksi->update(['status' => 'Selesai']);
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Pesanan berhasil diselesaikan'
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Gagal menyelesaikan pesanan'
+                ], 500);
+            }
+        }
         $transaksi = Transaksi::findOrFail($id);
 
         // Hanya update jika status sebelumnya bukan 'Selesai'

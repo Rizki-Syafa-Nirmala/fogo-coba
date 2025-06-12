@@ -57,25 +57,31 @@ Route::middleware('guest')->group(function () {
 Route::middleware(['auth', 'cekDevice'])->group(function () {
 
     Route::prefix('mobile')->name('mobile.')->group(function () {
+        Route::get('/profile', function () {
+            return view('user-mobile.profile');
+        })->name('profile');
         Route::get('/foods', [MakananController::class, 'index'])->name('foods');
         Route::get('/detailmakanan/mobile/{id}', [MakananController::class, 'detailmakanan'])->name('detailmakanan')->where('id', '[0-9]+'); //mobile
-        Route::get('/rekomendasi/mobile /{filter}', [RekomendasiController::class, 'rekomendasimakananmobile'])->name('rekomendasimobile');
-        // Route::get('/makanan/Kategori/{kategori?}', [MakananController::class, 'byCategory'])->name('makanan.kategori');
+        Route::get('/rekomendasi/mobile/{filter}', [RekomendasiController::class, 'rekomendasimakananmobile'])->name('rekomendasimobile');
         Route::get('/makanan/Kategori/{kategori?}', [MakananController::class, 'semuamakananmobile'])->name('makananmobile');
-        Route::get('pesanansaya', function() {
-           return view('user-mobile.order');
-        })->name('pesanansaya');
         Route::get('/transaksi-berlangsung', [TransaksiController::class, 'transaksi'])->name('transaksiberlangsung');
         Route::get('/ajax/transaksi', [TransaksiController::class, 'ajaxStatus'])->name('ajax.transaksi.statusSemua');
         Route::get('/semua', [TransaksiController::class, 'semuatransaksi'])->name('semua-transaksi');
+        Route::get('/transaksi/{id}', [TransaksiController::class, 'tampilkantransaksi'])->name('transaksi.show')->where('id', '[0-9]+');
+        Route::post('/transaksi/{id}/selesai', [MakananController::class, 'update'])->name('transactions.selesai')->where('id', '[0-9]+');
+        Route::get('/transaksi/{id}/bayar', [TransaksiController::class, 'bayar'])->name('bayar')->where('id', '[0-9]+');
+        Route::post('/transaksi/beli', [TransaksiController::class, 'buattransaksi'])->name('buat.transaksi');
 
 
+        Route::get('/transaksi', function () {
+            return view('user-mobile.detail-transaksi');
+        });
 
     });
     Route::get('/foods', [MakananController::class, 'index'])->name('foods');
     Route::get('/makanan/Kategori/{kategori?}', [MakananController::class, 'byCategory'])->name('makanan.kategori');
     Route::get('/semua-transaksi', [MakananController::class, 'userTransactions'])->name('transaksi');
-    Route::put('/transactions/{id}/complete', [MakananController::class, 'update'])->name('transactions.complete')->where('id', '[0-9]+');
+    Route::put('/transaksi/{id}/selesai', [MakananController::class, 'update'])->name('transactions.complete')->where('id', '[0-9]+');
 
     Route::post('/transaksi/beli', [TransaksiController::class, 'buattransaksi'])->name('transaksi.store');
     Route::get('/transaksi/{id}', [TransaksiController::class, 'tampilkantransaksi'])->name('transaksi.show')->where('id', '[0-9]+');

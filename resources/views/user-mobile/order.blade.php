@@ -26,11 +26,11 @@
         <div class="bg-white px-1 py-3 border-b border-gray-100">
             <div class="flex space-x-1">
                 <a href="{{ route('mobile.transaksiberlangsung') }}" type="button"
-                   class="flex-1 inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium {{ request()->routeIs('mobile.transaksiberlangsung') ? 'text-white bg-orange-400' : 'text-gray-900 bg-gray-50 border border-orange-600' }} rounded-lg">
+                   class="flex-1 inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium {{ request()->routeIs('mobile.transaksiberlangsung') ? 'text-white bg-orange-400' : 'text-black bg-gray-50 border border-orange-400' }} rounded-lg">
                     <i class="fas fa-clock mr-2"></i> Berlangsung
                 </a>
                 <a href="{{ route('mobile.semua-transaksi') }}" type="button"
-                        class="flex-1 inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium {{ request()->routeIs('mobile.semua-transaksi') ? 'text-white bg-orange-400' : 'text-gray-900 bg-gray-50 border border-orange-600' }} rounded-lg">
+                        class="flex-1 inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium {{ request()->routeIs('mobile.semua-transaksi') ? 'text-white bg-orange-400' : 'text-black bg-white border border-orange-400' }} rounded-lg">
                     <i class="fas fa-check-circle mr-2"></i> Selesai
                 </a>
             </div>
@@ -97,21 +97,20 @@
                     <!-- Tombol Aksi -->
                         @if ($transaksi->status !== 'Selesai')
 
-                        <div class="flex space-x-2 mt-6 pt-4 border-t border-gray-100">
+                        <div class="flex space-x-2  pt-4 border-t border-gray-100">
                                 <!-- Tombol Aksi -->
 
                                 <button
                                     id="status-button-{{ $transaksi->id }}"
+                                    onclick="handleStatusAction({{ $transaksi->id }})"
                                     type="button"
-                                    class="flex-1 font-medium rounded-lg text-sm px-3 py-2 transition-all"
+                                    class="flex-1 font-medium rounded-lg text-sm px-3 py-2 transition-all "
                                 >
                                     <i class="fas mr-1" id="status-icon-{{ $transaksi->id }}"></i>
                                     <span id="status-label-{{ $transaksi->id }}"></span>
                                 </button>
 
-                            {{-- <button type="button" class="flex-1 text-gray-600 bg-gray-50 hover:bg-gray-100 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-3 py-2 transition-all">
-                                <i class="fas fa-headset mr-1"></i> Bantuan
-                            </button> --}}
+
                         </div>
                         @else
                         <!-- Tombol Aksi -->
@@ -139,6 +138,15 @@
             Belum ada pesanan.
         </div>
         @endforelse
+        <div id="loading-screen" class="fixed inset-0 bg-white bg-opacity-70 z-[999] flex items-center justify-center hidden">
+            <div class="text-center">
+                <svg class="animate-spin h-10 w-10 text-orange-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                </svg>
+                <p class="text-sm mt-2 text-gray-700 font-medium">Memuat data pesanan...</p>
+            </div>
+        </div>
 
         <div class="h-6"></div>
     </div>
@@ -147,7 +155,104 @@
 <!-- Script -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
 <script>
+    // Function untuk handle action button
+    function handleStatusAction(transaksiId) {
+        const button = document.getElementById(`status-button-${transaksiId}`);
+        const label = document.getElementById(`status-label-${transaksiId}`);
 
+        if (!button || !label) return;
+
+        const buttonText = label.textContent;
+
+        // Jika button "Selesaikan Pesanan" - kirim ke database
+        if (buttonText === "Selesaikan Pesanan") {
+            // Disable button dan ubah text sementara
+            button.disabled = true;
+            label.textContent = "Memproses...";
+
+            // Kirim request ke database
+            fetch(`/mobile/transaksi/${transaksiId}/selesai`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    status: 'Selesai'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Refresh status untuk update tampilan
+                    fetchTransaksiStatus();
+
+                    // Optional: tampilkan notifikasi sukses
+                    showNotification('Pesanan berhasil diselesaikan!', 'success');
+                } else {
+                    throw new Error(data.message || 'Gagal menyelesaikan pesanan');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Gagal menyelesaikan pesanan. Silakan coba lagi.', 'error');
+
+                // Kembalikan button ke state semula
+                button.disabled = false;
+                label.textContent = "Selesaikan Pesanan";
+            });
+        }
+        // Jika button "Bayar Pesanan" - redirect ke halaman pembayaran
+        else if (buttonText === "Bayar Pesanan") {
+            window.location.href = `/mobile/transaksi/${transaksiId}`;
+        }
+        // Jika button "Lihat Detail" - redirect ke halaman detail
+        else if (buttonText === "Lihat Detail") {
+            window.location.href = `/mobile/transaksi/${transaksiId}`;
+        }
+    }
+
+    // Function untuk menampilkan notifikasi (optional)
+    function showNotification(message, type = 'info') {
+        // Buat element notifikasi
+        const notification = document.createElement('div');
+        notification.className = `fixed top-4 right-4 z-[1000] px-4 py-3 rounded-lg shadow-lg transition-all duration-300 transform translate-x-full`;
+
+        // Set warna berdasarkan type
+        if (type === 'success') {
+            notification.classList.add('bg-green-500', 'text-white');
+        } else if (type === 'error') {
+            notification.classList.add('bg-red-500', 'text-white');
+        } else {
+            notification.classList.add('bg-blue-500', 'text-white');
+        }
+
+        notification.innerHTML = `
+            <div class="flex items-center">
+                <span class="text-sm font-medium">${message}</span>
+                <button onclick="this.parentElement.parentElement.remove()" class="ml-3 text-white hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        `;
+
+        document.body.appendChild(notification);
+
+        // Animate in
+        setTimeout(() => {
+            notification.classList.remove('translate-x-full');
+        }, 100);
+
+        // Auto remove after 3 seconds
+        setTimeout(() => {
+            notification.classList.add('translate-x-full');
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }, 3000);
+    }
+
+    // Update function updateStatusButton untuk menambah data-action
     function updateStatusButton(transaksi) {
         const button = document.getElementById(`status-button-${transaksi.id}`);
         const icon = document.getElementById(`status-icon-${transaksi.id}`);
@@ -157,25 +262,25 @@
 
         // Reset class dan icon
         button.className = "flex-1 font-medium rounded-lg text-sm px-3 py-2 transition-all";
+        button.disabled = false; // Reset disabled state
         icon.className = "fas mr-1";
 
         // Logika berdasarkan status
         if (transaksi.status_pembayaran === 'belum dibayar') {
             button.classList.add("text-yellow-700", "bg-yellow-100", "hover:bg-yellow-200");
             icon.classList.add("fa-money-bill");
-            label.textContent = "Bayar Sekarang";
+            label.textContent = "Bayar Pesanan";
+            button.setAttribute('data-action', 'bayar');
         } else if (transaksi.status === 'Siap ambil') {
             button.classList.add("text-green-600", "bg-green-50", "hover:bg-green-100");
             icon.classList.add("fa-check");
             label.textContent = "Selesaikan Pesanan";
-        } else if (transaksi.status === 'Selesai') {
+            button.setAttribute('data-action', 'selesaikan');
+        } else {
             button.classList.add("text-gray-600", "bg-gray-100", "hover:bg-gray-200");
             icon.classList.add("fa-eye");
             label.textContent = "Lihat Detail";
-        } else {
-            button.classList.add("text-blue-600", "bg-blue-50", "hover:bg-blue-100");
-            icon.classList.add("fa-info-circle");
-            label.textContent = "Status Pesanan";
+            button.setAttribute('data-action', 'detail');
         }
     }
 
@@ -195,9 +300,9 @@
         }
     }
 
-// Fungsi utama untuk fetch status
+    // Fungsi utama untuk fetch status
     function fetchTransaksiStatus() {
-        fetch("{{ route('mobile.ajax.transaksi.statusSemua') }}")
+        return fetch("{{ route('mobile.ajax.transaksi.statusSemua') }}")
             .then(response => response.json())
             .then(data => {
                 const steps = ['Pesanan dibuat', 'Pesanan dibayar', 'Diproses Mitra', 'Siap Ambil', 'Selesai'];
@@ -266,13 +371,24 @@
 
     // Jalankan otomatis saat halaman dimuat
     window.addEventListener('DOMContentLoaded', () => {
-        fetchTransaksiStatus(); // dipanggil otomatis sekali
+        const loading = document.getElementById('loading-screen');
+        loading.classList.remove('hidden');
+
+        fetchTransaksiStatus().finally(() => {
+            loading.classList.add('hidden');
+        });
     });
 
     // Masih bisa dipanggil juga lewat tombol kalau dibutuhkan
     document.getElementById('refresh-status-btn')?.addEventListener('click', () => {
-        fetchTransaksiStatus(); // dipanggil manual lewat tombol
+        const loading = document.getElementById('loading-screen');
+        loading.classList.remove('hidden');
+
+        fetchTransaksiStatus().finally(() => {
+            loading.classList.add('hidden');
+        });
     });
+
 
 
 </script>
