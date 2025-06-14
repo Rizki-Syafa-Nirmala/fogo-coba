@@ -56,8 +56,11 @@
             Pesanan Saya
             <div class="tooltip-arrow" data-popper-arrow></div>
         </div>
+        @php
+            $user = Auth::user();
+        @endphp
         <a href="{{ route('mobile.profile') }}" data-tooltip-target="tooltip-profile" type="button" class="inline-flex flex-col items-center justify-center px-5 rounded-e-full hover:bg-gray-50  group">
-            <img src="{{ Auth::user()->profpic ? asset('storage/' . $user->profpic) : asset('images/user.png') }}" alt="Profile" class="w-auto h-7 {{ request()->routeIs('mobile.profile')  ? 'border border-orange-400' : 'grayscale border border-gray-950' }} rounded-full mb-1 group-hover:filter group-hover:brightness-125">
+            <img src="{{ Auth::user()->profpic ? asset('storage/' . $user->profpic) : asset('images/user.png') }}" alt="Profile" class="w-7 h-7 {{ request()->routeIs('mobile.profile')  ? 'border border-orange-400' : 'grayscale border border-gray-950' }} rounded-full mb-1 group-hover:filter group-hover:brightness-125">
             <span class="sr-only">Profile</span>
         </a>
         <div id="tooltip-profile" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip ">

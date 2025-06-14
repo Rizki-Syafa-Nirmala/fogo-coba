@@ -147,7 +147,7 @@
                 Belum ada pesanan.
             </div>
          @endforelse
-        <div id="loading-screen" class="fixed inset-0 bg-white bg-opacity-70 z-[999] flex items-center justify-center hidden">
+        <div id="loading-screen" class="fixed inset-0  bg-opacity-70 z-[999] flex items-center justify-center hidden">
             <div class="text-center">
                 <svg class="animate-spin h-10 w-10 text-orange-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>

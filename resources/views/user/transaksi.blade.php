@@ -82,6 +82,32 @@
                                     <button data-modal-target="ratingReviewModal{{ $transaksi->id }}" data-modal-toggle="ratingReviewModal{{ $transaksi->id }}" class="bg-orange-100 text-orange-800 px-3 py-1 rounded-lg text-sm hover:bg-orange-200 transition">
                                         Review
                                     </button>
+                                    <div id="ratingReviewModal{{ $transaksi->id }}" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-50">
+                                        <div class="bg-white rounded-lg p-6 w-full max-w-md">
+                                            <div class="flex justify-between mb-4">
+                                                <h3 class="text-xl font-semibold">Edit Review</h3>
+                                                <button data-modal-toggle="ratingReviewModal{{ $transaksi->id }}" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+                                            </div>
+
+                                            <form method="POST" action="{{ route('transactions.rate', $transaksi->id) }}">
+                                                @csrf
+                                                @method('POST')
+                                                <div class="flex justify-center mb-4 text-3xl flex-row-reverse">
+                                                    @for ($i = 5; $i >= 1; $i--)
+                                                        <input type="radio" id="star{{ $i }}_{{ $transaksi->id }}" name="rating" value="{{ $i }}" {{ $transaksi->rating == $i ? 'checked' : '' }} class="hidden peer" />
+                                                        <label for="star{{ $i }}_{{ $transaksi->id }}" class="text-yellow-200 cursor-pointer peer-checked:text-yellow-400">&#9733;</label>
+                                                    @endfor
+                                                </div>
+
+                                                <textarea name="komen" rows="4" class="w-full border border-gray-300 rounded-md p-3 mb-4" required>{{ old('comment', $transaksi->comment) }}</textarea>
+
+                                                <div class="flex justify-end gap-2">
+                                                    <button type="button" data-modal-toggle="ratingReviewModal{{ $transaksi->id }}}" class="px-4 py-2 border rounded-md">Cancel</button>
+                                                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Save</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                 @endif
                             @endif
 

@@ -48,7 +48,7 @@
            <div class="aspect-[3/2] w-full relative overflow-hidden">
                <div class="animate-pulse bg-gray-200 absolute inset-0"></div>
                <img class="mx-auto h-full  relative z-10 object-cover"
-                    src="{{ $makanan->gambar_makanan ? asset('storage/'.$makanan->gambar_makanan) : asset('images/food.png') }}"
+                    src="{{ $makanan->gambar_makanan ? asset('storage/'.$makanan->gambar_makanan) : asset('images/makanan.png') }}"
                     alt="{{ $makanan->nama }}"
                     loading="lazy" />
            </div>

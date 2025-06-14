@@ -18,7 +18,6 @@
                 @endif
                 <a href="{{ route('transaksi') }}" class="nav-link {{ request()->routeIs('transaksi') ? 'text-orange-600'  : 'text-gray-600 hover:text-orange-600' }}">Pesanan Saya</a>
                 <a href="{{ route('review') }}" class="nav-link {{ request()->routeIs('review') ? 'text-orange-600'  : 'text-gray-600 hover:text-orange-600'  }}">Review</a>
-                <a href="#" class="nav-link text-gray-600 hover:text-orange-600  ">Contact</a>
             </div>
 
             <!-- User Menu -->
@@ -112,9 +111,6 @@
                 </a>
                 <a href="{{ route('review') }}" class="block rounded-md px-3 py-2 text-base font-medium transition-colors {{ request()->routeIs('review') ? 'bg-orange-500 text-white' : 'text-gray-600 hover:bg-orange-50'    }}">
                     Review
-                </a>
-                <a href="#" class="block rounded-md px-3 py-2 text-base font-medium transition-colors text-gray-600 hover:bg-orange-50  ">
-                    Contact
                 </a>
             </div>
         </div>
