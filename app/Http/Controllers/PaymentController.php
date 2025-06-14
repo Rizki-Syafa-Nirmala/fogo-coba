@@ -58,6 +58,7 @@ class PaymentController extends Controller
             break;
         case 'settlement':
             $transaksi->status_pembayaran = 'sudah dibayar';
+            $transaksi->status = 'Proses';
             break;
         case 'pending':
             $transaksi->status_pembayaran = 'belum dibayar';
