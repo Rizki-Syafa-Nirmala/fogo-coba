@@ -1,4 +1,3 @@
-
 @extends('layouts.page')
 
 @section('content-user')
@@ -10,9 +9,6 @@
 
   <div class="relative z-10 px-6 py-24 sm:py-32 lg:px-8 max-w-6xl mx-auto">
     <div class="flex flex-col items-center">
-      {{-- Decorative Elements --}}
-      <div class="absolute top-10 left-10 w-20 h-20 rounded-full bg-orange-400/30 blur-xl"></div>
-      <div class="absolute bottom-20 right-10 w-32 h-32 rounded-full bg-red-500/30 blur-xl"></div>
 
       {{-- Badge --}}
       <div class="bg-orange-500 text-white px-4 py-1 rounded-full text-sm font-medium mb-6 animate-pulse">
@@ -20,15 +16,16 @@
       </div>
 
       {{-- Main Heading with Animation --}}
-      <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white text-center max-w-4xl leading-tight">
-        <span class="inline-block transform hover:scale-105 transition-transform duration-300">Makan</span>
-        <span class="inline-block transform hover:scale-105 transition-transform duration-300">Untuk</span>
-        <span class="inline-block transform hover:scale-105 transition-transform duration-300">Menjaga</span>
-        <span class="bg-gradient-to-r from-orange-300 to-yellow-200 text-transparent bg-clip-text inline-block transform hover:scale-105 transition-transform duration-300">Lingkungan
+      <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white text-center max-w-4xl leading-[1.2]">
+        <span class="inline-block transition-transform duration-300 hover:scale-105">Makan</span>
+        <span class="inline-block transition-transform duration-300 hover:scale-105">Untuk</span>
+        <span class="inline-block transition-transform duration-300 hover:scale-105">Menjaga</span>
+        <span class="inline-block transition-transform duration-300 hover:scale-105 bg-gradient-to-r from-orange-300 to-yellow-200 text-transparent bg-clip-text pb-1 leading-tight">
+          Lingkungan
         </span>
+
       </h1>
 
-      {{-- Subheading with improved styling --}}
       <p class="mt-8 text-xl md:text-2xl text-orange-100 text-center max-w-2xl leading-relaxed">
         Bantu kurangi limbah makanan dengan memesan makanan sisa produksi dari mitra kami.
       </p>
@@ -39,11 +36,7 @@
         <div class="bg-white/10 backdrop-blur-md p-6 rounded-3xl shadow-2xl border border-white/20 transition-all duration-300 hover:shadow-orange-500/30">
           <div class="flex items-center flex-wrap sm:flex-nowrap gap-3 mt-2">
             <div class="flex items-center flex-grow bg-white rounded-2xl px-4 py-3 shadow-inner focus-within:ring-2 focus-within:ring-orange-500 transition-all duration-200 w-full">
-              <svg class="h-8 w-8 text-red-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"
-                />
-              </svg>
+                  <img src="{{ asset('images/icons/map.png') }}" alt="Ikon Lokasi" class="h-8 w-8 flex-shrink-0" />
               <input type="text" id="autocomplete" name="kota" value="{{ session('user_kota') }}"
                 class="w-full border-none focus:outline-none text-gray-800 placeholder-gray-500 bg-transparent text-lg font-medium ml-3"
                 placeholder="Masukkan nama kota..."
@@ -52,19 +45,13 @@
 
             <div class="flex gap-2 w-full sm:w-auto">
             <button type="submit" class="flex items-center justify-center bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold p-3 rounded-xl transition duration-300 shadow-lg hover:shadow-orange-500/50 hover:scale-105">
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                </svg>
+                <img src="{{ asset('images/icons/search.png') }}" class="h-6 w-6 flex-shrink-0" />
             </button>
             </div>
             
             <button type="button" onclick="ambilLokasi()" class="flex items-center justify-center bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white font-bold px-4 py-3 rounded-xl transition duration-300 shadow-lg hover:shadow-orange-300/30 hover:scale-105 flex-grow sm:flex-grow-0"
             title="Gunakan Lokasi Saat Ini">
-            <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3" />
-                </svg>
+              <img src="{{ asset('images/icons/liveloc.png') }}" class="h-6 w-6 scale-125 flex-shrink-0" />
               </button>
             </div>
           </div>
@@ -80,59 +67,24 @@
         <h2 class="text-4xl md:text-5xl font-bold mb-2">
             Mau Makan <span class="text-orange-600">Apa Hari Ini?</span>
         </h2>
-        <div class="w-24 h-1 bg-gradient-to-r from-orange-300 to-orange-600 mx-auto rounded-full"></div>
     </div>
 
-    <div class="grid grid-cols-5 md:grid-cols-5 gap-5">
-        <a href="{{ route('foods') }}" class="group">
-            <div class="relative h-20 w-auto  rounded-xl overflow-hidden transition-all duration-300 
-                {{ !isset($selectedKategori) ? 'ring-4 ring-orange-400 shadow-lg shadow-orange-200' : '' }}">
-                <div class="absolute inset-0 bg-gradient-to-br from-orange-400 to-red-500 group-hover:from-orange-500 group-hover:to-red-600 transition-all duration-500"></div>
-                
-                <!-- Decorative Elements -->
-                <div class="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -translate-y-10 translate-x-10"></div>
-                <div class="absolute bottom-0 left-0 w-16 h-16 bg-white/10 rounded-full translate-y-8 -translate-x-8"></div>
-                
-                <!-- Text Content -->
-                <div class="absolute inset-0 flex flex-col items-center justify-center p-1 transition-all duration-300 group-hover:scale-105">
-                    <span class="text-white font-bold text-lg text-center drop-shadow-md">
-                        Semua Makanan
-                    </span>
-                    <div class="w-0 group-hover:w-16 h-0.5 bg-white/70 mt-2 transition-all duration-300"></div>
-                </div>
-            </div>
-        </a>
-        
-        <!-- Dynamic Categories -->
-        @foreach ($kategoris as $index => $kategori)
-            <a href="{{ route('makanan.kategori', $kategori->id) }}" class="group">
-                <div class="relative h-20 rounded-xl overflow-hidden transition-all duration-300
-                    {{ (isset($selectedKategori) && $selectedKategori->id == $kategori->id) ? 'ring-4 ring-orange-400 shadow-lg shadow-orange-200' : '' }}">
-                    
-                    <!-- Dynamic Gradient Background -->
-                    <div class="absolute inset-0 transition-all duration-500
-                        {{ $index % 5 == 0 ? 'bg-gradient-to-br from-blue-400 to-indigo-600 group-hover:from-blue-500 group-hover:to-indigo-700' : '' }}
-                        {{ $index % 5 == 1 ? 'bg-gradient-to-br from-green-400 to-teal-600 group-hover:from-green-500 group-hover:to-teal-700' : '' }}
-                        {{ $index % 5 == 2 ? 'bg-gradient-to-br from-purple-400 to-pink-600 group-hover:from-purple-500 group-hover:to-pink-700' : '' }}
-                        {{ $index % 5 == 3 ? 'bg-gradient-to-br from-yellow-400 to-amber-600 group-hover:from-yellow-500 group-hover:to-amber-700' : '' }}
-                        {{ $index % 5 == 4 ? 'bg-gradient-to-br from-red-400 to-rose-600 group-hover:from-red-500 group-hover:to-rose-700' : '' }}
-                    "></div>
-                    
-                    <!-- Decorative Elements -->
-                    <div class="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -translate-y-10 translate-x-10"></div>
-                    <div class="absolute bottom-0 left-0 w-16 h-16 bg-white/10 rounded-full translate-y-8 -translate-x-8"></div>
-                    
-                    <!-- Text Content -->
-                    <div class="absolute inset-0 flex flex-col items-center justify-center p-4 transition-all duration-300 group-hover:scale-105">
-                        <span class="text-white font-bold text-lg text-center drop-shadow-md">
-                            {{ $kategori->nama }}
-                        </span>
-                        <div class="w-0 group-hover:w-16 h-0.5 bg-white/70 mt-2 transition-all duration-300"></div>
-                    </div>
-                </div>
-            </a>
-        @endforeach
-    </div>
+    <div class="flex flex-wrap gap-3">
+    <!-- Button Semua Makanan -->
+    <a href="{{ route('foods') }}" class="px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 ease-in-out
+        {{ !isset($selectedKategori) 
+            ? 'bg-orange-200 text-orange-800 shadow-sm scale-105' 
+            : 'bg-orange-50 text-orange-600 hover:bg-orange-100 hover:scale-105' }}">Semua Makanan</a>
+
+    <!-- Loop kategori -->
+    @foreach ($kategoris as $kategori)
+        <a href="{{ route('makanan.kategori', $kategori->id) }}"
+            class="px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 ease-in-out
+            {{ isset($selectedKategori) && $selectedKategori->id == $kategori->id 
+                ? 'bg-orange-200 text-orange-800 shadow-sm scale-105' 
+                : 'bg-orange-50 text-orange-600 hover:bg-orange-100 hover:scale-105' }}">{{ $kategori->nama }}</a>
+    @endforeach
+</div>
 </div>
 
     <!-- Daftar Makanan -->
@@ -143,7 +95,7 @@
                 <div class="aspect-[3/2] w-full relative overflow-hidden">
                     <div class="animate-pulse bg-gray-200 absolute inset-0"></div>
                      <img class="mx-auto h-full  relative z-10 object-cover"
-                        src="{{ $makanan->gambar_makanan ? asset('storage/'.$makanan->gambar_makanan) : asset('images/food.png') }}"
+                        src="{{ $makanan->gambar_makanan ? asset('storage/'.$makanan->gambar_makanan) : asset('images/makanan.png') }}"
                         alt="{{ $makanan->nama }}"
                         loading="lazy" />
                 </div>
@@ -183,7 +135,6 @@
                             <svg class="w-[20px] h-[20px] text-red-600" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
                             </svg>
-
                             <p class="text-sm font-medium text-gray-500 ">
                                 {{ $makanan->jarak_km }} KM
                             </p>
@@ -272,4 +223,3 @@
     </script>
 
 @endsection
-
