@@ -75,6 +75,7 @@ class ReviewController extends Controller
         } else {
             // Buat ulasan baru
             Ulasan::create([
+                'makanan_id' => $transaksi->makanan_id, 
                 'transaksi_id' => $id,
                 'user_id' => auth()->id(),
                 'rating' => $request->rating,
