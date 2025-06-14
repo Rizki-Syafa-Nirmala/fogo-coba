@@ -67,7 +67,7 @@ class TransaksiController extends Controller
 
             $transaksi->save();
 
-            return redirect()->route('mobile.transaksi.show', $transaksi->id);
+            return redirect()->route('mobile.transaksi.lihat', $transaksi->id);
         }
         $makanan = Makanan::findOrFail($request->makanan_id);
 
@@ -218,9 +218,11 @@ class TransaksiController extends Controller
     {
 
         if($this->agent->isMobile()){
-            $transaksis = Transaksi::where('user_id', auth()->id())
-            ->where('status', 'selesai')
-            ->get();
+
+            $transaksis = Transaksi::with('ulasan')
+                ->where('user_id', auth()->id())
+                ->where('status', 'selesai')
+                ->get();
 
             return view('user-mobile.order', compact('transaksis'));
         }

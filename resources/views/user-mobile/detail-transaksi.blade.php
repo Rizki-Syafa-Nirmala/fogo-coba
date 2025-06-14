@@ -5,7 +5,7 @@
     <!-- Header -->
     <header class="bg-white shadow-sm sticky top-0 z-30">
         <div class="max-w-md mx-auto px-4 py-3 flex items-center gap-4">
-            <a  href="{{ url()->previous() != url()->current() ? url()->previous() : route('foods') }}"
+            <a  href="{{ url()->previous() != url()->current() ? url()->previous() : route('mobile.transaksiberlangsung') }}"
                 aria-label="Kembali"
                 onclick="window.history.back()"
                 class="inline-flex items-center justify-center w-10 h-10 text-sm font-medium text-gray-500 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 transition-colors"
@@ -25,7 +25,6 @@
 
 
         @if ($transaksi->status === 'siap ambil')
-
         <!-- Alert Catatan -->
         <div class="flex items-center p-4 mb-4 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50" role="alert">
             <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -33,6 +32,25 @@
             </svg>
             <div>
                 <span class="font-medium">Catatan Penting!</span> Mohon ambil pesanan tepat waktu sesuai jadwal yang telah ditentukan. Terima kasih sudah membantu mengurangi limbah makanan! 🌱
+            </div>
+        </div>
+        @elseif ($transaksi->status === 'Selesai')
+        <!-- Alert Catatan -->
+        <div class="flex items-center p-4 mb-4 text-sm text-green-800 border border-green-300 rounded-lg bg-green-50" role="alert">
+            <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <div>
+                 Terima kasih sudah membantu mengurangi limbah makanan! 🌱
+            </div>
+        </div>
+        @elseif ($transaksi->status_pembayaran === 'belum dibayar')
+                <div class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50" role="alert">
+            <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <div>
+                <span class="font-medium">Catatan Penting!</span> Mohon melakukan pembayaran agar pesanan dapat diproses. Terima kasih sudah membantu mengurangi limbah makanan! 🌱
             </div>
         </div>
         @endif

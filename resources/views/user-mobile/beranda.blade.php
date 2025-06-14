@@ -111,7 +111,7 @@
                         <i class="fas fa-star">
                         </i>
                         <span>
-                            {{ $makanan->averange_rating }}
+                            {{ $makanan->average_rating }}
                         </span>
                     </div>
                     @endif

@@ -6,15 +6,15 @@
 
 @section('content-user-mobile')
 <div class="bg-gray-50">
-    <div class="max-w-sm mx-auto bg-white min-h-screen">
+    <div class="max-w-md mx-auto bg-white min-h-screen pb-16">
         <!-- Header -->
         <header class="sticky top-0 z-50 bg-white border-b border-gray-300 shadow-sm">
                 <div class="flex items-center justify-between px-4 py-4">
 
-                    <h1 class="text-xl font-semibold text-gray-900 text-center flex-1">Pesanan Saya</h1>
-
                     <!-- Spacer agar posisi tetap tengah -->
                     <div style="width: 24px;"></div>
+                    <h1 class="text-xl font-semibold text-gray-900 text-center flex-1">Pesanan Saya</h1>
+
                     <!-- Tombol Trigger -->
                     <button id="refresh-status-btn" class="text-orange-500 hover:text-orange-600">
                         <i class="fas fa-sync-alt text-xl"></i>
@@ -115,29 +115,38 @@
                         @else
                         <!-- Tombol Aksi -->
                         <div class="flex space-x-2 mt-6 pt-4 border-t border-gray-100">
-                            <button
+                            <a href="{{ route('mobile.transaksi.lihat', ['id' => $transaksi->id]) }}"
                                 type="button"
-                                class="flex-1 text-gray-600 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-3 py-2 transition-all"
+                                class="text-center flex-1 text-gray-600 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-3 py-2 transition-all"
                             >
                                 <i class="fas fa-eye mr-1"></i> Lihat Detail
-                            </button>
+                            </a>
+                            @if ($transaksi->ulasan == null)
 
-                            <button
+                            <a href="{{ route('mobile.ulasan', ['id' => $transaksi->id]) }}"
                                 type="button"
-                                class="flex-1 text-gray-900 bg-gray-50 hover:bg-gray-100 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-3 py-2 transition-all"
-                            >
+                                class="text-center flex-1 text-gray-900 bg-gray-50 hover:bg-gray-100 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-3 py-2 transition-all"
+                                >
                                 <i class="fas fa-star mr-1"></i> Beri Rating
-                            </button>
+                            </a>
+                            @else
+                            <a href="{{ route('mobile.ulasan', ['id' => $transaksi->id]) }}"
+                                type="button"
+                                class="text-center flex-1 text-gray-900 bg-gray-50 hover:bg-gray-100 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-3 py-2 transition-all"
+                                >
+                                <i class="fas fa-star mr-1"></i> Edit Ulasan
+                            </a>
+                            @endif
                         </div>
                         @endif
                     </div>
                 </div>
         </div>
-        @empty
-        <div class="p-4 text-center text-gray-500">
-            Belum ada pesanan.
-        </div>
-        @endforelse
+            @empty
+            <div class="p-4 text-center text-gray-500">
+                Belum ada pesanan.
+            </div>
+         @endforelse
         <div id="loading-screen" class="fixed inset-0 bg-white bg-opacity-70 z-[999] flex items-center justify-center hidden">
             <div class="text-center">
                 <svg class="animate-spin h-10 w-10 text-orange-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

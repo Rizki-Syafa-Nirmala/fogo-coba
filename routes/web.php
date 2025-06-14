@@ -36,7 +36,7 @@ Route::get('/', function () {
     return redirect()->route('guest.home');
 })->name('gerbang');
 Route::middleware('guest')->group(function () {
-    
+
 
     Route::get('/home/guest', [MakananController::class, 'index'])->name('guest.home');
     Route::get('/about', function () {
@@ -47,7 +47,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', function () {
         return redirect('/user/login');
     })->name('login');
-    
+
     Route::get('edukasi', function () {
         return view('guest.edukasi');
     })->name('edukasi');
@@ -60,6 +60,15 @@ Route::middleware(['auth', 'cekDevice'])->group(function () {
         Route::get('/profile', function () {
             return view('user-mobile.profile');
         })->name('profile');
+        Route::get('/profile-saya', function () {
+            return view('user-mobile.profile-saya');
+        })->name('profile-saya');
+        Route::get('/profile/pengaturan-alamat', function () {
+            return view('user-mobile.alamat');
+        })->name('pengaturan-alamat');
+        Route::get('/profile/ganti-password', function () {
+            return view('user-mobile.ganti-password');
+        })->name('ganti-password');
         Route::get('/foods', [MakananController::class, 'index'])->name('foods');
         Route::get('/detailmakanan/mobile/{id}', [MakananController::class, 'detailmakanan'])->name('detailmakanan')->where('id', '[0-9]+'); //mobile
         Route::get('/rekomendasi/mobile/{filter}', [RekomendasiController::class, 'rekomendasimakananmobile'])->name('rekomendasimobile');
@@ -67,10 +76,13 @@ Route::middleware(['auth', 'cekDevice'])->group(function () {
         Route::get('/transaksi-berlangsung', [TransaksiController::class, 'transaksi'])->name('transaksiberlangsung');
         Route::get('/ajax/transaksi', [TransaksiController::class, 'ajaxStatus'])->name('ajax.transaksi.statusSemua');
         Route::get('/semua', [TransaksiController::class, 'semuatransaksi'])->name('semua-transaksi');
-        Route::get('/transaksi/{id}', [TransaksiController::class, 'tampilkantransaksi'])->name('transaksi.show')->where('id', '[0-9]+');
-        Route::post('/transaksi/{id}/selesai', [MakananController::class, 'update'])->name('transactions.selesai')->where('id', '[0-9]+');
+        Route::get('/transaksi/{id}', [TransaksiController::class, 'tampilkantransaksi'])->name('transaksi.lihat')->where('id', '[0-9]+');
+        Route::post('/transaksi/{id}/selesai', [MakananController::class, 'update'])->name('transaksi.selesai')->where('id', '[0-9]+');
         Route::get('/transaksi/{id}/bayar', [TransaksiController::class, 'bayar'])->name('bayar')->where('id', '[0-9]+');
         Route::post('/transaksi/beli', [TransaksiController::class, 'buattransaksi'])->name('buat.transaksi');
+        Route::post('/update-password', [UserController::class, 'updatePassword'])->name('password.update');
+        Route::get('/ulasan/{id}', [ReviewController::class, 'create'])->name('ulasan');
+        Route::post('ulasan/{id}/rating', [ReviewController::class, 'rate'])->name('transaksi.ulasan')->where('id', '[0-9]+');
 
 
         Route::get('/transaksi', function () {

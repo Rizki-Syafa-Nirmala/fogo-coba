@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Jenssegers\Agent\Agent;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -9,6 +11,14 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
+
+    protected $agent;
+
+    public function __construct()
+    {
+        $this->agent = new Agent();
+    }
 
     public function indexprofile()
     {
@@ -62,6 +72,55 @@ class UserController extends Controller
 
     public function updatePassword(Request $request)
     {
+        if($this->agent->isMobile()){
+             // Validate the request
+            $request->validate([
+                'current_password' => ['required', 'string'],
+                'new_password' => [
+                    'required',
+                    'string',
+                    'min:8',
+                    'confirmed',
+                    'different:current_password',
+                    Password::min(7)
+                        // ->mixedCase()
+                        // ->numbers()
+                        // ->symbols()
+                        ->uncompromised(),
+                ],
+                'new_password_confirmation' => ['required', 'string'],
+            ], [
+                'current_password.required' => 'password sebelumnya harus diisi',
+                'new_password.required' => 'password baru harus diisi',
+                'new_password.min' => 'password baru harus memiliki minimal 8 karakter',
+                'new_password.confirmed' => 'password baru harus sama dengan konfirmasi passwor',
+                'new_password.different' => 'password baru tidak boleh sama dengan password sebelumnya',
+                'new_password.mixedCase' => 'password baru harus memiliki huruf besar dan kecil',
+                // 'new_password.numbers' => 'New password must contain at least one number.',
+                // 'new_password.symbols' => 'New password must contain at least one special character.',
+                'new_password.uncompromised' => 'password baru telah digunakan sebelumnya',
+                'new_password_confirmation.required' => 'konfirmasi password harus diisi',
+            ]);
+
+            $user = Auth::user();
+
+            // Check if current password is correct
+            if (!Hash::check($request->current_password, $user->password)) {
+                return back()->withErrors([
+                    'current_password' => 'password sebelumnya tidak cocok'
+                ])->withInput();
+            }
+
+            // Update the password
+            $user->update([
+                'password' => Hash::make($request->new_password)
+            ]);
+
+            // Log the user out from other devices (optional)
+            // Auth::logoutOtherDevices($request->new_password);
+
+            return back()->with('success', 'Password berhasil diubah.');
+        }
         // Mendapatkan user yang sedang login
         $user = Auth::user();
 
