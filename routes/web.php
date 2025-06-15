@@ -12,16 +12,6 @@ use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\LogoutController;
 
 
-// Route::get('/storage/{path}', function ($path) {
-//     $fullPath = storage_path('app/public/' . $path);
-
-//     if (!File::exists($fullPath)) {
-//         abort(404);
-//     }
-
-//     return Response::file($fullPath);
-// })->where('path', '.*');
-// untuk guest
 Route::get('/', function () {
     if (auth()->check()) {
         if (auth()->user()->is_admin) {
@@ -35,9 +25,12 @@ Route::get('/', function () {
     // Kalau belum login, tampilkan halaman guest
     return redirect()->route('guest.home');
 })->name('gerbang');
-Route::middleware('guest')->group(function () {
-
-
+Route::middleware(['guest', 'cekDevice'])->group(function () {
+    Route::prefix('mobile')->name('mobile.')->group(function () {
+        Route::get('/install', function () {
+            return view('user-mobile.install');
+        })->name('install');
+    });
     Route::get('/home/guest', [MakananController::class, 'index'])->name('guest.home');
     Route::get('/about', function () {
         return view('guest.about');
@@ -124,5 +117,6 @@ Route::post('/midtrans-callback', [PaymentController::class, 'callback']);
 
 Route::post('/ambil-kota', [LokasiController::class, '__invoke'])->name('ambil.kota');
 Route::post('/ganti-kota', [LokasiController::class, 'gantiKota'])->name('ganti.kota');
+
 
 

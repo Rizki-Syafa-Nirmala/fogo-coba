@@ -100,6 +100,10 @@ class MakananController extends Controller
 
             // Jika user belum login (guest)
         if (!auth()->check()) {
+
+            if($this->agent->isMobile()){
+                return view('user-mobile.install'); 
+            }
             return view('guest.home', compact('makanans', 'kategoris', 'mitras'));
         }
 
