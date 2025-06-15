@@ -172,6 +172,14 @@
                 window.location.replace(config.redirectUrl);
             }, config.redirectDelay);
         }
+        // Fungsi untuk redirect setelah install
+        function redirectlogin() {
+
+            setTimeout(() => {
+                debugLog('Redirecting to:', config.redirectUrl);
+                window.location.replace(config.redirectUrl);
+            }, config.redirectDelay);
+        }
 
         // Fungsi utama untuk install PWA
         async function installPWA() {
@@ -214,8 +222,10 @@
                     if (navigator.userAgent.match(/iPhone|iPad|iPod/)) {
                         // iOS Safari
                         showStatus('Buka menu Share (📤) > Add to Home Screen untuk menginstall', 'info');
+                        redirectlogin();
                     } else {
                         showStatus('Buka menu browser (⋮) > Add to Home Screen untuk menginstall', 'info');
+                        redirectlogin();
                     }
                 }
 
