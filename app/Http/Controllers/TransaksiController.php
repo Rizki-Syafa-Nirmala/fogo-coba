@@ -203,7 +203,8 @@ class TransaksiController extends Controller
 
         }
             $transaksis = Transaksi::where('user_id', auth()->id())
-            ->where('status_pembayaran', 'belum dibayar');
+            ->where('status_pembayaran', 'belum dibayar')
+            ->get();
 
 
         return view('user.transaksi.transaksiberlangsung', compact('transaksis'));

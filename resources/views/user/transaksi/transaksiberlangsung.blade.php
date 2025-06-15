@@ -12,7 +12,7 @@
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
                     <div class="mb-4 sm:mb-0">
                         <p class="text-sm font-semibold text-orange-600">
-                            ID Transaksi: #{{ $transaksi->order_id }}
+                            ID Transaksi: {{ $transaksi->order_id }}
                         </p>
                         <p class="text-xs text-gray-500">
                             Tanggal: {{ $transaksi->created_at->format('d M Y, H:i') }}

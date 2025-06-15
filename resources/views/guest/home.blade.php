@@ -38,7 +38,7 @@
                 </div>
 
                 <!-- {{-- Get Started Button - Improved --}}
-                <a href="{{ route('foods') }}" 
+                <a href="{{ route('foods') }}"
                    class="group mt-8 inline-flex items-center px-8 py-4 bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white font-semibold rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
                     <span class="mr-3 text-lg">Get Started</span>
                     <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-white/30 transition-colors duration-300">
@@ -105,8 +105,8 @@
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-10">
                     <div class="flex flex-col items-center space-y-4 group">
                         <div class="relative">
-                            <img alt="Ilustrasi memilih makanan sisa produksi di aplikasi" 
-                                 class="w-20 h-20 object-contain group-hover:scale-105 transition-transform duration-300" 
+                            <img alt="Ilustrasi memilih makanan sisa produksi di aplikasi"
+                                 class="w-20 h-20 object-contain group-hover:scale-105 transition-transform duration-300"
                                 src="{{ asset('images/pilihmakan.png') }}" alt="Food Image" class="w-full h-full">
                             <div class="absolute inset-0 bg-orange-100 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                         </div>
@@ -116,8 +116,8 @@
 
                     <div class="flex flex-col items-center space-y-4 group">
                         <div class="relative">
-                            <img alt="Ilustrasi konfirmasi pesanan makanan" 
-                                class="w-20 h-20 object-contain group-hover:scale-105 transition-transform duration-300" 
+                            <img alt="Ilustrasi konfirmasi pesanan makanan"
+                                class="w-20 h-20 object-contain group-hover:scale-105 transition-transform duration-300"
                                 src="{{ asset('images/confirmmakan.png') }}" alt="Food Image" class="w-full h-full">
                             <div class="absolute inset-0 bg-orange-100 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                         </div>
@@ -127,8 +127,8 @@
 
                     <div class="flex flex-col items-center space-y-4 group">
                         <div class="relative">
-                            <img alt="Ilustrasi mengambil makanan di tempat penjual" 
-                                class="w-20 h-20 object-contain group-hover:scale-105 transition-transform duration-300" 
+                            <img alt="Ilustrasi mengambil makanan di tempat penjual"
+                                class="w-20 h-20 object-contain group-hover:scale-105 transition-transform duration-300"
                                 src="{{ asset('images/ambilmakan.png') }}" alt="Food Image" class="w-full h-full">
                             <div class="absolute inset-0 bg-orange-100 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                         </div>
@@ -141,46 +141,46 @@
 
         {{-- Food Section --}}
        <section class="relative bg-gradient-to-br from-orange-400 via-orange-300 to-orange-200 overflow-hidden">
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
-        <div class="flex flex-col lg:flex-row items-center gap-10">
+        <div class="relative w-full  sm:px-6 lg:px-8 py-32">
+            <div class="flex flex-col lg:flex-row items-center gap-10">
 
-            {{-- Section Header --}}
-            <div class="text-white max-w-xl">
-                <h2 class="text-3xl md:text-4xl font-extrabold mb-4 leading-snug">Harga Makanan Terjangkau!</h2>
-                <p class="text-base md:text-lg text-white/90 leading-relaxed tracking wide">
-                    Pilihan pas buat kamu yang pengen makan enak tapi tetap irit. Nggak perlu mahal buat bisa puas!
-                </p>
-            </div>
+                {{-- Section Header --}}
+                <div class="text-white max-w-xl ml-2">
+                    <h2 class="text-3xl md:text-6xl font-extrabold mb-4 leading-snug">Harga Makanan Terjangkau!</h2>
+                    <p class="text-base md:text-xl text-white/90 leading-relaxed tracking wide">
+                        Pilihan pas buat kamu yang pengen makan enak tapi tetap irit. Nggak perlu mahal buat bisa puas!
+                    </p>
+                </div>
 
-            {{-- Food Cards --}}
-            <div class="flex gap-5 md:gap-6 overflow-x-auto scrollbar-hide pb-2">
-                @foreach ($makanans as $makanan)
-                    <a href="{{ route('filament.user.auth.login') }}" 
-                       class="makanan-item {{ $loop->index >= 10 ? 'hidden' : '' }} flex-shrink-0 relative rounded-2xl overflow-hidden bg-gray-100 w-44 aspect-square flex flex-col justify-end shadow-lg">
+                {{-- Food Cards --}}
+                <div class="flex gap-5 md:gap-6 w-full overflow-x-auto scrollbar-hide pb-2">
+                    @foreach ($makanans as $makanan)
+                        <a href="{{ route('filament.user.auth.login') }}"
+                        class="makanan-item {{ $loop->index >= 10 ? 'hidden' : '' }} flex-shrink-0 relative rounded-2xl overflow-hidden bg-gray-100 w-52 aspect-square flex flex-col justify-end shadow-lg">
 
-                        <img alt="Food Image" class="w-full h-full object-cover absolute inset-0" 
-                             src="{{ $makanan->gambar_makanan ? asset('storage/'.$makanan->gambar_makanan) : asset('images/food.png') }}" />
+                            <img alt="Food Image" class="w-full h-full object-cover absolute inset-0"
+                                src="{{ $makanan->gambar_makanan ? asset('storage/'.$makanan->gambar_makanan) : asset('images/makanan.png') }}" />
 
-                        @if ($makanan->rating_count > 0)
-                            <div class="absolute top-3 left-3 bg-black/60 rounded-md px-2 py-1 text-yellow-400 text-sm font-semibold flex items-center gap-1">
-                                <i class="fas fa-star"></i>
-                                <span>{{ $makanan->averange_rating }}</span>
+                            @if ($makanan->rating_count > 0)
+                                <div class="absolute top-3 left-3 bg-black/60 rounded-md px-2 py-1 text-yellow-400 text-sm font-semibold flex items-center gap-1">
+                                    <i class="fas fa-star"></i>
+                                    <span>{{ $makanan->average_rating }}</span>
+                                </div>
+                            @endif
+
+                            <div class="relative z-10 px-3 py-2 bg-gray-900/60 backdrop-blur-sm rounded-b-2xl">
+                                <h3 class="text-orange-300 font-semibold text-lg truncate">{{ $makanan->nama }}</h3>
+                                <div class="text-gray-100 text-sm font-normal mt-1">
+                                    Rp {{ number_format($makanan->harga, 0, ',', '.') }}
+                                </div>
                             </div>
-                        @endif
+                        </a>
+                    @endforeach
+                </div>
 
-                        <div class="relative z-10 px-3 py-2 bg-gray-900/60 backdrop-blur-sm rounded-b-2xl">
-                            <h3 class="text-orange-300 font-semibold text-lg truncate">{{ $makanan->nama }}</h3>
-                            <div class="text-gray-100 text-sm font-normal mt-1">
-                                Rp {{ number_format($makanan->harga, 0, ',', '.') }}
-                            </div>
-                        </div>
-                    </a>
-                @endforeach
             </div>
-
-        </div>
-    </div>
-</section>
+            </div>
+        </section>
 
 
         {{-- Education content --}}
@@ -188,8 +188,8 @@
             <div class="text-center lg:text-left mb-12 md:mb-16">
                 <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Mini Education</h2>
                 <p class="text-sm md:text-base text-gray-600 leading-relaxed max-w-auto mx-auto lg:mx-0">
-                    Sampah makanan jadi masalah besar yang sering kita anggap sepele. Di Indonesia sendiri, jutaan ton makanan terbuang tiap tahun—padahal banyak yang masih layak makan. 
-                    Bukan cuma makanannya yang terbuang, tapi juga energi, air, dan sumber daya yang dipakai untuk memproduksinya. Lewat FOGO, yuk bareng-bareng jadi bagian dari gerakan penyelamatan makanan. Mulai dari belajar bareng, ubah kebiasaan, sampai eksplor ide kreatif dari sisa makanan. 
+                    Sampah makanan jadi masalah besar yang sering kita anggap sepele. Di Indonesia sendiri, jutaan ton makanan terbuang tiap tahun—padahal banyak yang masih layak makan.
+                    Bukan cuma makanannya yang terbuang, tapi juga energi, air, dan sumber daya yang dipakai untuk memproduksinya. Lewat FOGO, yuk bareng-bareng jadi bagian dari gerakan penyelamatan makanan. Mulai dari belajar bareng, ubah kebiasaan, sampai eksplor ide kreatif dari sisa makanan.
                     Nggak perlu nunggu nanti—kita bisa mulai dari sekarang!
                 </p>
             </div>
