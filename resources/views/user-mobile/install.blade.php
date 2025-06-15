@@ -55,7 +55,7 @@
 
         // Configuration
         const config = {
-            redirectUrl: '{{ route("foods") }}', // Menggunakan Laravel route helper
+            redirectUrl: '{{ route('foods') }}', // Menggunakan Laravel route helper
             redirectDelay: 2000, // Delay sebelum redirect (ms)
             autoRegisterSW: true, // Auto register service worker
             showDebugLogs: true // Show console logs
