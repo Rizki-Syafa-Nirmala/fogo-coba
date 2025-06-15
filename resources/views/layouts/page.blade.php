@@ -13,6 +13,7 @@
     data-client-key="{{config('midtrans.client_key')}}"></script>
       <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @PwaHead
 </head>
 <body>
     <div>
@@ -99,6 +100,8 @@
             document.getElementById('loading').classList.add('hidden');
         }
     </script> --}}
+        @RegisterServiceWorkerScript <!-- This registers the service worker -->
+
 </body>
 
 <script>
