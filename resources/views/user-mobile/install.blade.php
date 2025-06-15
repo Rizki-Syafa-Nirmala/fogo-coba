@@ -55,7 +55,7 @@
 
         // Configuration
         const config = {
-            redirectUrl: '{{ route('filament.user.auth.login') }}', // Menggunakan Laravel route helper
+            redirectUrl: '{{ route("dashboard") }}', // Menggunakan Laravel route helper
             redirectDelay: 2000, // Delay sebelum redirect (ms)
             autoRegisterSW: true, // Auto register service worker
             showDebugLogs: true // Show console logs
@@ -169,7 +169,7 @@
 
             setTimeout(() => {
                 debugLog('Redirecting to:', config.redirectUrl);
-                window.location.href = config.redirectUrl;
+                window.location.replace(config.redirectUrl);
             }, config.redirectDelay);
         }
 
@@ -254,7 +254,7 @@
 
                 // Auto redirect jika sudah terinstall
                 setTimeout(() => {
-                    window.location.href = config.redirectUrl;
+                    window.location.replace(config.redirectUrl);
                 }, 1500);
                 return;
             }
