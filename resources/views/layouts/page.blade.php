@@ -43,16 +43,16 @@
                         @yield('content-user-mobile')
                     </div>
                 @else
-                    <script>
-                        window.location.href = "{{ route('filament.user.auth.login') }}";
-                    </script>
+                    <div class="">
+                        @yield('content-mobile')
+                    </div>
+
                 @endauth
             @else
                 @auth
                     <div class="pt-20">
                         @yield('content-user')
                     </div>
-
                 @else
                     <div class="">
                         @yield('content')

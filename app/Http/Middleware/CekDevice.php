@@ -2,10 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Jenssegers\Agent\Agent;
+use Illuminate\Http\Request;
+use Closure;
 
 
 class CekDevice
@@ -27,7 +27,15 @@ class CekDevice
             } else if ($agent->isDesktop() && $request->routeIs('mobile.*')) {
                 return redirect()->route('foods'); // asumsi ini route untuk desktop
             }
+        } elseif (!auth()->check()) {
+
+            if ($agent->isMobile() && ! $request->routeIs('mobile.*')) {
+                return redirect()->route('mobile.install');
+            } else if ($agent->isDesktop() && $request->routeIs('mobile.*')) {
+                return redirect()->route('guest.home'); // asumsi ini route untuk desktop
+            }
         }
+
         return $next($request);
     }
 }
