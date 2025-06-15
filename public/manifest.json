@@ -5,7 +5,7 @@
     "display": "standalone",
     "description": "A Progressive Web Application setup for Laravel projects.",
     "theme_color": "#6777ef",
-    "start_url": "/mobile/foods",
+    "start_url": "/user/login",
     "icons": [
         {
             "src": "logo.png",
