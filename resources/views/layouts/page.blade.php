@@ -13,16 +13,19 @@
     data-client-key="{{config('midtrans.client_key')}}"></script>
       <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @php
+            $agent = new Jenssegers\Agent\Agent();
+        @endphp
+    @if ($agent->isMobile())
+
     @PwaHead
+    @endif
 </head>
 <body>
     <div>
         <!-- Menambahkan Navbar -->
 
 
-        @php
-            $agent = new Jenssegers\Agent\Agent();
-        @endphp
         @if ($agent->isMobile())
             @yield('content-navbar-mobile')
         @else
