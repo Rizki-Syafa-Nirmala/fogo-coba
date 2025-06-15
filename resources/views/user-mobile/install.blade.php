@@ -17,7 +17,7 @@
 
         <!-- Download Button -->
         <button id="downloadBtn" class="bg-white text-indigo-600 px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:shadow-xl hover:-translate-y-1 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none transition-all duration-300 inline-flex items-center gap-3 mb-6">
-            <div class="w-6 h-6 border-2 border-indigo-600 border-t-transparent rounded-full loader hidden"></div>
+            <div class="w-6 h-6 border-2 border-indigo-600 border-t-transparent rounded-full loader hidden animate-spin"></div>
             <span id="btnText">📥 Install Aplikasi</span>
         </button>
 
@@ -51,42 +51,74 @@
     <script>
         let deferredPrompt;
         let isInstalling = false;
+        let serviceWorkerReady = false;
+
+        // Configuration
+        const config = {
+            redirectUrl: '{{ route('filament.user.auth.login') }}', // Menggunakan Laravel route helper
+            redirectDelay: 2000, // Delay sebelum redirect (ms)
+            autoRegisterSW: true, // Auto register service worker
+            showDebugLogs: true // Show console logs
+        };
+
+        // Debug logging
+        function debugLog(message, data = null) {
+            if (config.showDebugLogs) {
+                console.log(`[PWA Install] ${message}`, data || '');
+            }
+        }
 
         // Event listener untuk beforeinstallprompt
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            console.log('PWA install prompt ready');
+            debugLog('PWA install prompt ready');
         });
 
-        // Cek apakah service worker sudah terdaftar
-        function checkServiceWorker() {
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.getRegistrations().then(registrations => {
-                    if (registrations.length > 0) {
-                        showStatus('Service Worker sudah terdaftar', 'success');
-                    }
-                });
-            }
-        }
+        // Auto register service worker saat halaman dimuat
+        async function autoRegisterServiceWorker() {
+            if (!config.autoRegisterSW) return false;
 
-        // Fungsi untuk mendaftarkan service worker
-        async function registerServiceWorker() {
             if ('serviceWorker' in navigator) {
                 try {
+                    showStatus('Mempersiapkan aplikasi...', 'info');
+
                     const registration = await navigator.serviceWorker.register('/sw.js');
-                    console.log('Service Worker registered:', registration);
-                    showStatus('Service Worker berhasil didaftarkan!', 'success');
+                    debugLog('Service Worker registered automatically:', registration);
+
+                    // Tunggu sampai service worker ready
+                    await navigator.serviceWorker.ready;
+                    serviceWorkerReady = true;
+
+                    showStatus('Aplikasi siap diinstall!', 'success');
                     return true;
                 } catch (error) {
-                    console.error('Service Worker registration failed:', error);
-                    showStatus('Gagal mendaftarkan Service Worker', 'error');
+                    debugLog('Service Worker auto registration failed:', error);
+                    showStatus('Gagal mempersiapkan aplikasi', 'error');
                     return false;
                 }
             } else {
-                showStatus('Browser tidak mendukung Service Worker', 'error');
+                showStatus('Browser tidak mendukung PWA', 'error');
                 return false;
             }
+        }
+
+        // Cek apakah service worker sudah terdaftar
+        async function checkServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                try {
+                    const registrations = await navigator.serviceWorker.getRegistrations();
+                    if (registrations.length > 0) {
+                        debugLog('Service Worker already registered');
+                        serviceWorkerReady = true;
+                        showStatus('Aplikasi siap diinstall!', 'success');
+                        return true;
+                    }
+                } catch (error) {
+                    debugLog('Error checking service worker:', error);
+                }
+            }
+            return false;
         }
 
         // Fungsi untuk menampilkan status
@@ -106,10 +138,12 @@
 
             statusEl.classList.remove('hidden');
 
-            // Hide status after 5 seconds
-            setTimeout(() => {
-                statusEl.classList.add('hidden');
-            }, 5000);
+            // Hide status after 5 seconds (except for success messages)
+            if (status !== 'success') {
+                setTimeout(() => {
+                    statusEl.classList.add('hidden');
+                }, 5000);
+            }
         }
 
         // Fungsi untuk toggle loading state
@@ -129,6 +163,16 @@
             }
         }
 
+        // Fungsi untuk redirect setelah install
+        function redirectAfterInstall() {
+            showStatus('Berhasil terinstall! Mengarahkan ke aplikasi...', 'success');
+
+            setTimeout(() => {
+                debugLog('Redirecting to:', config.redirectUrl);
+                window.location.href = config.redirectUrl;
+            }, config.redirectDelay);
+        }
+
         // Fungsi utama untuk install PWA
         async function installPWA() {
             if (isInstalling) return;
@@ -137,29 +181,29 @@
             toggleLoading(true);
 
             try {
-                // 1. Daftarkan service worker terlebih dahulu
-                showStatus('Mendaftarkan Service Worker...', 'info');
-                const swRegistered = await registerServiceWorker();
-
-                if (!swRegistered) {
-                    toggleLoading(false);
-                    isInstalling = false;
-                    return;
+                // Pastikan service worker sudah ready
+                if (!serviceWorkerReady) {
+                    showStatus('Mempersiapkan service worker...', 'info');
+                    const swReady = await autoRegisterServiceWorker();
+                    if (!swReady) {
+                        throw new Error('Service Worker tidak dapat dipersiapkan');
+                    }
                 }
 
-                // 2. Tunggu sebentar untuk memastikan SW terdaftar
-                await new Promise(resolve => setTimeout(resolve, 1000));
-
-                // 3. Coba install PWA
+                // Coba install PWA
                 if (deferredPrompt) {
                     showStatus('Menampilkan dialog install...', 'info');
                     deferredPrompt.prompt();
 
                     const { outcome } = await deferredPrompt.userChoice;
+                    debugLog('User choice:', outcome);
 
                     if (outcome === 'accepted') {
                         showStatus('Aplikasi berhasil diinstall!', 'success');
                         document.getElementById('btnText').textContent = '✅ Terinstall';
+
+                        // Auto redirect setelah install
+                        redirectAfterInstall();
                     } else {
                         showStatus('Install dibatalkan', 'error');
                     }
@@ -167,16 +211,16 @@
                     deferredPrompt = null;
                 } else {
                     // Fallback untuk browser yang tidak mendukung install prompt
-                    if (window.DeviceMotionEvent && typeof DeviceMotionEvent.requestPermission === 'function') {
+                    if (navigator.userAgent.match(/iPhone|iPad|iPod/)) {
                         // iOS Safari
-                        showStatus('Buka menu Share > Add to Home Screen untuk menginstall', 'info');
+                        showStatus('Buka menu Share (📤) > Add to Home Screen untuk menginstall', 'info');
                     } else {
-                        showStatus('Buka menu browser > Add to Home Screen untuk menginstall', 'info');
+                        showStatus('Buka menu browser (⋮) > Add to Home Screen untuk menginstall', 'info');
                     }
                 }
 
             } catch (error) {
-                console.error('Error installing PWA:', error);
+                debugLog('Error installing PWA:', error);
                 showStatus('Terjadi kesalahan saat install', 'error');
             } finally {
                 toggleLoading(false);
@@ -187,23 +231,52 @@
         // Event listener untuk tombol download
         document.getElementById('downloadBtn').addEventListener('click', installPWA);
 
-        // Cek status saat halaman dimuat
-        window.addEventListener('load', () => {
-            checkServiceWorker();
+        // Event listener untuk appinstalled
+        window.addEventListener('appinstalled', () => {
+            debugLog('PWA was installed successfully');
+            showStatus('Aplikasi berhasil terinstall!', 'success');
+            document.getElementById('btnText').textContent = '✅ Terinstall';
+
+            // Auto redirect setelah install
+            redirectAfterInstall();
+        });
+
+        // Inisialisasi saat halaman dimuat
+        window.addEventListener('load', async () => {
+            debugLog('Page loaded, initializing PWA install page');
 
             // Cek apakah PWA sudah terinstall
             if (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) {
+                debugLog('PWA already installed, redirecting...');
                 document.getElementById('btnText').textContent = '✅ Sudah Terinstall';
                 document.getElementById('downloadBtn').disabled = true;
-                showStatus('Aplikasi sudah terinstall!', 'success');
+                showStatus('Aplikasi sudah terinstall! Mengarahkan...', 'success');
+
+                // Auto redirect jika sudah terinstall
+                setTimeout(() => {
+                    window.location.href = config.redirectUrl;
+                }, 1500);
+                return;
+            }
+
+            // Cek service worker yang sudah ada
+            const swExists = await checkServiceWorker();
+
+            // Auto register service worker jika belum ada
+            if (!swExists && config.autoRegisterSW) {
+                await autoRegisterServiceWorker();
             }
         });
 
-        // Event listener untuk appinstalled
-        window.addEventListener('appinstalled', () => {
-            console.log('PWA was installed');
-            showStatus('Aplikasi berhasil terinstall!', 'success');
-            document.getElementById('btnText').textContent = '✅ Terinstall';
+        // Detect jika user kembali ke halaman setelah install
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                // Cek lagi apakah sudah terinstall
+                if (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) {
+                    debugLog('PWA detected as installed after visibility change');
+                    redirectAfterInstall();
+                }
+            }
         });
     </script>
 </div>
