@@ -218,15 +218,15 @@
 
                     deferredPrompt = null;
                 } else {
+                    redirectlogin();
                     // Fallback untuk browser yang tidak mendukung install prompt
-                    if (navigator.userAgent.match(/iPhone|iPad|iPod/)) {
-                        // iOS Safari
-                        showStatus('Buka menu Share (📤) > Add to Home Screen untuk menginstall', 'info');
-                        redirectlogin();
-                    } else {
-                        showStatus('Buka menu browser (⋮) > Add to Home Screen untuk menginstall', 'info');
-                        redirectlogin();
-                    }
+                    // if (navigator.userAgent.match(/iPhone|iPad|iPod/)) {
+                    //     // iOS Safari
+                    //     showStatus('Buka menu Share (📤) > Add to Home Screen untuk menginstall', 'info');
+                    // } else {
+                    //     showStatus('Buka menu browser (⋮) > Add to Home Screen untuk menginstall', 'info');
+                    //     redirectlogin();
+                    // }
                 }
 
             } catch (error) {
