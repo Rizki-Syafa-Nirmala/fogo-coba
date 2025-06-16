@@ -9,7 +9,7 @@
 .fi-simple-main {
     @apply bg-[#CCC5B9]/20;
     @apply border border-[#CCC5B9]/50 shadow-lg;
-    @apply mx-2 md:mx-0;
+    @apply mx-5 sm:mx-5 md:mx-0;
     @apply max-w-2xl ;
 }
 
