@@ -16,34 +16,33 @@
                     $hour = date('H');
 
                     if ($hour < 12) {
-                        $greeting = 'Selamat Pagi';
+                        $greeting = 'Good Morning';
                     } elseif ($hour < 18) {
-                        $greeting = 'Selamat Sore';
+                        $greeting = 'Good Afternoon';
                     } else {
-                        $greeting = 'Selamat Malam';
+                        $greeting = 'Good Evening';
                     }
                 @endphp
-            <div class="flex justify-between items-start mb-4 px-2">
-                <div class="flex-1">
-                    <p class="text-gray-500 text-sm mb-1">
-                        {{ $greeting }}
-                    </p>
-                    <h1 class="font-bold text-lg leading-tight mb-2">
-                        {{ Auth::user()->name }}
-                    </h1>
-                </div>
+            <div class="flex justify-start px-2">
 
-                <div class="flex justify-center items-start pt-1  px-1">
-                    <div class="flex items-center gap-2 border border-[#2B7A99] rounded-full px-4 py-2 bg-white shadow-sm w-full max-w-sm min-w-[8rem]">
-                        <i class="fas fa-map-marker-alt text-[#2B7A99] text-sm"></i>
-                        <span class="text-[#2B7A99] text-sm truncate text-center w-full" title="{{ session('user_kota') ?? 'Lokasi tidak diketahui' }}">
-                            {{ session('user_kota') ?? 'Lokasi tidak diketahui' }}
-                        </span>
-                    </div>
-                </div>
+                <p class="text-black font-bold text-2xl mb-1">
 
+                    <span class="text-orange-500">{{ $greeting }}</span>  {{ Auth::user()->name }}
+
+                </p>
             </div>
+            <div class="flex justify-between items-center mb-4 px-2">
+                <div class="flex-1">
+                    <p class="text-gray-600 text-lg">
+                         <span class="font-semibold text-gray-900">{{ session('user_kota') ?? '30220 Baltimore' }}</span>
+                        <i class="fas fa-chevron-down text-xs ml-1"></i>
+                    </p>
+                </div>
 
+                <div class="flex items-center">
+                    <span class="text-gray-900 font-semibold text-lg">{{ Auth::user()->points ?? '890' }} Points</span>
+                </div>
+            </div>
 
            <!-- Recommended Recipe card smaller width and height -->
 
@@ -76,17 +75,11 @@
                     </div>
                 </div>
             </div>
-           <!-- Categories heading with arrow -->
-            <div class="flex justify-between items-center mb-3 px-2">
-                <h2 class="font-semibold text-gray-900 text-base">
-                Kategori
-                </h2>
-            </div>
            <!-- Categories scroll container -->
             <div class="flex space-x-4 overflow-x-auto pb-2 px-2 scrollbar-hide">
                 <!-- Button dengan background gambar -->
                 @foreach ($kategoris as $kategori)
-                    <a href="{{ route('mobile.makananmobile', $kategori->id) }}" type="button" class="inline-flexbg-white text-black border border-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 whitespace-nowrap items-center px-2 py-2 text-sm font-medium  rounded-full">
+                    <a href="{{ route('mobile.makananmobile', $kategori->id) }}" type="button" class="inline-flexbg-white bg-orange-50 text-orange-600 whitespace-nowrap items-center px-2 py-2 text-sm font-medium  rounded-full">
                     {{ $kategori->nama }}
                     </a>
                 @endforeach
@@ -94,17 +87,13 @@
         </div>
         <div class="max-w-md mx-auto pt-4">
             <div class="flex items-center justify-between mb-4 px-2">
-                <h2 class="font-semibold text-base">
+                <h2 class="font-bold text-black">
                     Makanan yang Tersedia
                 </h2>
-                <a href="{{ route('mobile.makananmobile') }}" class="text-black text-lg pr-3">
-                    <i class="fas fa-arrow-right">
-                    </i>
-                </a>
             </div>
             <div  class="flex overflow-x-auto gap-6 px-1 mb-2 scrollbar-hide">
                 @foreach ($makanans as $makanan)
-                <a href="{{ route('mobile.detailmakanan', $makanan->id) }}" class="makanan-item {{ $loop->index >= 4 ? 'hidden' : '' }} flex-shrink-0 relative rounded-xl overflow-hidden bg-gray-100 w-60 aspect-square flex flex-col justify-end shadow-md">
+                <a href="{{ route('mobile.detailmakanan', $makanan->id) }}" class="makanan-item {{ $loop->index >= 4 ? 'hidden' : '' }} flex-shrink-0 relative rounded-xl overflow-hidden bg-gray-100 w-48 aspect-square flex flex-col justify-end shadow-md">
                     <img alt="Glass of fresh orange juice with sliced oranges and rosemary on white background" class="w-60 h-full object-cover absolute inset-0" src="{{ $makanan->gambar_makanan ? asset('storage/'.$makanan->gambar_makanan) : asset('images/food.png') }}"/>
                     @if ($makanan->rating_count > 0)
                     <div class="absolute top-3 left-3 bg-black bg-opacity-50 rounded-md px-2 py-1 text-yellow-400 text-sm font-semibold flex items-center space-x-1">
@@ -166,7 +155,5 @@
         }
     </script>
 </div>
-
-
 
 @endsection
