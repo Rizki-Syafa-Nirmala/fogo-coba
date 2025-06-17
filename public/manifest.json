@@ -4,7 +4,7 @@
     "background_color": "#ffffff",
     "display": "standalone",
     "description": "Makan untuk Menjaga Bumi",
-    "theme_color": "#6777ef",
+    "theme_color": "#E49426",
     "start_url": "/user/login",
     "scope": "/",
     "icons": [
