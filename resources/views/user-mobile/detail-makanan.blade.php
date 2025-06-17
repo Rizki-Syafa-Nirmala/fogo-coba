@@ -76,24 +76,24 @@
                 </button>
             </form> --}}
             <div id="konfirmasiModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
-                <div class="bg-white rounded-lg mx-4 w-full max-w-sm">
+                <div class="bg-white rounded-lg mx-4 w-full max-w-md">
                     <div class="p-6">
                         <div class="flex items-center justify-center w-12 h-12 mx-auto bg-yellow-100 rounded-full mb-4">
                             <i class="fas fa-exclamation-circle text-yellow-600 text-xl"></i>
                         </div>
-                        <h3 class="text-lg font-semibold text-gray-900 text-center mb-2">Konfirmasi Pemesanan</h3>
-                        <p class="text-sm text-gray-600 text-center mb-6">
+                        <h3 class="text-xl font-semibold text-gray-900 text-center mb-2">Konfirmasi Pemesanan</h3>
+                        <p class="text-lg text-gray-600 text-center mb-6">
                             Apakah anda yakin ingin memesans <span class="font-bold">{{ $makanan->nama }}</span>? Lanjutkan untuk Melakukan Pembayaran
                         </p>
                         <div class="flex space-x-3">
                             <button
                                 onclick="closeModal()"
-                                class="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors">
+                                class="flex-1 px-4 py-2 text-lg font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors">
                                 Batal
                             </button>
                             <form action="{{ route('mobile.buat.transaksi') }}" method="POST"
 
-                            class="flex-1 text-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors">
+                            class="flex-1 text-center px-4 py-2 text-lg font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors">
                                 @csrf
                                 <input type="hidden" name="makanan_id" value="{{ $makanan->id }}">
                                 <button type="submit">

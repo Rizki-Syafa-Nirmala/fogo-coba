@@ -242,18 +242,18 @@
                     <div class="flex items-center justify-center w-12 h-12 mx-auto bg-yellow-100 rounded-full mb-4">
                         <i class="fas fa-exclamation-circle text-yellow-600 text-xl"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 text-center mb-2">Konfirmasi Pembayaran</h3>
-                    <p class="text-sm text-gray-600 text-center mb-6">
+                    <h3 class="text-xl font-semibold text-gray-900 text-center mb-2">Konfirmasi Pembayaran</h3>
+                    <p class="text-lg text-gray-600 text-center mb-6">
                         Anda memilih untuk tidak menggunakan poin dalam pembayaran ini. Setelah melanjutkan, transaksi tidak dapat dibatalkan atau diubah. Lanjutkan sekarang?
                     </p>
                     <div class="flex space-x-3">
                         <button
                             onclick="closeModal()"
-                            class="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors">
+                            class="flex-1 px-4 py-2 text-lg font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors">
                             Batal
                         </button>
                         <a href="{{ route('mobile.bayar', $transaksi->id) }}"
-                        class="flex-1 text-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors">
+                        class="flex-1 text-center px-4 py-2 text-lg font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors">
                             Lanjutkan
                         </a>
                     </div>
