@@ -102,7 +102,7 @@ class MakananController extends Controller
         if (!auth()->check()) {
 
             if($this->agent->isMobile()){
-                return view('user-mobile.install'); 
+                return view('user-mobile.install');
             }
             return view('guest.home', compact('makanans', 'kategoris', 'mitras'));
         }
@@ -190,6 +190,12 @@ class MakananController extends Controller
             try {
                 $transaksi = Transaksi::findOrFail($id);
                 $transaksi->update(['status' => 'Selesai']);
+                $user = $transaksi->user; // pastikan relasi user() ada di model Transaksi
+
+                // Misal kolom nominal di transaksi bernama 'total'
+                $poinTambahan = floor($transaksi->total_harga / 1000); // 1 poin per 1000 rupiah
+                $user->point += $poinTambahan;
+                $user->save();
                 return response()->json([
                     'success' => true,
                     'message' => 'Pesanan berhasil diselesaikan'

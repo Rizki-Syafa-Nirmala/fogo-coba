@@ -82,7 +82,9 @@ Route::middleware(['auth', 'cekDevice'])->group(function () {
         Route::post('/transaksi/beli', [TransaksiController::class, 'buattransaksi'])->name('buat.transaksi');
         Route::post('/update-password', [UserController::class, 'updatePassword'])->name('password.update');
         Route::get('/ulasan/{id}', [ReviewController::class, 'create'])->name('ulasan');
-        Route::post('ulasan/{id}/rating', [ReviewController::class, 'rate'])->name('transaksi.ulasan')->where('id', '[0-9]+');
+        Route::post('ulasan/{id}/rating', [ReviewController::class, 'rate'])->name('transaksi.ulasan')->where('id', '[0-9]+');    Route::post('/transaksi/hitung-potongan/{id}', [TransaksiController::class, 'hitungPotongan'])->name('hitungPotongan');
+        Route::post('/transaksi/hitung-potongan/{id}', [TransaksiController::class, 'hitungPotongan'])->name('hitungPotongan');
+
 
 
         Route::get('/transaksi', function () {

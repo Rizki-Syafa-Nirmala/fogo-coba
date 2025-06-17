@@ -236,6 +236,7 @@ class TransaksiController extends Controller
     }
     public function hitungPotongan(Request $request, $id)
     {
+
         $transaksi = Transaksi::findOrFail($id);
         $user = auth()->user();
         $gunakanPoin = $request->input('point') == 1;
@@ -273,10 +274,16 @@ class TransaksiController extends Controller
         }
 
         $transaksi->save();
+        if ($this->agent->isMobile()) {
+            return redirect()
+                ->route('mobile.transaksi.lihat', $transaksi->id)
+                ->with('success', 'Penggunaan poin berhasil diperbarui.');
+        }else {
 
-        return redirect()
-            ->route('transaksi.show', $transaksi->id)
-            ->with('success', 'Penggunaan poin berhasil diperbarui.');
+            return redirect()
+                ->route('transaksi.show', $transaksi->id)
+                ->with('success', 'Penggunaan poin berhasil diperbarui.');
+        }
     }
 
 
