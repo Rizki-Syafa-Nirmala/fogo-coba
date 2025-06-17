@@ -122,7 +122,7 @@ Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 Route::post('/midtrans-callback', [PaymentController::class, 'callback']);
 
-Route::post('/ambil-kota', [LokasiController::class, '__invoke'])->name('ambil.kota');
+Route::post('/ambil-kota', [LokasiController::class, '__invoke']);
 Route::post('/ganti-kota', [LokasiController::class, 'gantiKota'])->name('ganti.kota');
 
 
