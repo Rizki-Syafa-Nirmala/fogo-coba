@@ -11,7 +11,7 @@ use Filament\Forms\Components\Grid;
 
 class RegisterUser extends AuthRegister
 {
-    public function getHeading(): string 
+    public function getHeading(): string
     {
         return 'Buat Akun Pelanggan';
     }
@@ -32,7 +32,7 @@ class RegisterUser extends AuthRegister
                 ->label('Email'),
                 TextInput::make('no_telp')
                 ->tel()
-                ->telRegex('/^[+][(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.\/0-9]$/')
+                ->telregex('/^0[0-9]{9,13}$/')
                 ->label('Nomor Telepon')
                 ->required(),
                 TextArea::make('alamat')
