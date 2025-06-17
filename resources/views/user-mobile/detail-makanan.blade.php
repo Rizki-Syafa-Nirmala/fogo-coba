@@ -22,10 +22,11 @@
 
             <!-- Nama & Harga -->
             <div class="text-center space-y-2">
-                <h1 class="text-2xl font-bold text-gray-900">{{ $makanan->nama }}({{ $makanan->mitra->name }})</h1>
-                <p class="text-xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
+                <h1 class="text-2xl font-bold text-gray-900">{{ $makanan->nama }}</h1>
+                <p class="text-2xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
                     Rp {{ number_format($makanan->harga, 0, ',', '.') }}
                 </p>
+                <p class="text-md font-semibold text-gray-900">{{ $makanan->mitra->name }} ({{ $makanan->jarak_km }} KM)</p>
             </div>
 
             <!-- Rating -->
@@ -93,7 +94,7 @@
                             </button>
                             <form action="{{ route('mobile.buat.transaksi') }}" method="POST"
 
-                            class="flex-1 text-center px-4 py-2 text-lg font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors">
+                            class="flex-1 text-center px-4 py-2 text-lg font-medium text-white bg-orange-400 rounded-md ">
                                 @csrf
                                 <input type="hidden" name="makanan_id" value="{{ $makanan->id }}">
                                 <button type="submit">

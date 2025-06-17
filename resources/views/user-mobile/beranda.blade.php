@@ -31,13 +31,13 @@
             </div>
 
             <!-- Location & Points -->
-            <div class="flex items-center justify-between px-4 mt-3">
-                <div class="flex items-center gap-2 text-sm text-gray-500">
+            <div class="flex items-center justify-between px-4 py-4 ">
+                <div class="flex items-center gap-2 text-md text-gray-500">
                     <i class="fas fa-map-marker-alt text-orange-500"></i>
                     <span class="font-medium text-gray-700">{{ session('user_kota') }}</span>
                 </div>
 
-                <div class="flex items-center gap-1 bg-orange-50 border border-orange-200 text-orange-600 px-3 py-1 rounded-full shadow-sm">
+                <div class="flex items-center gap-1 bg-orange-50 border border-orange-200 text-orange-600 px-2 py-1 rounded-full shadow-sm">
                     <i class="fas fa-star text-orange-400 text-sm"></i>
                     <span class="font-semibold text-sm">{{ Auth::user()->point }} pts</span>
                 </div>
@@ -80,7 +80,7 @@
     <div class="flex space-x-4 overflow-x-auto pb-2 px-2 scrollbar-hide">
         @foreach ($kategoris as $kategori)
             <a href="{{ route('mobile.makananmobile', $kategori->id) }}"
-               class="inline-flex bg-orange-50 text-orange-600 whitespace-nowrap items-center px-3 py-2 text-sm font-medium rounded-full">
+               class="inline-flex bg-orange-50 text-orange-600 whitespace-nowrap items-center px-3 py-2 text-lg font-medium rounded-full">
                 {{ $kategori->nama }}
             </a>
         @endforeach

@@ -136,10 +136,14 @@ class MakananController extends Controller
 
     public function detailmakanan($id)
     {
-        $makanan = Makanan::with('kategoris', 'mitra', 'ulasan')->findOrFail($id);
 
-        $makanan->average_rating = $makanan->ulasan->isNotEmpty() ? number_format($makanan->ulasan->avg('rating'), 1) : 0;
-        $makanan->rating_count = $makanan->ulasan->count();
+        $userKota = session('user_kota'); // Ambil kota dari session
+        $userLat = session('user_latitude'); // latitude user yang sudah disimpan
+        $userLon = session('user_longitude'); // longitude user yang sudah disimpan
+
+
+        $makanans = $this->getProcessedMakanans($userKota, $userLat, $userLon);
+        $makanan = $makanans->find($id);
 
         if($this->agent->isMobile()){
             return view('user-mobile.detail-makanan', compact('makanan'));
@@ -190,12 +194,15 @@ class MakananController extends Controller
             try {
                 $transaksi = Transaksi::findOrFail($id);
                 $transaksi->update(['status' => 'Selesai']);
-                $user = $transaksi->user; // pastikan relasi user() ada di model Transaksi
+                if($transaksi->point == false){
 
-                // Misal kolom nominal di transaksi bernama 'total'
-                $poinTambahan = floor($transaksi->total_harga / 1000); // 1 poin per 1000 rupiah
-                $user->point += $poinTambahan;
-                $user->save();
+                    $user = $transaksi->user; // pastikan relasi user() ada di model Transaksi
+
+                    // Misal kolom nominal di transaksi bernama 'total'
+                    $poinTambahan = floor($transaksi->total_harga / 1000); // 1 poin per 1000 rupiah
+                    $user->point += $poinTambahan;
+                    $user->save();
+                }
                 return response()->json([
                     'success' => true,
                     'message' => 'Pesanan berhasil diselesaikan'

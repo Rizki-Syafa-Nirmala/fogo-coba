@@ -129,7 +129,7 @@
         </div>
 
         <!-- Points Usage Form -->
-        @if (empty($transaksi->snap_token) && ($transaksi->point || auth()->user()->point > 0))
+        @if (empty($transaksi->snap_token || $transaksi->status_pembayaran === 'sudah dibayar') && ($transaksi->point || auth()->user()->point > 0))
         <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-4">
             <form id="form-poin" action="{{ route('mobile.hitungPotongan', $transaksi->id) }}" method="POST">
                 @csrf
@@ -153,7 +153,7 @@
                                {{ old('point', $transaksi->point) ? 'checked' : '' }}
                                class="sr-only peer"
                                onchange="document.getElementById('form-poin').submit();">
-                        <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                        <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-400"></div>
                     </label>
                 </div>
             </form>
@@ -200,8 +200,8 @@
                     <div class="border-t border-gray-200 pt-3">
                         <dl class="flex items-center justify-between gap-4">
                             <dt class="text-lg font-semibold text-gray-900">Total</dt>
-                            <dd class="text-lg font-bold text-blue-600">
-                                Rp.{{ number_format($transaksi->total_harga ?? $transaksi->makanan->harga) }}
+                            <dd class="text-lg font-bold text-green-500">
+                                Rp.{{ number_format($transaksi->total_harga) }}
                             </dd>
                         </dl>
                     </div>
@@ -211,26 +211,27 @@
 
         @if ($transaksi->status_pembayaran !== 'sudah dibayar' )
             <div class="pt-2">
-                @if(empty($transaksi->snap_token) && ($transaksi->point == 0 || auth()->user()->point > 0))
+                @if(empty($transaksi->snap_token) )
                     <!-- Tombol trigger modal -->
                     <button
                         onclick="openModal()"
-                        class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-4 text-center inline-flex items-center justify-center gap-2 transition-colors shadow-lg">
+                        class="w-full text-white bg-orange-400 font-medium rounded-lg text-sm px-5 py-4 text-center inline-flex items-center justify-center gap-2 transition-colors shadow-lg">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
                         </svg>
                         Lakukan Pembayaran
                     </button>
-                @else
-                    <a href="{{ route('mobile.bayar', $transaksi->id) }}"
-                    class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-4 text-center inline-flex items-center justify-center gap-2 transition-colors shadow-lg">
+                    @else
+                    <button
+                        onclick="openModal()"
+                        class="w-full text-white bg-orange-400 font-medium rounded-lg text-sm px-5 py-4 text-center inline-flex items-center justify-center gap-2 transition-colors shadow-lg">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
                         </svg>
-                        Bayar Sekarang
-                    </a>
+                        Bayar
+                    </button>
                 @endif
             </div>
         @endif
@@ -243,9 +244,16 @@
                         <i class="fas fa-exclamation-circle text-yellow-600 text-xl"></i>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-900 text-center mb-2">Konfirmasi Pembayaran</h3>
+                    @if ($transaksi->point == 1)
+
+                    <p class="text-lg text-gray-600 text-center mb-6">
+                        Anda menggunakan <span class="font-bold"> {{ number_format($transaksi->makanan->harga-$transaksi->total_harga/100, 0, ',', '.') }} </span> poin dalam pembayaran ini. Setelah melanjutkan, transaksi tidak dapat dibatalkan atau diubah. Lanjutkan sekarang?
+                    </p>
+                    @else
                     <p class="text-lg text-gray-600 text-center mb-6">
                         Anda memilih untuk tidak menggunakan poin dalam pembayaran ini. Setelah melanjutkan, transaksi tidak dapat dibatalkan atau diubah. Lanjutkan sekarang?
                     </p>
+                    @endif
                     <div class="flex space-x-3">
                         <button
                             onclick="closeModal()"
@@ -253,7 +261,7 @@
                             Batal
                         </button>
                         <a href="{{ route('mobile.bayar', $transaksi->id) }}"
-                        class="flex-1 text-center px-4 py-2 text-lg font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors">
+                        class="flex-1 text-center px-4 py-2 text-lg font-medium text-white bg-orange-400 rounded-md">
                             Lanjutkan
                         </a>
                     </div>

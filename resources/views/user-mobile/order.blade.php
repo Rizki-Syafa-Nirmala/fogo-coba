@@ -147,13 +147,13 @@
                 Belum ada pesanan.
             </div>
          @endforelse
-        <div id="loading-screen" class="fixed inset-0  bg-opacity-70 z-[999] flex items-center justify-center hidden">
+        <div id="loading-screen" class="fixed inset-0 bg-orange-100 bg-opacity-10 z-[999] flex items-center justify-center hidden">
             <div class="text-center">
                 <svg class="animate-spin h-10 w-10 text-orange-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
                 </svg>
-                <p class="text-sm mt-2 text-gray-700 font-medium">Memuat data pesanan...</p>
+                <p class="text-xl mt-2 text-gray-700 font-medium">Memuat data pesanan...</p>
             </div>
         </div>
 

@@ -99,11 +99,18 @@ class TransaksiController extends Controller
 
             // Cek apakah transaksi milik user yang sedang login
             if ($transaksi->user_id !== auth()->id()) {
-                return redirect()->route('foods');
+                return redirect()->route('mobile.foods');
+            }
+
+            if($transaksi->total_harga == 0){
+                $transaksi->status_pembayaran = 'sudah dibayar';
+                $transaksi->status = 'Proses';
+                $transaksi->save();
+                return view('user-mobile.detail-transaksi', compact('transaksi'));
             }
 
             if ($transaksi->status_pembayaran === 'sudah dibayar') {
-                return redirect()->route('transaksi.show', $transaksi->id);
+                return redirect()->route('mobile.transaksi.lihat', $transaksi->id);
             }else {
                 if (!$transaksi->snap_token) {
                     // Set konfigurasi Midtrans

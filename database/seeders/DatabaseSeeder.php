@@ -31,7 +31,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
             'no_telp' => '085889251312',
             'password' => Hash::make('iniuser'),
-            'is_admin' => false
+            'is_admin' => false,
+            'point' => '1000'
 
         ]);
 
