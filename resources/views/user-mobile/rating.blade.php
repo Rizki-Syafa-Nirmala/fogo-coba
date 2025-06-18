@@ -22,38 +22,48 @@
 
         <!-- Alert Messages -->
         @if(session('success'))
-            <div class="mx-4 mt-4 p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 border border-green-200" role="alert">
-                <div class="flex">
+            <div class="mx-4 mt-4 p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 border border-green-200 relative" role="alert" id="success-alert">
+                <div class="flex items-start">
                     <svg class="flex-shrink-0 inline w-4 h-4 mr-3 mt-[2px]" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                     </svg>
-                    <div>
+                    <div class="flex-1">
                         <span class="font-medium">Berhasil!</span> {{ session('success') }}
                     </div>
+                    <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex h-8 w-8 items-center justify-center" onclick="closeAlert('success-alert')" aria-label="Close">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
                 </div>
             </div>
         @endif
 
         @if(session('error'))
-            <div class="mx-4 mt-4 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 border border-red-200" role="alert">
-                <div class="flex">
+            <div class="mx-4 mt-4 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 border border-red-200 relative" role="alert" id="error-alert">
+                <div class="flex items-start">
                     <svg class="flex-shrink-0 inline w-4 h-4 mr-3 mt-[2px]" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
                     </svg>
-                    <div>
+                    <div class="flex-1">
                         <span class="font-medium">Error!</span> {{ session('error') }}
                     </div>
+                    <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 items-center justify-center" onclick="closeAlert('error-alert')" aria-label="Close">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
                 </div>
             </div>
         @endif
 
         @if($errors->any())
-            <div class="mx-4 mt-4 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 border border-red-200" role="alert">
-                <div class="flex">
+            <div class="mx-4 mt-4 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 border border-red-200 relative" role="alert" id="validation-error-alert">
+                <div class="flex items-start">
                     <svg class="flex-shrink-0 inline w-4 h-4 mr-3 mt-[2px]" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
                     </svg>
-                    <div>
+                    <div class="flex-1">
                         <span class="font-medium">Error!</span>
                         @if($errors->has('error'))
                             {{ $errors->first('error') }}
@@ -65,20 +75,34 @@
                             </ul>
                         @endif
                     </div>
+                    <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 items-center justify-center" onclick="closeAlert('validation-error-alert')" aria-label="Close">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
                 </div>
             </div>
         @endif
 
         <!-- Show existing review info if editing -->
         @if(isset($existingUlasan))
-            <div class="mx-4 mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                <div class="flex items-center mb-2">
-                    <svg class="w-4 h-4 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <div class="mx-4 mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg relative" id="info-alert">
+                <div class="flex items-start">
+                    <svg class="w-4 h-4 text-blue-500 mr-2 mt-[2px] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
                     </svg>
-                    <span class="text-sm font-medium text-blue-800">Mengedit ulasan yang sudah ada</span>
+                    <div class="flex-1">
+                        <div class="mb-2">
+                            <span class="text-sm font-medium text-blue-800">Mengedit ulasan yang sudah ada</span>
+                        </div>
+                        <p class="text-xs text-blue-600">Anda sudah memberikan ulasan sebelumnya. Silakan edit jika diperlukan.</p>
+                    </div>
+                    <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-blue-50 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex h-8 w-8 items-center justify-center" onclick="closeAlert('info-alert')" aria-label="Close">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
                 </div>
-                <p class="text-xs text-blue-600">Anda sudah memberikan ulasan sebelumnya. Silakan edit jika diperlukan.</p>
             </div>
         @endif
 
@@ -93,7 +117,7 @@
             <div class="p-6 flex-1 flex flex-col">
                 <!-- Question -->
                 <div class="text-center mb-8">
-                    <h2 class="text-xl font-semibold text-gray-900 mb-2">Bagaimana pendapat Anda?</h2>
+                    <h2 class="text-xl font-semibold text-gray-900 mb-2">Bagaimana {{ $transaksi->makanan->nama }} Kamu ?</h2>
                     <p class="text-sm text-gray-500">Silahkan berikan rating dengan mengklik bintang di bawah ini</p>
                 </div>
 
@@ -117,8 +141,17 @@
                 </div>
 
                 @error('rating')
-                    <div class="mb-4 p-3 text-sm text-red-800 rounded-lg bg-red-50 border border-red-200">
-                        {{ $message }}
+                    <div class="mb-4 p-3 text-sm text-red-800 rounded-lg bg-red-50 border border-red-200 relative" id="rating-error-alert">
+                        <div class="flex items-start">
+                            <div class="flex-1">
+                                {{ $message }}
+                            </div>
+                            <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 items-center justify-center" onclick="closeAlert('rating-error-alert')" aria-label="Close">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 @enderror
 
@@ -141,7 +174,18 @@
                         required>{{ old('komen', $existingUlasan->komen ?? '') }}</textarea>
 
                     @error('komen')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        <div class="mt-2 p-3 text-sm text-red-800 rounded-lg bg-red-50 border border-red-200 relative" id="komen-error-alert">
+                            <div class="flex items-start">
+                                <div class="flex-1">
+                                    {{ $message }}
+                                </div>
+                                <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 items-center justify-center" onclick="closeAlert('komen-error-alert')" aria-label="Close">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
                     @enderror
 
                     <div class="flex justify-between items-center mt-1">
@@ -186,124 +230,150 @@
         </form>
     </div>
 
-    <script>
-        // Star rating functionality
-        const starButtons = document.querySelectorAll('.star-btn');
-        const ratingInput = document.getElementById('rating-input');
-        const ratingText = document.getElementById('rating-text');
-        const komentarTextarea = document.getElementById('komen');
-        const charCount = document.getElementById('char-count');
+<script>
+// Function to close alert
+function closeAlert(alertId) {
+    const alert = document.getElementById(alertId);
+    if (alert) {
+        alert.style.opacity = '0';
+        alert.style.transform = 'translateY(-10px)';
+        setTimeout(() => {
+            alert.remove();
+        }, 150);
+    }
+}
 
-        // Mengambil rating dari input hidden yang sudah diset dari database
-        let currentRating = parseInt(ratingInput.value) || 0;
+// Star rating functionality
+const starButtons = document.querySelectorAll('.star-btn');
+const ratingInput = document.getElementById('rating-input');
+const ratingText = document.getElementById('rating-text');
+const komentarTextarea = document.getElementById('komen');
+const charCount = document.getElementById('char-count');
 
-        // Set initial rating jika ada data dari database
-        if (currentRating > 0) {
-            updateStars();
-            updateRatingText();
-            console.log(`Loaded existing rating: ${currentRating} stars`);
+// Mengambil rating dari input hidden yang sudah diset dari database
+let currentRating = parseInt(ratingInput.value) || 0;
+
+// Rating text messages
+const ratingMessages = {
+    0: 'Pilih rating Anda',
+    1: 'Sangat Buruk',
+    2: 'Buruk',
+    3: 'Cukup',
+    4: 'Baik',
+    5: 'Sangat Baik'
+};
+
+// Character count functionality
+function updateCharCount() {
+    const currentLength = komentarTextarea.value.length;
+    charCount.textContent = currentLength;
+
+    if (currentLength > 900) {
+        charCount.classList.add('text-red-500');
+    } else {
+        charCount.classList.remove('text-red-500');
+    }
+}
+
+// Function untuk update tampilan bintang berdasarkan rating
+function updateStars() {
+    starButtons.forEach((button, index) => {
+        const star = button.querySelector('svg');
+        if (index < currentRating) {
+            star.classList.remove('text-gray-300');
+            star.classList.add('text-yellow-400');
+        } else {
+            star.classList.remove('text-yellow-400');
+            star.classList.add('text-gray-300');
         }
+    });
+}
 
-        // Rating text messages
-        const ratingMessages = {
-            0: 'Pilih rating Anda',
-            1: 'Sangat Buruk',
-            2: 'Buruk',
-            3: 'Cukup',
-            4: 'Baik',
-            5: 'Sangat Baik'
-        };
-
-        // Character count functionality
-        function updateCharCount() {
-            const currentLength = komentarTextarea.value.length;
-            charCount.textContent = currentLength;
-
-            if (currentLength > 900) {
-                charCount.classList.add('text-red-500');
-            } else {
-                charCount.classList.remove('text-red-500');
-            }
+// Function untuk highlight bintang saat hover
+function highlightStars(rating) {
+    starButtons.forEach((button, index) => {
+        const star = button.querySelector('svg');
+        if (index < rating) {
+            star.classList.remove('text-gray-300');
+            star.classList.add('text-yellow-400');
+        } else {
+            star.classList.remove('text-yellow-400');
+            star.classList.add('text-gray-300');
         }
+    });
+}
 
-        komentarTextarea.addEventListener('input', updateCharCount);
+// Function untuk update text rating
+function updateRatingText(hoverRating = null) {
+    const displayRating = hoverRating || currentRating;
+    ratingText.textContent = ratingMessages[displayRating];
+}
 
-        starButtons.forEach((button, index) => {
-            // Click handler - set permanent rating
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                currentRating = index + 1;
-                ratingInput.value = currentRating;
-                updateStars();
-                updateRatingText();
+// Event listeners untuk setiap star button
+starButtons.forEach((button, index) => {
+    // PERBAIKAN UTAMA: Click handler yang memungkinkan rating dikurangi
+    button.addEventListener('click', (e) => {
+        e.preventDefault();
 
-                // Visual feedback for click
-                button.style.transform = 'scale(1.2)';
-                setTimeout(() => {
-                    button.style.transform = 'scale(1)';
-                }, 150);
+        const clickedRating = index + 1;
 
-                console.log(`Rating set to: ${currentRating} stars`);
-            });
+        // Jika user mengklik rating yang sama dengan current rating,
+        // set rating ke 0 (reset) atau tetap sama (tergantung kebutuhan)
+        // Untuk memungkinkan pengurangan rating, kita akan set ke rating yang diklik
+        currentRating = clickedRating;
 
-            // Hover effects
-            button.addEventListener('mouseenter', () => {
-                highlightStars(index + 1);
-                updateRatingText(index + 1);
-            });
-        });
+        // ALTERNATIF: Jika ingin user bisa reset rating dengan klik rating yang sama:
+        // if (currentRating === clickedRating) {
+        //     currentRating = 0; // Reset ke 0
+        // } else {
+        //     currentRating = clickedRating;
+        // }
 
-        // Reset to current rating when mouse leaves the rating area
-        document.getElementById('star-rating').addEventListener('mouseleave', () => {
-            updateStars();
-            updateRatingText();
-        });
+        ratingInput.value = currentRating;
+        updateStars();
+        updateRatingText();
 
-        // Function untuk update tampilan bintang berdasarkan rating
-        function updateStars() {
-            starButtons.forEach((button, index) => {
-                const star = button.querySelector('svg');
-                if (index < currentRating) {
-                    star.classList.remove('text-gray-300');
-                    star.classList.add('text-yellow-400');
-                } else {
-                    star.classList.remove('text-yellow-400');
-                    star.classList.add('text-gray-300');
-                }
-            });
-        }
+        // Visual feedback untuk click
+        button.style.transform = 'scale(1.2)';
+        setTimeout(() => {
+            button.style.transform = 'scale(1)';
+        }, 150);
 
-        // Function untuk highlight bintang saat hover
-        function highlightStars(rating) {
-            starButtons.forEach((button, index) => {
-                const star = button.querySelector('svg');
-                if (index < rating) {
-                    star.classList.remove('text-gray-300');
-                    star.classList.add('text-yellow-400');
-                } else {
-                    star.classList.remove('text-yellow-400');
-                    star.classList.add('text-gray-300');
-                }
-            });
-        }
+        console.log(`Rating updated to: ${currentRating} stars`);
+    });
 
-        // Function untuk update text rating
-        function updateRatingText(hoverRating = null) {
-            const displayRating = hoverRating || currentRating;
-            ratingText.textContent = ratingMessages[displayRating];
-        }
+    // Hover effects - PERBAIKAN: Pastikan hover tidak mengganggu rating yang sudah dipilih
+    button.addEventListener('mouseenter', () => {
+        highlightStars(index + 1);
+        updateRatingText(index + 1);
+    });
+});
 
-        // Initialize on page load - penting untuk menampilkan data existing
-        document.addEventListener('DOMContentLoaded', function() {
-            updateStars(); // Akan menampilkan bintang kuning sesuai rating dari database
-            updateRatingText(); // Akan menampilkan text sesuai rating
-            updateCharCount(); // Akan menampilkan jumlah karakter existing
+// PERBAIKAN: Reset ke current rating saat mouse keluar dari area rating
+document.getElementById('star-rating').addEventListener('mouseleave', () => {
+    updateStars(); // Kembali ke tampilan rating sebenarnya
+    updateRatingText(); // Kembali ke text rating sebenarnya
+});
 
-            // Debug info
-            if (currentRating > 0) {
-                console.log(`Displaying existing review: ${currentRating} stars, comment: "${komentarTextarea.value}"`);
-            }
-        });
-    </script>
+// Event listener untuk textarea
+komentarTextarea.addEventListener('input', updateCharCount);
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Set initial rating jika ada data dari database
+    if (currentRating > 0) {
+        updateStars();
+        updateRatingText();
+        console.log(`Loaded existing rating: ${currentRating} stars`);
+    }
+
+    updateCharCount();
+
+    // Debug info
+    if (currentRating > 0) {
+        console.log(`Displaying existing review: ${currentRating} stars, comment: "${komentarTextarea.value}"`);
+    }
+});
+</script>
 </div>
 @endsection

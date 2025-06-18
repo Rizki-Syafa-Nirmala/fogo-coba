@@ -69,6 +69,46 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Profile updated successfully.');
 
     }
+    public function updateProfilePicture(Request $request)
+    {
+        try {
+            $request->validate([
+                'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120' // Max 5MB
+            ]);
+
+            $user = auth()->user();
+            
+            // Hapus foto lama jika ada
+            if ($user->profpic && Storage::disk('public')->exists($user->profpic)) {
+                Storage::disk('public')->delete($user->profpic);
+            }
+
+            // Upload foto baru
+            $file = $request->file('profile_picture');
+            $fileName = 'profile_' . $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $filePath = $file->storeAs('profile_pictures', $fileName, 'public');
+
+            // Update database
+            $user->update(['profpic' => $filePath]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Foto profil berhasil diperbarui',
+                'profile_picture_url' => asset('storage/' . $filePath)
+            ]);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'File tidak valid: ' . implode(', ', $e->validator->errors()->all())
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat mengupload foto: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 
     public function updatePassword(Request $request)
     {

@@ -84,6 +84,7 @@ Route::middleware(['auth', 'cekDevice'])->group(function () {
         Route::get('/ulasan/{id}', [ReviewController::class, 'create'])->name('ulasan');
         Route::post('ulasan/{id}/rating', [ReviewController::class, 'rate'])->name('transaksi.ulasan')->where('id', '[0-9]+');    Route::post('/transaksi/hitung-potongan/{id}', [TransaksiController::class, 'hitungPotongan'])->name('hitungPotongan');
         Route::post('/transaksi/hitung-potongan/{id}', [TransaksiController::class, 'hitungPotongan'])->name('hitungPotongan');
+        Route::put('/profile/update-picture', [UserController::class, 'updateProfilePicture'])->name('profile.update-picture');
 
 
 
