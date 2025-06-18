@@ -154,9 +154,16 @@ class TransaksiController extends Controller
             return redirect()->route('foods');
         }
 
+        if ($transaksi->total_harga == 0) {
+        $transaksi->status_pembayaran = 'sudah dibayar';
+        $transaksi->status = 'Proses';
+        $transaksi->save();
+        return view('user.order', compact('transaksi'));
+    }
+
         if ($transaksi->status_pembayaran === 'sudah dibayar') {
             return redirect()->route('transaksi.show', $transaksi->id);
-        }else {
+        } else {
             if (!$transaksi->snap_token) {
                 // Set konfigurasi Midtrans
                 \Midtrans\Config::$serverKey = config('midtrans.server_key');
